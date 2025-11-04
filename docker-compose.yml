@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+
+  players-producer:
+    build:
+      context: .
+      dockerfile: Dockerfile.producer
+    container_name: players-producer
+    command: ["java", "-cp", "/app/app.jar", "producer.PlayersProducer"]
+    restart: always
+
+  scoreboard-producer:
+    build:
+      context: .
+      dockerfile: Dockerfile.producer
+    container_name: scoreboard-producer
+    command: ["java", "-cp", "/app/app.jar", "producer.ScoreboardProducer"]
+    restart: always
+
+  spark-consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    restart: always

@@ -1,0 +1,6 @@
+FROM eclipse-temurin:11-jre
+WORKDIR /app
+COPY jars/lol-streaming-assembly-0.1.0.jar /app/app.jar
+# dossier de sortie partagé
+VOLUME ["/data"]
+CMD ["java", "-Dout.players=/data/raw/players", "-Dout.scoreboard=/data/raw/scoreboard", "-Dloop.seconds=300", "-jar", "/app/app.jar"]
