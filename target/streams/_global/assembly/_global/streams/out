@@ -3,22 +3,22 @@
 [0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 1 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 1 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 2 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 73 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 75 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 95 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 68 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mProcess renames start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 19 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 193 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 94 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mBuilding assembly jar due to missing output...[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 219 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 159 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mReport merge results start:[0m
 [0m[[0m[0minfo[0m] [0m[0m7 file(s) merged using strategy 'First' (Run the task at debug level to see the details)[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -348,117 +348,241 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-util-ajax/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-webapp/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.sql.sources.DataSourceRegister[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.codehaus.mojo/animal-sniffer-annotations/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-client/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = mssql-jdbc-12.6.1.jre11.jar, jar org = com.microsoft.sqlserver, entry target = META-INF/services/java.sql.Driver[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.github.stephenc.jcip/jcip-annotations/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.guava/guava/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop.thirdparty/hadoop-shaded-protobuf_3_7/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/licenses-binary/LICENSE.protobuf.txt[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-simplekdc/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.org.codehaus.stax2.validation.XMLValidationSchemaFactory.relaxng[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.spark-project.spark/unused/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-tags_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.spark-project.spark/unused/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-token-provider-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.spark-project.spark/unused/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-mapreduce-client-core/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.org.codehaus.stax2.validation.XMLValidationSchemaFactory.w3c[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.httpcomponents/httpclient/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-crypto/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-client/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop.thirdparty/hadoop-shaded-guava/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-configuration2/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-server/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = slf4j-api-1.7.36.jar, jar org = org.slf4j, entry target = META-INF/maven/org.slf4j/slf4j-api/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.crypto.key.KeyProviderFactory[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-common/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/jersey-module-version[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = mssql-jdbc-12.6.1.jre11.jar, jar org = com.microsoft.sqlserver, entry target = META-INF/MSFTSIG.SF[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-http/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.httpcomponents/httpclient/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.curator/curator-client/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/jakarta.activation/jakarta.activation-api/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-collections/commons-collections/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-cli/commons-cli/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.curator/curator-framework/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-crypto/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.guava/listenablefuture/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-terminal-jansi/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty.websocket/websocket-api/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.thoughtworks.paranamer/paranamer/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-tags_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-tags_2.12/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.re2j/re2j/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-lang3/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-remote-ssh/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/net.minidev/accessors-smart/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-token-provider-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-token-provider-kafka-0-10_2.12/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-annotations/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-logging-1.1.3.jar, jar org = commons-logging, entry target = META-INF/maven/commons-logging/commons-logging/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-yarn-client/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.com.sun.jersey.spi.HeaderDelegateProvider[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/LICENSE.md[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-webapp/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerby-config/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.org.eclipse.jetty.http.HttpFieldPreEncoder[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-remote-telnet/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-identity/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/token-provider/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-yarn-client/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -539,241 +663,117 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-http/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-identity/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.curator/curator-client/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/token-provider/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-collections/commons-collections/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-yarn-client/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.curator/curator-framework/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-annotations/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.guava/listenablefuture/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-logging-1.1.3.jar, jar org = commons-logging, entry target = META-INF/maven/commons-logging/commons-logging/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-configuration2/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-yarn-client/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = slf4j-api-1.7.36.jar, jar org = org.slf4j, entry target = META-INF/maven/org.slf4j/slf4j-api/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.com.sun.jersey.spi.HeaderDelegateProvider[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-common/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/LICENSE.md[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = mssql-jdbc-12.6.1.jre11.jar, jar org = com.microsoft.sqlserver, entry target = META-INF/MSFTSIG.SF[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-webapp/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-util-ajax/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerby-config/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.sql.sources.DataSourceRegister[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.org.eclipse.jetty.http.HttpFieldPreEncoder[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-client/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-remote-telnet/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.github.stephenc.jcip/jcip-annotations/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.re2j/re2j/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop.thirdparty/hadoop-shaded-protobuf_3_7/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-lang3/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-simplekdc/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-remote-ssh/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.spark-project.spark/unused/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-tags_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.spark-project.spark/unused/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-token-provider-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.spark-project.spark/unused/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/net.minidev/accessors-smart/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.org.codehaus.stax2.validation.XMLValidationSchemaFactory.w3c[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-token-provider-kafka-0-10_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-token-provider-kafka-0-10_2.12/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-crypto/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-crypto/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-terminal-jansi/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty.websocket/websocket-api/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.thoughtworks.paranamer/paranamer/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-tags_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-tags_2.12/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-client/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop.thirdparty/hadoop-shaded-guava/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-server/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.crypto.key.KeyProviderFactory[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/jersey-module-version[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.httpcomponents/httpclient/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/jakarta.activation/jakarta.activation-api/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-cli/commons-cli/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/licenses-binary/LICENSE.protobuf.txt[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.org.codehaus.stax2.validation.XMLValidationSchemaFactory.relaxng[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.hadoop/hadoop-mapreduce-client-core/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.httpcomponents/httpclient/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-webapp/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.codehaus.mojo/animal-sniffer-annotations/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = mssql-jdbc-12.6.1.jre11.jar, jar org = com.microsoft.sqlserver, entry target = META-INF/services/java.sql.Driver[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.guava/guava/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1078,6 +1078,60 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-common/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-simplekdc/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/dnsjava/dnsjava/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.io.erasurecode.rawcoder.RawErasureCoderFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-pool2-2.11.1.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-pool2/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.security.SecurityInfo[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/NOTICE-binary[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-collections/commons-collections/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerby-util/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.jline/jline-terminal/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -1121,60 +1175,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/NOTICE-binary[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-collections/commons-collections/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerby-util/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-common/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-simplekdc/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/dnsjava/dnsjava/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.io.erasurecode.rawcoder.RawErasureCoderFactory[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-pool2-2.11.1.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-pool2/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.security.SecurityInfo[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1297,6 +1297,48 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.guava/failureaccess/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerby-asn1/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.curator/curator-framework/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.codehaus.woodstox/stax2-api/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-server/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-text/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jsr305-3.0.2.jar, jar org = com.google.code.findbugs, entry target = META-INF/maven/com.google.code.findbugs/jsr305/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-io/commons-io/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -1370,48 +1412,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty.websocket/websocket-client/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.codehaus.woodstox/stax2-api/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-server/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-text/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jsr305-3.0.2.jar, jar org = com.google.code.findbugs, entry target = META-INF/maven/com.google.code.findbugs/jsr305/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/com.google.guava/failureaccess/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerby-asn1/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.curator/curator-framework/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1620,14 +1620,14 @@
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-beanutils/commons-beanutils/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 30 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 482 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 542 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 78 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 46 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 6374 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 5902 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 68 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 69 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mBuilt: /home/azureuser/lol-streaming-clean/target/scala-2.12/lol-streaming-assembly-0.1.0.jar[0m
-[0m[[0m[0minfo[0m] [0m[0mJar hash: 1e694227a6eb15043fd9c17d545fe8e6f7ee398c[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 6c7dc4d5a42e9c422a0ca1a86dae766ace911c3d[0m
 [0m[[0m[0mdebug[0m] [0m[0mClose library jar references start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 3 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 4 ms[0m

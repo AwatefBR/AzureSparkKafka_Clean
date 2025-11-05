@@ -11,7 +11,7 @@ object SparkToAzureSql {
     val server   = sys.env.getOrElse("AZURE_SQL_SERVER", "lol-sql-server.database.windows.net")
     val db       = sys.env.getOrElse("AZURE_SQL_DB", "lol-database")
     val user     = sys.env.getOrElse("AZURE_SQL_USER", "dbadmin@lol-sql-server")
-    val password = sys.env.getOrElse("AZURE_SQL_PASSWORD", "CHANGE_ME")
+    val password = sys.env.getOrElse("AZURE_SQL_PASSWORD", "ESGI2025Spark!")
     s"jdbc:sqlserver://$server:1433;database=$db;user=$user;password=$password;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
   }
 
