@@ -103,12 +103,6 @@ services:
     depends_on:
       - spark-master
       - kafka
-    command: >
-      /opt/spark/bin/spark-submit
-      --master spark://spark-master:7077
-      --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1
-      --class consumer.SparkToAzureSql
-      /opt/app/app.jar
     environment:
       KAFKA_BOOTSTRAP: "kafka:9092"
       AZURE_SQL_SERVER: "${AZURE_SQL_SERVER}"

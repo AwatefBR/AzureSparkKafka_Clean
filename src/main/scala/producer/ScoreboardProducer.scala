@@ -29,71 +29,73 @@ object ScoreboardProducer {
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     val producer = new KafkaProducer[String, String](props)
 
-    val apiUrl =
-      "https://lol.fandom.com/api.php?action=runquery&query=ScoreboardPlayers&format=json"
+    val fields =
+      "OverviewPage,Name,Link,Champion,Kills,Deaths,Assists,Gold,CS,DamageToChampions," +
+      "Items,TeamKills,TeamGold,Team,TeamVs,Time,PlayerWin,DateTime_UTC,DST,Tournament," +
+      "Role,UniqueLine,UniqueLineVs,GameId,MatchId,GameTeamId,GameRoleId,GameRoleIdVs,StatsPage"
+
+    val where = "DateTime_UTC >= '2024-01-01'"  // ✅ YOU CAN CHANGE THIS DATE
+
+    val batchSize = 100
+    var offset = 0
 
     while (true) {
-      println("[Producer:Scoreboard] Fetching data…")
+      val url =
+        s"https://lol.fandom.com/api.php?action=cargoquery" +
+        s"&tables=ScoreboardPlayers" +
+        s"&fields=$fields" +
+        s"&where=$where" +
+        s"&limit=$batchSize" +
+        s"&offset=$offset" +
+        s"&format=json"
+
+      println(s"[Producer:Scoreboard] Fetching offset=$offset …")
 
       val response = requests.get(
-        apiUrl,
-        readTimeout = 30000,
-        headers = Map("User-Agent" -> "Mozilla/5.0") // Anti rate-limit
+        url,
+        headers = Map(
+          "User-Agent" -> "LeaguepediaDataCollector/1.0 (contact: youremail@example.com)" // REQUIRED
+        ),
+        readTimeout = 30000
       ).text()
 
       val json = ujson.read(response)
 
-      // ✅ Si rate-limit, json = {"error": ...}
       if (json.obj.contains("error")) {
-        println("[Producer:Scoreboard] ⏳ Rate Limit → Sleep 5s")
-        Thread.sleep(5000)
-      } else if (!json.obj.contains("cargoquery")) {
-        println("[Producer:Scoreboard] ⚠️ No cargoquery field → Sleep 5s")
-        Thread.sleep(5000)
-      } else {
-        val data = json("result")("results").arr
+        println("[Producer:Scoreboard] ⏳ Rate-limit → waiting 30s…")
+        Thread.sleep(30000)
+      }
+      else {
+        val batch = json("cargoquery").arr
 
-        data.foreach { entry =>
-          val f = entry("title")
-          val s = Scoreboard(
-            overviewpage = get(f, "OverviewPage"),
-            name = get(f, "Name"),
-            link = get(f, "Link"),
-            champion = get(f, "Champion"),
-            kills = get(f, "Kills"),
-            deaths = get(f, "Deaths"),
-            assists = get(f, "Assists"),
-            gold = get(f, "Gold"),
-            cs = get(f, "CS"),
-            damagetochampions = get(f, "DamageToChampions"),
-            items = get(f, "Items"),
-            teamkills = get(f, "TeamKills"),
-            teamgold = get(f, "TeamGold"),
-            team = get(f, "Team"),
-            teamvs = get(f, "TeamVs"),
-            time = get(f, "Time"),
-            playerwin = get(f, "PlayerWin"),
-            datetime_utc = get(f, "DateTime_UTC"),
-            dst = get(f, "DST"),
-            tournament = get(f, "Tournament"),
-            role = get(f, "Role"),
-            uniqueline = get(f, "UniqueLine"),
-            uniquelinevs = get(f, "UniqueLineVs"),
-            gameid = get(f, "GameId"),
-            matchid = get(f, "MatchId"),
-            gameteamid = get(f, "GameTeamId"),
-            gameroleid = get(f, "GameRoleId"),
-            gameroleidvs = get(f, "GameRoleIdVs"),
-            statspage = get(f, "StatsPage")
-          )
-
-          val value = write(s)
-          val key = s.gameid + ":" + s.name
-          producer.send(new ProducerRecord[String, String]("scoreboard", key, value))
+        if (batch.isEmpty) {
+          println("[Producer:Scoreboard] ✅ No more results → reset in 2 min")
+          offset = 0
+          Thread.sleep(120000)
         }
+        else {
+          batch.foreach { row =>
+            val f = row("title")
 
-        println("[Producer:Scoreboard] ✅ Sent batch. Sleeping 5s…")
-        Thread.sleep(5000)
+            val s = Scoreboard(
+              get(f,"OverviewPage"), get(f,"Name"), get(f,"Link"), get(f,"Champion"),
+              get(f,"Kills"), get(f,"Deaths"), get(f,"Assists"), get(f,"Gold"),
+              get(f,"CS"), get(f,"DamageToChampions"), get(f,"Items"), get(f,"TeamKills"),
+              get(f,"TeamGold"), get(f,"Team"), get(f,"TeamVs"), get(f,"Time"),
+              get(f,"PlayerWin"), get(f,"DateTime_UTC"), get(f,"DST"), get(f,"Tournament"),
+              get(f,"Role"), get(f,"UniqueLine"), get(f,"UniqueLineVs"), get(f,"GameId"),
+              get(f,"MatchId"), get(f,"GameTeamId"), get(f,"GameRoleId"), get(f,"GameRoleIdVs"),
+              get(f,"StatsPage")
+            )
+
+            val key = s.gameid + ":" + s.name
+            producer.send(new ProducerRecord[String, String]("scoreboard", key, write(s)))
+          }
+
+          println(s"[Producer:Scoreboard] ✅ Sent ${batch.size} rows")
+          offset += batchSize
+          Thread.sleep(10000)
+        }
       }
     }
   }
