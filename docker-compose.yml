@@ -2,24 +2,122 @@ version: '3.9'
 
 services:
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - spark-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_LOG_DIRS: "/var/lib/kafka/data"
+    ports:
+      - "29092:29092"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo > /dev/tcp/kafka/9092"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - spark-net
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9092"
+    ports:
+      - "8081:8080"
+    networks:
+      - spark-net
+
+  spark-master:
+    image: spark:3.5.1
+    container_name: spark-master
+    entrypoint: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master"]
+    environment:
+      SPARK_MASTER_HOST: spark-master
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    networks:
+      - spark-net
+
+  spark-worker:
+    image: spark:3.5.1
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    entrypoint: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077"]
+    networks:
+      - spark-net
+
   players-producer:
     build:
       context: .
       dockerfile: Dockerfile.producer
-    container_name: players-producer
     command: ["java", "-cp", "/app/app.jar", "producer.PlayersProducer"]
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP: "kafka:9092"
     restart: always
+    networks:
+      - spark-net
 
   scoreboard-producer:
     build:
       context: .
       dockerfile: Dockerfile.producer
-    container_name: scoreboard-producer
     command: ["java", "-cp", "/app/app.jar", "producer.ScoreboardProducer"]
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP: "kafka:9092"
     restart: always
+    networks:
+      - spark-net
 
   spark-consumer:
     build:
       context: .
       dockerfile: Dockerfile.spark
-    restart: always
+    depends_on:
+      - spark-master
+      - kafka
+    command: >
+      /opt/spark/bin/spark-submit
+      --master spark://spark-master:7077
+      --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1
+      --class consumer.SparkToAzureSql
+      /opt/app/app.jar
+    environment:
+      KAFKA_BOOTSTRAP: "kafka:9092"
+      AZURE_SQL_SERVER: "${AZURE_SQL_SERVER}"
+      AZURE_SQL_DB: "${AZURE_SQL_DB}"
+      AZURE_SQL_USER: "${AZURE_SQL_USER}"
+      AZURE_SQL_PASSWORD: "${AZURE_SQL_PASSWORD}"
+    networks:
+      - spark-net
+
+networks:
+  spark-net:
+    driver: bridge

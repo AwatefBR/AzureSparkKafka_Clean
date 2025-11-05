@@ -6,17 +6,16 @@ import org.apache.spark.sql.types._
 
 object SparkToAzureSql {
 
-  // Azure SQL JDBC configuration
-  val jdbcUrl =
-    "jdbc:sqlserver://lol-sql-server.database.windows.net:1433;" +
-      "database=lol-database;" +
-      "user=dbadmin@lol-sql-server;" +
-      "password=ESGI2025Spark!;" +
-      "encrypt=true;trustServerCertificate=false;" +
-      "hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+  // JDBC URL construite depuis les variables d'environnement
+  private def jdbcUrl: String = {
+    val server   = sys.env.getOrElse("AZURE_SQL_SERVER", "lol-sql-server.database.windows.net")
+    val db       = sys.env.getOrElse("AZURE_SQL_DB", "lol-database")
+    val user     = sys.env.getOrElse("AZURE_SQL_USER", "dbadmin@lol-sql-server")
+    val password = sys.env.getOrElse("AZURE_SQL_PASSWORD", "CHANGE_ME")
+    s"jdbc:sqlserver://$server:1433;database=$db;user=$user;password=$password;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+  }
 
-  // Write batch function
-  def writeBatch(df: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], tableName: String): Unit = {
+  private def writeBatch(df: org.apache.spark.sql.DataFrame, tableName: String): Unit = {
     df.write
       .format("jdbc")
       .option("url", jdbcUrl)
@@ -28,16 +27,18 @@ object SparkToAzureSql {
 
   def main(args: Array[String]): Unit = {
 
+    val masterUrl = sys.env.getOrElse("SPARK_MASTER", "spark://spark-master:7077")
+    val bootstrap = sys.env.getOrElse("KAFKA_BOOTSTRAP", "kafka:9092")
+
     val spark = SparkSession.builder()
       .appName("SparkToAzureSQL")
-      .master("spark://spark-master:7077")
+      .master(masterUrl)
       .getOrCreate()
 
     spark.sparkContext.setLogLevel("WARN")
-
     import spark.implicits._
 
-    // =============== PLAYERS STREAM ===============
+    // PLAYERS SCHEMA
     val playersSchema = new StructType()
       .add("id", StringType)
       .add("overviewpage", StringType)
@@ -65,8 +66,9 @@ object SparkToAzureSql {
 
     val playersStream = spark.readStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "kafka:9092")
+      .option("kafka.bootstrap.servers", bootstrap)
       .option("subscribe", "players")
+      .option("startingOffsets", "latest")
       .load()
 
     val playersParsed = playersStream
@@ -75,12 +77,17 @@ object SparkToAzureSql {
       .select("data.*")
 
     playersParsed.writeStream
-      .foreachBatch { (batch: org.apache.spark.sql.DataFrame, batchId: Long) => writeBatch(batch, "dbo.Players")}
+      .foreachBatch(new org.apache.spark.api.java.function.VoidFunction2[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], java.lang.Long] {
+        override def call(batch: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], batchId: java.lang.Long): Unit = {
+          writeBatch(batch, "dbo.Players")
+        }
+      })
       .outputMode("append")
+      .option("checkpointLocation", "/tmp/chk/players")
       .start()
 
 
-    // =============== SCOREBOARD STREAM ===============
+    // SCOREBOARD SCHEMA
     val scoreboardSchema = new StructType()
       .add("overviewpage", StringType)
       .add("name", StringType)
@@ -114,8 +121,9 @@ object SparkToAzureSql {
 
     val scoreboardStream = spark.readStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "kafka:9092")
+      .option("kafka.bootstrap.servers", bootstrap)
       .option("subscribe", "scoreboard")
+      .option("startingOffsets", "latest")
       .load()
 
     val scoreboardParsed = scoreboardStream
@@ -124,8 +132,13 @@ object SparkToAzureSql {
       .select("data.*")
 
     scoreboardParsed.writeStream
-      .foreachBatch { (batch: org.apache.spark.sql.DataFrame, batchId: Long) => writeBatch(batch, "dbo.Scoreboard")}
+      .foreachBatch(new org.apache.spark.api.java.function.VoidFunction2[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], java.lang.Long] {
+        override def call(batch: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], batchId: java.lang.Long): Unit = {
+          writeBatch(batch, "dbo.Scoreboard")
+        }
+      })
       .outputMode("append")
+      .option("checkpointLocation", "/tmp/chk/scoreboard")
       .start()
       .awaitTermination()
   }
