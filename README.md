@@ -38,22 +38,28 @@ Services deployés via Docker Compose :
 Azure SQL doit être accessible en public et la white-list IP configurée.
 
  Démarrer le pipeline
-1) Compiler & packager le consumer Spark
+
+Compiler & packager le consumer Spark:
+
 sbt clean assembly
 
 La commande génère le jar :
 target/scala-2.12/lol-streaming-assembly-0.1.0.jar
 
-2) (Re)build des images Docker
+(Re)build des images Docker:
+
 docker compose build
 
-3) Lancer le cluster + producers + consumer
+Lancer le cluster + producers + consumer:
+
 docker compose up -d
 
-4) Vérifier que tout fonctionne
+Vérifier que tout fonctionne:
+
 docker compose ps
 
-5) Consulter les logs (exemples)
+Consulter les logs (exemples):
+
 docker logs -f lol-streaming-clean-spark-consumer-1
 docker logs -f lol-streaming-clean-players-producer-1
 docker logs -f lol-streaming-clean-scoreboard-producer-1
