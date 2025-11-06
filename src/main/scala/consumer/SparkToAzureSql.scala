@@ -1,12 +1,12 @@
 package consumer
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 
 object SparkToAzureSql {
 
-  // JDBC URL construite depuis les variables d'environnement
+  // ---- JDBC URL ----
   private def jdbcUrl: String = {
     val server   = sys.env.getOrElse("AZURE_SQL_SERVER", "lol-sql-server.database.windows.net")
     val db       = sys.env.getOrElse("AZURE_SQL_DB", "lol-database")
@@ -15,8 +15,9 @@ object SparkToAzureSql {
     s"jdbc:sqlserver://$server:1433;database=$db;user=$user;password=$password;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
   }
 
-  private def writeBatch(df: org.apache.spark.sql.DataFrame, tableName: String): Unit = {
-    df.write
+  // ---- Fonction générique d'écriture ----
+  def writeToSql(tableName: String)(batch: DataFrame, batchId: Long): Unit = {
+    batch.write
       .format("jdbc")
       .option("url", jdbcUrl)
       .option("dbtable", tableName)
@@ -38,37 +39,38 @@ object SparkToAzureSql {
     spark.sparkContext.setLogLevel("WARN")
     import spark.implicits._
 
-    // PLAYERS SCHEMA
-    val playersSchema = new StructType()
-      .add("id", StringType)
-      .add("overviewpage", StringType)
-      .add("player", StringType)
-      .add("image", StringType)
-      .add("name", StringType)
-      .add("nativename", StringType)
-      .add("namealphabet", StringType)
-      .add("namefull", StringType)
-      .add("country", StringType)
-      .add("nationality", StringType)
-      .add("nationalityprimary", StringType)
-      .add("age", StringType)
-      .add("birthdate", StringType)
-      .add("deathdate", StringType)
-      .add("residencyformer", StringType)
-      .add("team", StringType)
-      .add("team2", StringType)
-      .add("currentteams", StringType)
-      .add("teamsystem", StringType)
-      .add("team2system", StringType)
-      .add("residency", StringType)
-      .add("role", StringType)
-      .add("favchamps", StringType)
+    // ---- SCHEMA PLAYERS ----
+    val playersSchema = StructType(Seq(
+      StructField("id", StringType),
+      StructField("overviewpage", StringType),
+      StructField("player", StringType),
+      StructField("image", StringType),
+      StructField("name", StringType),
+      StructField("nativename", StringType),
+      StructField("namealphabet", StringType),
+      StructField("namefull", StringType),
+      StructField("country", StringType),
+      StructField("nationality", StringType),
+      StructField("nationalityprimary", StringType),
+      StructField("age", StringType),
+      StructField("birthdate", StringType),
+      StructField("deathdate", StringType),
+      StructField("residencyformer", StringType),
+      StructField("team", StringType),
+      StructField("team2", StringType),
+      StructField("currentteams", StringType),
+      StructField("teamsystem", StringType),
+      StructField("team2system", StringType),
+      StructField("residency", StringType),
+      StructField("role", StringType),
+      StructField("favchamps", StringType)
+    ))
 
     val playersStream = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", bootstrap)
       .option("subscribe", "players")
-      .option("startingOffsets", "latest")
+      .option("startingOffsets", "earliest")
       .load()
 
     val playersParsed = playersStream
@@ -77,53 +79,47 @@ object SparkToAzureSql {
       .select("data.*")
 
     playersParsed.writeStream
-      .foreachBatch(new org.apache.spark.api.java.function.VoidFunction2[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], java.lang.Long] {
-        override def call(batch: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], batchId: java.lang.Long): Unit = {
-          writeBatch(batch, "dbo.Players")
-        }
-      })
+      .foreachBatch(writeToSql("dbo.Players") _)
       .outputMode("append")
       .option("checkpointLocation", "/tmp/chk/players")
       .start()
 
-
-    // SCOREBOARD SCHEMA
-    val scoreboardSchema = new StructType()
-      .add("overviewpage", StringType)
-      .add("name", StringType)
-      .add("link", StringType)
-      .add("champion", StringType)
-      .add("kills", StringType)
-      .add("deaths", StringType)
-      .add("assists", StringType)
-      .add("gold", StringType)
-      .add("cs", StringType)
-      .add("damagetochampions", StringType)
-      .add("items", StringType)
-      .add("teamkills", StringType)
-      .add("teamgold", StringType)
-      .add("team", StringType)
-      .add("teamvs", StringType)
-      .add("time", StringType)
-      .add("playerwin", StringType)
-      .add("datetime_utc", StringType)
-      .add("dst", StringType)
-      .add("tournament", StringType)
-      .add("role", StringType)
-      .add("uniqueline", StringType)
-      .add("uniquelinevs", StringType)
-      .add("gameid", StringType)
-      .add("matchid", StringType)
-      .add("gameteamid", StringType)
-      .add("gameroleid", StringType)
-      .add("gameroleidvs", StringType)
-      .add("statspage", StringType)
+    // ---- SCHEMA SCOREBOARD ----
+    val scoreboardSchema = StructType(Seq(
+      StructField("overviewpage", StringType),
+      StructField("name", StringType),
+      StructField("link", StringType),
+      StructField("champion", StringType),
+      StructField("kills", StringType),
+      StructField("deaths", StringType),
+      StructField("assists", StringType),
+      StructField("gold", StringType),
+      StructField("cs", StringType),
+      StructField("damagetochampions", StringType),
+      StructField("items", StringType),
+      StructField("teamkills", StringType),
+      StructField("teamgold", StringType),
+      StructField("team", StringType),
+      StructField("teamvs", StringType),
+      StructField("time", StringType),
+      StructField("playerwin", StringType),
+      StructField("datetime_utc", StringType),
+      StructField("dst", StringType),
+      StructField("tournament", StringType),
+      StructField("role", StringType),
+      StructField("gameid", StringType),
+      StructField("matchid", StringType),
+      StructField("gameteamid", StringType),
+      StructField("gameroleid", StringType),
+      StructField("gameroleidvs", StringType),
+      StructField("statspage", StringType)
+    ))
 
     val scoreboardStream = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", bootstrap)
       .option("subscribe", "scoreboard")
-      .option("startingOffsets", "latest")
+      .option("startingOffsets", "earliest")
       .load()
 
     val scoreboardParsed = scoreboardStream
@@ -132,11 +128,7 @@ object SparkToAzureSql {
       .select("data.*")
 
     scoreboardParsed.writeStream
-      .foreachBatch(new org.apache.spark.api.java.function.VoidFunction2[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], java.lang.Long] {
-        override def call(batch: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], batchId: java.lang.Long): Unit = {
-          writeBatch(batch, "dbo.Scoreboard")
-        }
-      })
+      .foreachBatch(writeToSql("dbo.Scoreboard") _)
       .outputMode("append")
       .option("checkpointLocation", "/tmp/chk/scoreboard")
       .start()
