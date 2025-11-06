@@ -11,8 +11,8 @@ object ScoreboardProducer {
     deaths: String, assists: String, gold: String, cs: String, damagetochampions: String,
     items: String, teamkills: String, teamgold: String, team: String, teamvs: String,
     time: String, playerwin: String, datetime_utc: String, dst: String, tournament: String,
-    role: String, uniqueline: String, uniquelinevs: String, gameid: String, matchid: String,
-    gameteamid: String, gameroleid: String, gameroleidvs: String, statspage: String
+    role: String, gameid: String, matchid: String, gameteamid: String,
+    gameroleid: String, statspage: String
   )
   implicit val rwScoreboard: ReadWriter[Scoreboard] = macroRW
 
@@ -27,24 +27,27 @@ object ScoreboardProducer {
     props.put("bootstrap.servers", bootstrap)
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+
     val producer = new KafkaProducer[String, String](props)
 
     val fields =
-      "OverviewPage,Name,Link,Champion,Kills,Deaths,Assists,Gold,CS,DamageToChampions," +
-      "Items,TeamKills,TeamGold,Team,TeamVs,Time,PlayerWin,DateTime_UTC,DST,Tournament," +
-      "Role,UniqueLine,UniqueLineVs,GameId,MatchId,GameTeamId,GameRoleId,GameRoleIdVs,StatsPage"
+      "SP.OverviewPage,SP.Name,SP.Link,SP.Champion,SP.Kills,SP.Deaths,SP.Assists,SP.Gold,SP.CS,SP.DamageToChampions," +
+      "SP.Items,SP.TeamKills,SP.TeamGold,SP.Team,SP.TeamVs,SP.Time,SP.PlayerWin,SP.DateTime_UTC,SP.DST,SP.Tournament," +
+      "SP.Role,SP.GameId,SP.MatchId,SP.GameTeamId,SP.GameRoleId,SP.StatsPage"
 
-    val where = "DateTime_UTC >= '2024-01-01'"  // ✅ YOU CAN CHANGE THIS DATE
+    val where = "_DATE(SP.DateTime_UTC) >= \"2024-01-01\""
+    val whereEncoded = java.net.URLEncoder.encode(where, "UTF-8")
 
     val batchSize = 100
     var offset = 0
 
     while (true) {
+
       val url =
         s"https://lol.fandom.com/api.php?action=cargoquery" +
-        s"&tables=ScoreboardPlayers" +
+        s"&tables=ScoreboardPlayers=SP" +
         s"&fields=$fields" +
-        s"&where=$where" +
+        s"&where=$whereEncoded" +
         s"&limit=$batchSize" +
         s"&offset=$offset" +
         s"&format=json"
@@ -53,27 +56,24 @@ object ScoreboardProducer {
 
       val response = requests.get(
         url,
-        headers = Map(
-          "User-Agent" -> "LeaguepediaDataCollector/1.0 (contact: youremail@example.com)" // REQUIRED
-        ),
+        headers = Map("User-Agent" -> "LeaguepediaSparkCollector/1.0"),
         readTimeout = 30000
       ).text()
 
       val json = ujson.read(response)
 
-      if (json.obj.contains("error")) {
-        println("[Producer:Scoreboard] ⏳ Rate-limit → waiting 30s…")
+      if (!json.obj.contains("cargoquery")) {
+        println("[Producer:Scoreboard] ⏳ Rate-limit or invalid response → waiting 30s…")
         Thread.sleep(30000)
       }
       else {
         val batch = json("cargoquery").arr
 
         if (batch.isEmpty) {
-          println("[Producer:Scoreboard] ✅ No more results → reset in 2 min")
+          println("[Producer:Scoreboard] ✅ Finished → restarting in 2 minutes")
           offset = 0
           Thread.sleep(120000)
-        }
-        else {
+        } else {
           batch.foreach { row =>
             val f = row("title")
 
@@ -83,9 +83,8 @@ object ScoreboardProducer {
               get(f,"CS"), get(f,"DamageToChampions"), get(f,"Items"), get(f,"TeamKills"),
               get(f,"TeamGold"), get(f,"Team"), get(f,"TeamVs"), get(f,"Time"),
               get(f,"PlayerWin"), get(f,"DateTime_UTC"), get(f,"DST"), get(f,"Tournament"),
-              get(f,"Role"), get(f,"UniqueLine"), get(f,"UniqueLineVs"), get(f,"GameId"),
-              get(f,"MatchId"), get(f,"GameTeamId"), get(f,"GameRoleId"), get(f,"GameRoleIdVs"),
-              get(f,"StatsPage")
+              get(f,"Role"), get(f,"GameId"), get(f,"MatchId"), get(f,"GameTeamId"),
+              get(f,"GameRoleId"), get(f,"StatsPage")
             )
 
             val key = s.gameid + ":" + s.name
