@@ -2,6 +2,7 @@ package producer
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import java.util.Properties
+import java.sql.DriverManager
 import upickle.default._
 
 object PlayersProducer {
@@ -16,94 +17,59 @@ object PlayersProducer {
   )
   implicit val rwPlayer: ReadWriter[Player] = macroRW
 
-  private def get(f: ujson.Value, key: String): String =
-    f.obj.get(key).flatMap(_.strOpt).getOrElse("")
-
   def main(args: Array[String]): Unit = {
 
+    // ----------- ENV VARS -----------
     val bootstrap = sys.env.getOrElse("KAFKA_BOOTSTRAP", "kafka:9092")
+    val pgHost = sys.env("POSTGRES_HOST")
+    val pgDb = sys.env("POSTGRES_DB")
+    val pgUser = sys.env("POSTGRES_USER")
+    val pgPass = sys.env("POSTGRES_PASSWORD")
 
+    // ----------- KAFKA PROD -----------
     val props = new Properties()
     props.put("bootstrap.servers", bootstrap)
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     val producer = new KafkaProducer[String, String](props)
 
-    val fieldsRaw =
-      "ID,OverviewPage,Player,Image,Name,NativeName,NameAlphabet,NameFull," +
-      "Country,Nationality,NationalityPrimary,Age,Birthdate,DeathDate,ResidencyFormer," +
-      "Team,Team2,CurrentTeams,TeamSystem,Team2System,Residency,Role,FavChamps"
+    // ----------- POSTGRES JDBC -----------
+    val url = s"jdbc:postgresql://$pgHost:5432/$pgDb"
+    Class.forName("org.postgresql.Driver")  
+    val conn = DriverManager.getConnection(url, pgUser, pgPass)
 
-    val fieldsParam = java.net.URLEncoder.encode(fieldsRaw, "UTF-8")
+    println(s"[Producer:Players]  Connected to Postgres at $pgHost/$pgDb")
 
-    val batchSize = 500
-    var offset = 0
+    val query =
+      """
+        SELECT *
+        FROM players;
+      """
 
-    var keepGoing = true
+    val rs = conn.createStatement().executeQuery(query)
 
-    while (keepGoing) {
+    var count = 0
 
-      val url =
-        s"https://lol.fandom.com/api.php?action=cargoquery" +
-        s"&tables=Players" +
-        s"&fields=$fieldsParam" +
-        s"&limit=$batchSize" +
-        s"&offset=$offset" +
-        s"&format=json"
+    while (rs.next()) {
+      val p = Player(
+        rs.getString("id"), rs.getString("overviewpage"), rs.getString("player"),
+        rs.getString("image"), rs.getString("name"), rs.getString("nativename"),
+        rs.getString("namealphabet"), rs.getString("namefull"), rs.getString("country"),
+        rs.getString("nationality"), rs.getString("nationalityprimary"),
+        rs.getString("age"), rs.getString("birthdate"), rs.getString("deathdate"),
+        rs.getString("residencyformer"), rs.getString("team"), rs.getString("team2"),
+        rs.getString("currentteams"), rs.getString("teamsystem"),
+        rs.getString("team2system"), rs.getString("residency"),
+        rs.getString("role"), rs.getString("favchamps")
+      )
 
-      println(s"[Producer:Players] Fetching offset=$offset …")
-
-      val text =
-        try requests.get(
-          url,
-          headers = Map("User-Agent" -> "LeaguepediaDataCollector/1.0 (contact: youremail@example.com)"),
-          readTimeout = 30000
-        ).text()
-        catch {
-          case e: requests.RequestFailedException =>
-            println(s"[Producer:Players] HTTP ${e.response.statusCode} → waiting 30s")
-            Thread.sleep(30000)
-            // retry same offset
-            null
-        }
-
-      if (text == null) {
-        // retry with same offset
-      } else {
-        val json = ujson.read(text)
-
-        if (!json.obj.contains("cargoquery")) {
-          println("[Producer:Players] ⏳ Rate-limited → waiting 30s…")
-          Thread.sleep(30000)
-        } else {
-          val batch = json("cargoquery").arr
-
-          if (batch.isEmpty) {
-            println("✅ Finished all ~19,956 players. Stopping.")
-            keepGoing = false
-          } else {
-            batch.foreach { row =>
-              val f = row("title")
-              val p = Player(
-                get(f,"ID"), get(f,"OverviewPage"), get(f,"Player"), get(f,"Image"),
-                get(f,"Name"), get(f,"NativeName"), get(f,"NameAlphabet"), get(f,"NameFull"),
-                get(f,"Country"), get(f,"Nationality"), get(f,"NationalityPrimary"),
-                get(f,"Age"), get(f,"Birthdate"), get(f,"DeathDate"), get(f,"ResidencyFormer"),
-                get(f,"Team"), get(f,"Team2"), get(f,"CurrentTeams"), get(f,"TeamSystem"),
-                get(f,"Team2System"), get(f,"Residency"), get(f,"Role"), get(f,"FavChamps")
-              )
-              producer.send(new ProducerRecord[String, String]("players", p.id, write(p)))
-            }
-
-            println(s"[Producer:Players] ✅ Sent ${batch.size} rows")
-            offset += batchSize
-            Thread.sleep(2000) // small cooldown
-          }
-        }
-      }
+      producer.send(new ProducerRecord[String, String]("players", p.id, write(p)))
+      count += 1
     }
 
-    println("🚀 All players inserted, closing producer.")
+    println(s"[Producer:Players] Finished → $count rows sent to Kafka topic `players`")
+
     producer.close()
+    conn.close()
   }
 }
