@@ -36,7 +36,7 @@ services:
       - spark-net
 
   postgres:
-    image: postgres:14
+    image: postgres:15
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -84,7 +84,7 @@ services:
   players-producer:
     build:
       context: .
-      dockerfile: Dockerfile.producer
+      dockerfile: Dockerfile.players
     command: ["java", "-cp", "/app/app.jar", "producer.PlayersProducer"]
     depends_on:
       kafka:
@@ -103,8 +103,8 @@ services:
   scoreboard-producer:
     build:
       context: .
-      dockerfile: Dockerfile.producer
-    command: ["java", "-cp", "/app/app.jar", "producer.ScoreboardsProducer"]
+      dockerfile: Dockerfile.scoreboard 
+    command: ["java", "-cp", "/app/app.jar", "producer.ScoreboardProducer"]
     depends_on:
       kafka:
         condition: service_healthy

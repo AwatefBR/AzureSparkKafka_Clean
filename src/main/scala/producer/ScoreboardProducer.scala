@@ -43,7 +43,7 @@ object ScoreboardProducer {
     val query =
       """
         SELECT *
-        FROM scoreboard;
+        FROM scorboardplayers;
       """
 
     val rs = conn.createStatement().executeQuery(query)
