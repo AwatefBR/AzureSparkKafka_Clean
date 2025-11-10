@@ -2,6 +2,7 @@ package producer
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import java.util.Properties
+import java.sql.DriverManager
 import upickle.default._
 
 object ScoreboardProducer {
@@ -16,86 +17,60 @@ object ScoreboardProducer {
   )
   implicit val rwScoreboard: ReadWriter[Scoreboard] = macroRW
 
-  private def get(f: ujson.Value, key: String): String =
-    f.obj.get(key).flatMap(_.strOpt).getOrElse("")
-
   def main(args: Array[String]): Unit = {
 
+    // ----------- ENV VARS -----------
     val bootstrap = sys.env.getOrElse("KAFKA_BOOTSTRAP", "kafka:9092")
+    val pgHost = sys.env("POSTGRES_HOST")
+    val pgDb = sys.env("POSTGRES_DB")
+    val pgUser = sys.env("POSTGRES_USER")
+    val pgPass = sys.env("POSTGRES_PASSWORD")
 
+    // ----------- KAFKA PROD -----------
     val props = new Properties()
     props.put("bootstrap.servers", bootstrap)
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-
     val producer = new KafkaProducer[String, String](props)
 
-    val fields =
-      "SP.OverviewPage,SP.Name,SP.Link,SP.Champion,SP.Kills,SP.Deaths,SP.Assists,SP.Gold,SP.CS,SP.DamageToChampions," +
-      "SP.Items,SP.TeamKills,SP.TeamGold,SP.Team,SP.TeamVs,SP.Time,SP.PlayerWin,SP.DateTime_UTC,SP.DST,SP.Tournament," +
-      "SP.Role,SP.GameId,SP.MatchId,SP.GameTeamId,SP.GameRoleId,SP.StatsPage"
+    // ----------- POSTGRES JDBC -----------
+    val url = s"jdbc:postgresql://$pgHost:5432/$pgDb"
+    Class.forName("org.postgresql.Driver")
+    val conn = DriverManager.getConnection(url, pgUser, pgPass)
 
-    val where = "_DATE(SP.DateTime_UTC) >= \"2024-01-01\""
-    val whereEncoded = java.net.URLEncoder.encode(where, "UTF-8")
+    println(s"[Producer:Scoreboard]  Connected to Postgres at $pgHost/$pgDb")
 
-    val batchSize = 100
-    var offset = 0
+    val query =
+      """
+        SELECT *
+        FROM scoreboard;
+      """
 
-    while (true) {
+    val rs = conn.createStatement().executeQuery(query)
 
-      val url =
-        s"https://lol.fandom.com/api.php?action=cargoquery" +
-        s"&tables=ScoreboardPlayers=SP" +
-        s"&fields=$fields" +
-        s"&where=$whereEncoded" +
-        s"&limit=$batchSize" +
-        s"&offset=$offset" +
-        s"&format=json"
+    var count = 0
 
-      println(s"[Producer:Scoreboard] Fetching offset=$offset …")
+    while (rs.next()) {
+      val s = Scoreboard(
+        rs.getString("overviewpage"), rs.getString("name"), rs.getString("link"),
+        rs.getString("champion"), rs.getString("kills"), rs.getString("deaths"),
+        rs.getString("assists"), rs.getString("gold"), rs.getString("cs"),
+        rs.getString("damagetochampions"), rs.getString("items"), rs.getString("teamkills"),
+        rs.getString("teamgold"), rs.getString("team"), rs.getString("teamvs"),
+        rs.getString("time"), rs.getString("playerwin"), rs.getString("datetime_utc"),
+        rs.getString("dst"), rs.getString("tournament"), rs.getString("role"),
+        rs.getString("gameid"), rs.getString("matchid"), rs.getString("gameteamid"),
+        rs.getString("gameroleid"), rs.getString("statspage")
+      )
 
-      val response = requests.get(
-        url,
-        headers = Map("User-Agent" -> "LeaguepediaSparkCollector/1.0"),
-        readTimeout = 30000
-      ).text()
-
-      val json = ujson.read(response)
-
-      if (!json.obj.contains("cargoquery")) {
-        println("[Producer:Scoreboard] ⏳ Rate-limit or invalid response → waiting 30s…")
-        Thread.sleep(30000)
-      }
-      else {
-        val batch = json("cargoquery").arr
-
-        if (batch.isEmpty) {
-          println("[Producer:Scoreboard] ✅ Finished → restarting in 2 minutes")
-          offset = 0
-          Thread.sleep(120000)
-        } else {
-          batch.foreach { row =>
-            val f = row("title")
-
-            val s = Scoreboard(
-              get(f,"OverviewPage"), get(f,"Name"), get(f,"Link"), get(f,"Champion"),
-              get(f,"Kills"), get(f,"Deaths"), get(f,"Assists"), get(f,"Gold"),
-              get(f,"CS"), get(f,"DamageToChampions"), get(f,"Items"), get(f,"TeamKills"),
-              get(f,"TeamGold"), get(f,"Team"), get(f,"TeamVs"), get(f,"Time"),
-              get(f,"PlayerWin"), get(f,"DateTime_UTC"), get(f,"DST"), get(f,"Tournament"),
-              get(f,"Role"), get(f,"GameId"), get(f,"MatchId"), get(f,"GameTeamId"),
-              get(f,"GameRoleId"), get(f,"StatsPage")
-            )
-
-            val key = s.gameid + ":" + s.name
-            producer.send(new ProducerRecord[String, String]("scoreboard", key, write(s)))
-          }
-
-          println(s"[Producer:Scoreboard] ✅ Sent ${batch.size} rows")
-          offset += batchSize
-          Thread.sleep(10000)
-        }
-      }
+      val key = s.gameid + ":" + s.name
+      producer.send(new ProducerRecord[String, String]("scoreboard", key, write(s)))
+      count += 1
     }
+
+    println(s"[Producer:Scoreboard]  Finished → $count rows sent to Kafka topic `scoreboard`")
+
+    producer.close()
+    conn.close()
   }
 }
