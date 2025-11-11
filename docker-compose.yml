@@ -25,12 +25,14 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: "/var/lib/kafka/data"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
     ports:
       - "29092:29092"
     healthcheck:
       test: ["CMD", "bash", "-c", "echo > /dev/tcp/kafka/9092"]
-      interval: 5s
-      timeout: 3s
+      interval: 10s
+      timeout: 5s
       retries: 10
     networks:
       - spark-net
@@ -43,7 +45,13 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lol"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
+      - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql:ro
       - postgres-data:/var/lib/postgresql/data
     networks:
       - spark-net
@@ -90,7 +98,7 @@ services:
       kafka:
         condition: service_healthy
     environment:
-      KAFKA_BOOTSTRAP: "kafka:9092"
+      KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -106,10 +114,14 @@ services:
       dockerfile: Dockerfile.scoreboard 
     command: ["java", "-cp", "/app/app.jar", "producer.ScoreboardProducer"]
     depends_on:
+      spark-master:
+        condition: service_started 
       kafka:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
-      KAFKA_BOOTSTRAP: "kafka:9092"
+      KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -123,15 +135,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.spark
+    user: root
     depends_on:
-      - spark-master
-      - kafka
+      spark-master:
+        condition: service_started 
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy 
+    env_file:
+      - .env
     environment:
-      KAFKA_BOOTSTRAP: "kafka:9092"
+      KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
       AZURE_SQL_SERVER: "${AZURE_SQL_SERVER}"
       AZURE_SQL_DB: "${AZURE_SQL_DB}"
       AZURE_SQL_USER: "${AZURE_SQL_USER}"
       AZURE_SQL_PASSWORD: "${AZURE_SQL_PASSWORD}"
+    volumes:
+      - spark-checkpoints:/tmp/checkpoints
     networks:
       - spark-net
 
@@ -141,3 +162,4 @@ networks:
 
 volumes:
   postgres-data:
+  spark-checkpoints:

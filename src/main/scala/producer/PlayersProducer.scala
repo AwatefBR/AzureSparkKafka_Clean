@@ -35,10 +35,10 @@ object PlayersProducer {
 
     // ----------- POSTGRES JDBC -----------
     val url = s"jdbc:postgresql://$pgHost:5432/$pgDb"
-    Class.forName("org.postgresql.Driver")  
+    Class.forName("org.postgresql.Driver")
     val conn = DriverManager.getConnection(url, pgUser, pgPass)
 
-    println(s"[Producer:Players]  Connected to Postgres at $pgHost/$pgDb")
+    println(s"[Producer:Players] Connected to Postgres at $pgHost/$pgDb")
 
     val query =
       """
@@ -49,7 +49,6 @@ object PlayersProducer {
     val rs = conn.createStatement().executeQuery(query)
 
     var count = 0
-
     while (rs.next()) {
       val p = Player(
         rs.getString("id"), rs.getString("overviewpage"), rs.getString("player"),
@@ -67,7 +66,13 @@ object PlayersProducer {
       count += 1
     }
 
-    println(s"[Producer:Players] Finished → $count rows sent to Kafka topic `players`")
+    if (count == 0) {
+      println("[Producer:Players] No data found in table `players`. Waiting gracefully (no crash).")
+      // On attend un peu pour éviter le restart immédiat du conteneur
+      Thread.sleep(30000)
+    } else {
+      println(s"[Producer:Players] Finished → $count rows sent to Kafka topic `players`")
+    }
 
     producer.close()
     conn.close()
