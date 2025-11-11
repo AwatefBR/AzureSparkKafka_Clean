@@ -18,5 +18,15 @@ RUN curl -L -o /opt/spark/jars/spark-sql-kafka-0-10_2.12-3.5.1.jar \
 
 USER 185
 
-ENTRYPOINT ["/opt/spark/bin/spark-submit"]
-CMD ["--master", "spark://spark-master:7077","--deploy-mode", "client","--class", "consumer.SparkToAzureSql","/opt/app/app.jar"]
+ENTRYPOINT ["/bin/bash", "-lc"]
+CMD ["shopt -s dotglob nullglob; rm -rf /tmp/checkpoints/*; \
+      /opt/spark/bin/spark-submit \
+      --master spark://spark-master:7077 \
+      --deploy-mode client \
+      --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} \
+      --conf spark.executorEnv.AZURE_SQL_SERVER=${AZURE_SQL_SERVER} \
+      --conf spark.executorEnv.AZURE_SQL_DB=${AZURE_SQL_DB} \
+      --conf spark.executorEnv.AZURE_SQL_USER=${AZURE_SQL_USER} \
+      --conf spark.executorEnv.AZURE_SQL_PASSWORD=${AZURE_SQL_PASSWORD} \
+      --class consumer.SparkToAzureSql \
+      /opt/app/app.jar"]

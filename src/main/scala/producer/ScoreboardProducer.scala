@@ -8,7 +8,7 @@ import upickle.default._
 object ScoreboardProducer {
 
   case class Scoreboard(
-    overviewpage: String, name: String, link: String, champion: String, kills: String,
+    id:Int, overviewpage: String, name: String, link: String, champion: String, kills: String,
     deaths: String, assists: String, gold: String, cs: String, damagetochampions: String,
     items: String, teamkills: String, teamgold: String, team: String, teamvs: String,
     time: String, playerwin: String, datetime_utc: String, dst: String, tournament: String,
@@ -43,7 +43,7 @@ object ScoreboardProducer {
     val query =
       """
         SELECT *
-        FROM scorboardplayers;
+        FROM scoreboardplayers;
       """
 
     val rs = conn.createStatement().executeQuery(query)
@@ -52,6 +52,7 @@ object ScoreboardProducer {
 
     while (rs.next()) {
       val s = Scoreboard(
+        rs.getInt("id"),
         rs.getString("overviewpage"), rs.getString("name"), rs.getString("link"),
         rs.getString("champion"), rs.getString("kills"), rs.getString("deaths"),
         rs.getString("assists"), rs.getString("gold"), rs.getString("cs"),
@@ -63,7 +64,7 @@ object ScoreboardProducer {
         rs.getString("gameroleid"), rs.getString("statspage")
       )
 
-      val key = s.gameid + ":" + s.name
+      val key = s.id + s.id.toString
       producer.send(new ProducerRecord[String, String]("scoreboard", key, write(s)))
       count += 1
     }

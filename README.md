@@ -67,3 +67,31 @@ docker logs -f lol-streaming-clean-scoreboard-producer-1
  Arrêter l'ensemble
 docker compose down
 
+Durant le run:
+Si l'espace disk est saturé
+Check : df -h (si 100%) --> supprimer les conteneurs arrétés, images inutilisées, volumes non attachés --> docker system prune -a --volumes
+
+
+Tout relancer (base propre) :
+
+sbt clean assembly
+docker compose build --no-cache
+docker compose up -d
+
+
+verifier que les topics existent :
+
+docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
+  --bootstrap-server kafka:9092 --list
+
+creer les topics manuellement:
+
+docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
+  --create --topic players \
+  --bootstrap-server kafka:9092 \
+  --partitions 1 --replication-factor 1
+
+docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
+  --create --topic scoreboard \
+  --bootstrap-server kafka:9092 \
+  --partitions 1 --replication-factor 1
