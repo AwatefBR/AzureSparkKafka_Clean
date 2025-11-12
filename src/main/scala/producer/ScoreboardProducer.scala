@@ -11,6 +11,13 @@
 
     def run(): Unit = {
 
+      val masterUrl = sys.env.getOrElse("SPARK_MASTER", "spark://spark-master:7077")
+      val bootstrap = sys.env.getOrElse("KAFKA_BOOTSTRAP", "kafka:9092")
+      val spark = SparkSession.builder()
+      .appName("SparkScoreboard")
+      .master(masterUrl)
+      .getOrCreate()
+
       // ----- Connexions centralisées -----
       val conn = Config.pgConnection
       val producer = Config.kafkaProducer
