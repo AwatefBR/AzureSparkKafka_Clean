@@ -73,10 +73,20 @@ Check : df -h (si 100%) --> supprimer les conteneurs arrétés, images inutilis�
 
 
 Tout relancer (base propre) :
-
+docker compose down -v --remove-orphans
+sleep 5
+docker system prune -af
+sleep 5
+docker volume prune -f
+sleep 5
+docker network prune -f
+sleep 5
 sbt clean assembly
+sleep 5
 docker compose build --no-cache
+sleep 5
 docker compose up -d
+sleep 5
 
 
 verifier que les topics existent :
@@ -95,3 +105,35 @@ docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
   --create --topic scoreboard \
   --bootstrap-server kafka:9092 \
   --partitions 1 --replication-factor 1
+
+
+Effacer les ckp defectueux
+
+sudo rm -rf /tmp/checkpoints/scoreboard
+sudo rm -rf /tmp/checkpoints/players
+
+docker compose down
+sudo rm -rf /tmp/checkpoints /tmp/spark*
+docker system prune -a --volumes -f
+sudo systemctl restart docker
+
+tout supprimer y compris les volumes persistants
+docker-compose down -v
+
+
+SELECT *
+FROM dbo.Scoreboard
+ORDER BY CAST(id AS INT)
+LIMIT 100 
+
+java.io.IOException: No space left on device
+🧩 Interprétation
+Spark (ou ton container Docker) n’a plus d’espace disque disponible pour :
+
+écrire ses fichiers temporaires (/tmp, /tmp/blockmgr-...)
+
+stocker les checkpoints Spark
+
+ou éventuellement gérer les shuffle / cache intermédiaires.
+
+C’est une erreur du système de fichiers, pas une erreur applicative Spark.
