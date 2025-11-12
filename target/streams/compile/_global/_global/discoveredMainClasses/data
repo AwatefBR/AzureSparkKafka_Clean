@@ -1,1 +1,1 @@
-["consumer.SparkToAzureSql","producer.PlayersProducer","producer.ScoreboardProducer"]
+["producer.MainApp"]

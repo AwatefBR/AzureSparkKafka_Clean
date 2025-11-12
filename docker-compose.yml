@@ -112,7 +112,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.scoreboard 
-    command: ["java", "-cp", "/app/app.jar", "producer.ScoreboardProducer"]
+    command: ["java", "-cp", "/app/app.jar",  "producer.MainApp", "scoreboard"]
     depends_on:
       spark-master:
         condition: service_started 

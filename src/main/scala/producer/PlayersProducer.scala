@@ -1,44 +1,25 @@
+// pas de classe dans object sparer package : class specifique ave function predefinie. ici pas necessaire (à definir fichier a part).
+// utilisation key vault pour credentials conn 
+// spark core pour les produceurs 
+// boucle while --> tempo (simulation tps reel)
 package producer
+import org.apache.kafka.clients.producer.ProducerRecord
 
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import common.Config
 import java.util.Properties
 import java.sql.DriverManager
 import upickle.default._
 
 object PlayersProducer {
 
-  case class Player(
-    id: String, overviewpage: String, player: String, image: String, name: String,
-    nativename: String, namealphabet: String, namefull: String, country: String,
-    nationality: String, nationalityprimary: String, age: String, birthdate: String,
-    deathdate: String, residencyformer: String, team: String, team2: String,
-    currentteams: String, teamsystem: String, team2system: String, residency: String,
-    role: String, favchamps: String
-  )
+
   implicit val rwPlayer: ReadWriter[Player] = macroRW
 
-  def main(args: Array[String]): Unit = {
+  def run(): Unit = {
+    val conn = Config.pgConnection
+    val producer = Config.kafkaProducer
 
-    // ----------- ENV VARS -----------
-    val bootstrap = sys.env.getOrElse("KAFKA_BOOTSTRAP", "kafka:9092")
-    val pgHost = sys.env("POSTGRES_HOST")
-    val pgDb = sys.env("POSTGRES_DB")
-    val pgUser = sys.env("POSTGRES_USER")
-    val pgPass = sys.env("POSTGRES_PASSWORD")
-
-    // ----------- KAFKA PROD -----------
-    val props = new Properties()
-    props.put("bootstrap.servers", bootstrap)
-    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    val producer = new KafkaProducer[String, String](props)
-
-    // ----------- POSTGRES JDBC -----------
-    val url = s"jdbc:postgresql://$pgHost:5432/$pgDb"
-    Class.forName("org.postgresql.Driver")
-    val conn = DriverManager.getConnection(url, pgUser, pgPass)
-
-    println(s"[Producer:Players] Connected to Postgres at $pgHost/$pgDb")
+println(s"[Producer:Players] Connected to Postgres at ${Config.pgHost}/${Config.pgDb}")
 
     val query =
       """
@@ -61,7 +42,7 @@ object PlayersProducer {
         rs.getString("team2system"), rs.getString("residency"),
         rs.getString("role"), rs.getString("favchamps")
       )
-
+      println(s"[Producer:Players] Producing player id=${p.id}, name=${p.name}")
       producer.send(new ProducerRecord[String, String]("players", p.id, write(p)))
       count += 1
     }
@@ -76,5 +57,7 @@ object PlayersProducer {
 
     producer.close()
     conn.close()
+    
   }
+  
 }

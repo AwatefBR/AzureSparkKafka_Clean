@@ -151,7 +151,7 @@ object SparkToAzureSql {
   // ============================================================
   // 🚀 Main : lancement des streams Kafka → Azure SQL
   // ============================================================
-  def main(args: Array[String]): Unit = {
+  def run(): Unit = {
 
     println("✅ SparkToAzureSql lancé !")
 
