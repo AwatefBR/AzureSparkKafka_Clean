@@ -1,64 +1,82 @@
 package producer
 import common.Config
-
+import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.functions._
 
 object MainApp {
 
   def main(args: Array[String]): Unit = {
     require(
-        args.nonEmpty, "Usage: MainApp [players|scoreboard|all]",
-        args.head.toLowerCase.inSet("players", "scoreboard", "all")
+      args.nonEmpty, "Usage: MainApp [players|scoreboard]"
+    )
+    require(
+      Set("players", "scoreboard").contains(args.head.toLowerCase),
+      s"Invalid mode: ${args.head}. Usage: MainApp [players|scoreboard]"
     )
 
     val spark = SparkSession.builder()
       .appName("ProducerMainApp")
       .getOrCreate()
 
-val mode = args.head.toLowerCase
+    val mode = args.head.toLowerCase
 
-val tableName = 
-    if (mode == "player")
-        "tableNameForPlayers"
-    else
-        "tableNameForScores"
+    // ---- CHOIX TABLE ----
+    val tableName =
+      if (mode == "players")
+        "players"
+      else
+        "scoreboardplayers"
 
-    val data: DataFrame = 
-        spark.read.format("jdbc")
-        .option("url", "jdbc:postgresql://host/database")
+    // ---- LECTURE DE LA TABLE (statique) ----
+    val data: DataFrame =
+      spark.read.format("jdbc")
+        .option("url", Config.pgUrl)
         .option("dbtable", tableName)
-        .option("user", "username")
-        .option("password", "password")
+        .option("user", Config.pgUser)
+        .option("password", Config.pgPass)
         .load()
 
-        // todo un truc ici
+    // -----------------------------
+    //   STREAMING SIMULÉ ICI
+    // -----------------------------
 
-        data.write
+    // → On ajoute un index à chaque ligne
+    val dfIndexed = data.withColumn("rowId", monotonically_increasing_id())
+
+    val totalRows = dfIndexed.count()
+    val batchSize = 5
+    var cursor = 0L
+
+    println(s"[SimStream] Starting streaming simulation on table=$tableName")
+    println(s"[SimStream] Total rows: $totalRows → sending $batchSize rows every 2 seconds")
+
+    // → boucle streaming simulée
+    while (cursor < totalRows) {
+
+      // batch = lignes rowId ∈ [cursor ; cursor+batchSize[
+      val batch = dfIndexed.filter(
+        col("rowId") >= cursor &&
+        col("rowId") < cursor + batchSize
+      )
+
+      val forKafka = batch.selectExpr(
+        "CAST(rowId AS STRING) AS key",
+        "to_json(struct(*)) AS value"
+      )
+
+      // envoi dans kafka
+      forKafka.write
         .format("kafka")
-        .option("kafka.bootstrap.servers", "host1:port1,host2:port2")
+        .option("kafka.bootstrap.servers", Config.bootstrap)
+        .option("topic", tableName) // players → topic players, scoreboardplayers → topic scoreboardplayers
         .save()
 
-    args(0).toLowerCase match {
-      case "players" =>
-        println("Running PlayersProducer...")
-        PlayersProducer.run()
+      println(s"[SimStream] Sent rows $cursor to ${cursor + batchSize - 1}")
 
-      case "scoreboard" =>
-        println("Running ScoreboardProducer...")
-        ScoreboardProducer.run()
-
-      case "all" =>
-        println("Running both producers in parallel...")
-        val threads = Seq(
-          new Thread(() => PlayersProducer.run()),
-          new Thread(() => ScoreboardProducer.run())
-        )
-        threads.foreach(_.start())
-        threads.foreach(_.join())
-        println("All producers finished successfully.")
-
-      case other =>
-        println(s"Unknown producer: $other")
-        println("Usage: MainApp [players|scoreboard|all]")
+      cursor += batchSize
+      Thread.sleep(2000) // ← 2 secondes entre chaque batch
     }
+
+    println(s"[SimStream] Completed streaming for table=$tableName")
   }
 }

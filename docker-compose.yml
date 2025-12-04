@@ -51,7 +51,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql:ro
+      - .backup_postgres_20251017_030748:/docker-entrypoint-initdb.d/dump.sql:ro
       - postgres-data:/var/lib/postgresql/data
     networks:
       - spark-net
@@ -112,7 +112,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.scoreboard 
-    command: ["java", "-cp", "/app/app.jar",  "producer.MainApp", "scoreboard"]
+    command: ["sh", "-c", "docker exec spark-master /opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.POSTGRES_HOST=${POSTGRES_HOST} --conf spark.executorEnv.POSTGRES_PORT=${POSTGRES_PORT} --conf spark.executorEnv.POSTGRES_DB=${POSTGRES_DB} --conf spark.executorEnv.POSTGRES_USER=${POSTGRES_USER} --conf spark.executorEnv.POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --class producer.MainApp /tmp/app.jar scoreboard || /opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.POSTGRES_HOST=${POSTGRES_HOST} --conf spark.executorEnv.POSTGRES_PORT=${POSTGRES_PORT} --conf spark.executorEnv.POSTGRES_DB=${POSTGRES_DB} --conf spark.executorEnv.POSTGRES_USER=${POSTGRES_USER} --conf spark.executorEnv.POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --class producer.MainApp /app/app.jar scoreboard"]
     depends_on:
       spark-master:
         condition: service_started 
@@ -127,6 +127,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./target/scala-2.12/lol-streaming-assembly-0.1.0.jar:/app/app.jar:ro
     restart: always
     networks:
       - spark-net
