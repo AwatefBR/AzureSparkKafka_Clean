@@ -297,4 +297,8 @@ object SparkToAzureSql {
     // ============================================================
     spark.streams.awaitAnyTermination()
   }
+
+  def main(args: Array[String]): Unit = {
+    run()
+  }
 }

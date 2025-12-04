@@ -16,6 +16,7 @@ object MainApp {
 
     val spark = SparkSession.builder()
       .appName("ProducerMainApp")
+      .master("local[*]") 
       .getOrCreate()
 
     val mode = args.head.toLowerCase
@@ -31,6 +32,7 @@ object MainApp {
     val data: DataFrame =
       spark.read.format("jdbc")
         .option("url", Config.pgUrl)
+        .option("driver", "org.postgresql.Driver")
         .option("dbtable", tableName)
         .option("user", Config.pgUser)
         .option("password", Config.pgPass)

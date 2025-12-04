@@ -39,19 +39,19 @@ object Config {
 
   val pgUrl: String = s"jdbc:postgresql://$pgHost:$pgPort/$pgDb"
 
-  val pgConnection: Connection = {
+  lazy val pgConnection: Connection = {
     Class.forName("org.postgresql.Driver")
     DriverManager.getConnection(pgUrl, pgUser, pgPass)
   }
 
-  //  Azure SQL Configuration
+  //  Azure SQL Configuration (lazy - only initialized when needed)
   // ============================================================
-  val azureServer: String   = getEnv("AZURE_SQL_SERVER")
-  val azureDb: String       = getEnv("AZURE_SQL_DB")
-  val azureUser: String     = getEnv("AZURE_SQL_USER")
-  val azurePassword: String = getEnv("AZURE_SQL_PASSWORD")
+  lazy val azureServer: String   = getEnv("AZURE_SQL_SERVER")
+  lazy val azureDb: String       = getEnv("AZURE_SQL_DB")
+  lazy val azureUser: String     = getEnv("AZURE_SQL_USER")
+  lazy val azurePassword: String = getEnv("AZURE_SQL_PASSWORD")
 
-  val azureJdbcUrl: String =
+  lazy val azureJdbcUrl: String =
     s"jdbc:sqlserver://$azureServer:1433;" +
       s"database=$azureDb;" +
       s"user=$azureUser;" +
@@ -61,7 +61,7 @@ object Config {
       s"hostNameInCertificate=*.database.windows.net;" +
       s"loginTimeout=30;"
 
-  val azureConnection: Connection = {
+  lazy val azureConnection: Connection = {
     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
     DriverManager.getConnection(azureJdbcUrl)
   }

@@ -51,7 +51,6 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - .backup_postgres_20251017_030748:/docker-entrypoint-initdb.d/dump.sql:ro
       - postgres-data:/var/lib/postgresql/data
     networks:
       - spark-net
@@ -89,14 +88,14 @@ services:
     networks:
       - spark-net
 
-  main-producer:
+  producer-players:
     build:
       context: .
-      dockerfile: Dockerfile.main
-    entrypoint: ["java", "-jar", "/app/app.jar", "scoreboard"]
-
+      dockerfile: Dockerfile.main   
     depends_on:
       kafka:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
     environment:
       KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
@@ -105,15 +104,38 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    command: ["players"]
+    restart: always
+    networks:
+      - spark-net
+
+  producer-scoreboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.main
+    depends_on:
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    command: ["scoreboard"]
     restart: always
     networks:
       - spark-net
 
 
+
   spark-consumer:
     build:
       context: .
-      dockerfile: Dockerfile.spark
+      dockerfile: Dockerfile.consumer
     user: root
     depends_on:
       spark-master:

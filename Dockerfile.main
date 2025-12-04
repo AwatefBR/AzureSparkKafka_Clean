@@ -1,9 +1,10 @@
-FROM eclipse-temurin:11-jre
+FROM spark:3.5.1
 
-WORKDIR /app
+USER root
+WORKDIR /opt/app
 
-COPY target/scala-2.12/lol-streaming-assembly-0.1.0.jar /app/app.jar
+COPY target/scala-2.12/lol-streaming-assembly-0.1.0.jar /opt/app/app.jar
 
-# Pour passer PRODUCER_MODE
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["/opt/spark/bin/spark-submit", "--class", "producer.MainApp", "--master", "local[*]", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.postgresql:postgresql:42.7.3", "/opt/app/app.jar"]
+
 CMD []
