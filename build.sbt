@@ -26,7 +26,7 @@ libraryDependencies ++= Seq(
 )
 
 // Permet d'avoir plusieurs classes main dans le même jar
-assembly / mainClass := None
+assembly / mainClass := Some("producer.MainApp");
 
 // Gestion des conflits de META-INF
 assemblyMergeStrategy := {

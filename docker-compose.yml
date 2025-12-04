@@ -89,11 +89,12 @@ services:
     networks:
       - spark-net
 
-  players-producer:
+  main-producer:
     build:
       context: .
-      dockerfile: Dockerfile.players
-    command: ["java", "-cp", "/app/app.jar", "producer.PlayersProducer"]
+      dockerfile: Dockerfile.main
+    entrypoint: ["java", "-jar", "/app/app.jar", "scoreboard"]
+
     depends_on:
       kafka:
         condition: service_healthy
@@ -108,30 +109,6 @@ services:
     networks:
       - spark-net
 
-  scoreboard-producer:
-    build:
-      context: .
-      dockerfile: Dockerfile.scoreboard 
-    command: ["sh", "-c", "docker exec spark-master /opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.POSTGRES_HOST=${POSTGRES_HOST} --conf spark.executorEnv.POSTGRES_PORT=${POSTGRES_PORT} --conf spark.executorEnv.POSTGRES_DB=${POSTGRES_DB} --conf spark.executorEnv.POSTGRES_USER=${POSTGRES_USER} --conf spark.executorEnv.POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --class producer.MainApp /tmp/app.jar scoreboard || /opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.POSTGRES_HOST=${POSTGRES_HOST} --conf spark.executorEnv.POSTGRES_PORT=${POSTGRES_PORT} --conf spark.executorEnv.POSTGRES_DB=${POSTGRES_DB} --conf spark.executorEnv.POSTGRES_USER=${POSTGRES_USER} --conf spark.executorEnv.POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --class producer.MainApp /app/app.jar scoreboard"]
-    depends_on:
-      spark-master:
-        condition: service_started 
-      kafka:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
-    environment:
-      KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - ./target/scala-2.12/lol-streaming-assembly-0.1.0.jar:/app/app.jar:ro
-    restart: always
-    networks:
-      - spark-net
 
   spark-consumer:
     build:

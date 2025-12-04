@@ -1,1 +1,1 @@
-["producer.MainApp"]
+["common.TestAzure","producer.MainApp"]
