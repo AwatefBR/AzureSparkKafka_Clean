@@ -39,46 +39,78 @@ object MainApp {
         .load()
 
     // -----------------------------
-    //   STREAMING SIMULÉ ICI
+    //   STREAMING CONTINU SIMULÉ
     // -----------------------------
-
-    // → On ajoute un index à chaque ligne
-    val dfIndexed = data.withColumn("rowId", monotonically_increasing_id())
-
-    val totalRows = dfIndexed.count()
+    
     val batchSize = 5
-    var cursor = 0L
+    val intervalSeconds = 2
+    
+    println(s"[SimStream] Starting continuous streaming simulation on table=$tableName")
+    println(s"[SimStream] Sending $batchSize rows every $intervalSeconds seconds in a continuous loop")
+    println(s"[SimStream] Press Ctrl+C to stop")
 
-    println(s"[SimStream] Starting streaming simulation on table=$tableName")
-    println(s"[SimStream] Total rows: $totalRows → sending $batchSize rows every 2 seconds")
+    // → Boucle infinie pour streaming continu
+    var cycle = 0
+    while (true) {
+      try {
+        // Relire la table à chaque cycle (pour simuler de nouvelles données)
+        val data: DataFrame = spark.read.format("jdbc")
+          .option("url", Config.pgUrl)
+          .option("driver", "org.postgresql.Driver")
+          .option("dbtable", tableName)
+          .option("user", Config.pgUser)
+          .option("password", Config.pgPass)
+          .load()
 
-    // → boucle streaming simulée
-    while (cursor < totalRows) {
+        val dfIndexed = data.withColumn("rowId", monotonically_increasing_id())
+        val totalRows = dfIndexed.count()
+        
+        if (totalRows == 0) {
+          println(s"[SimStream] Cycle $cycle: No data in table $tableName, waiting...")
+          Thread.sleep(intervalSeconds * 1000)
+          cycle += 1
+        } else {
+          // Envoyer les données par batch
+          var cursor = 0L
+          while (cursor < totalRows) {
+            val batch = dfIndexed.filter(
+              col("rowId") >= cursor &&
+              col("rowId") < cursor + batchSize
+            )
 
-      // batch = lignes rowId ∈ [cursor ; cursor+batchSize[
-      val batch = dfIndexed.filter(
-        col("rowId") >= cursor &&
-        col("rowId") < cursor + batchSize
-      )
+            if (!batch.isEmpty) {
+              val forKafka = batch.selectExpr(
+                "CAST(rowId AS STRING) AS key",
+                "to_json(struct(*)) AS value"
+              )
 
-      val forKafka = batch.selectExpr(
-        "CAST(rowId AS STRING) AS key",
-        "to_json(struct(*)) AS value"
-      )
+              // envoi dans kafka
+              forKafka.write
+                .format("kafka")
+                .option("kafka.bootstrap.servers", Config.bootstrap)
+                .option("topic", tableName)
+                .save()
 
-      // envoi dans kafka
-      forKafka.write
-        .format("kafka")
-        .option("kafka.bootstrap.servers", Config.bootstrap)
-        .option("topic", tableName) // players → topic players, scoreboardplayers → topic scoreboardplayers
-        .save()
+              println(s"[SimStream] Cycle $cycle: Sent rows $cursor to ${cursor + batchSize - 1} (total: $totalRows)")
+            }
 
-      println(s"[SimStream] Sent rows $cursor to ${cursor + batchSize - 1}")
-
-      cursor += batchSize
-      Thread.sleep(2000) // ← 2 secondes entre chaque batch
+            cursor += batchSize
+            Thread.sleep(intervalSeconds * 1000)
+          }
+          
+          println(s"[SimStream] Cycle $cycle completed: Processed $totalRows rows. Restarting cycle...")
+          cycle += 1
+          
+          // Pause entre les cycles pour éviter de surcharger
+          Thread.sleep(5000)
+        }
+      } catch {
+        case e: Exception =>
+          println(s"[SimStream] ERROR in cycle $cycle: ${e.getMessage}")
+          e.printStackTrace()
+          println(s"[SimStream] Retrying in 10 seconds...")
+          Thread.sleep(10000)
+      }
     }
-
-    println(s"[SimStream] Completed streaming for table=$tableName")
   }
 }

@@ -10,7 +10,7 @@ postgres-data/
 spark-checkpoints/
 .env
 *.env
-
+postgres-init/*
 # IDE
 .idea/
 .vscode/
