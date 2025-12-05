@@ -27,7 +27,9 @@ class Scoreboard(
   val matchid: String,
   val gameteamid: String,
   val gameroleid: String,
-  val statspage: String
+  val statspage: String,
+  val uniqueline: String,
+  val uniquelinevs: String
 )
 
 object Scoreboard {
@@ -58,7 +60,9 @@ object Scoreboard {
     matchid: String,
     gameteamid: String,
     gameroleid: String,
-    statspage: String
+    statspage: String,
+    uniqueline: String,
+    uniquelinevs: String
   ): Scoreboard =
     new Scoreboard(
       id,
@@ -87,6 +91,8 @@ object Scoreboard {
       matchid,
       gameteamid,
       gameroleid,
-      statspage
+      statspage,
+      uniqueline,
+      uniquelinevs
     )
 }
