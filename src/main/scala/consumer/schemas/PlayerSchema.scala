@@ -18,8 +18,6 @@ object PlayerSchema {
     StructField("nationality", StringType, nullable = true),
     StructField("nationalityprimary", StringType, nullable = true),
     StructField("age", StringType, nullable = true),
-    StructField("birthdate", StringType, nullable = true),
-    StructField("deathdate", StringType, nullable = true),
     StructField("residencyformer", StringType, nullable = true),
     StructField("team", StringType, nullable = true),
     StructField("team2", StringType, nullable = true),
@@ -29,6 +27,8 @@ object PlayerSchema {
     StructField("residency", StringType, nullable = true),
     StructField("role", StringType, nullable = true),
     StructField("favchamps", StringType, nullable = true),
+    StructField("birthdate", StringType, nullable = true),
+    StructField("deathdate", StringType, nullable = true),
     StructField("rowId", LongType, nullable = true) // Ajouté par le producer
   ))
 }
