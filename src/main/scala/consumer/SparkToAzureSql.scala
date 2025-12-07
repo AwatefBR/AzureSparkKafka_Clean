@@ -47,16 +47,19 @@ object SparkToAzureSql {
     
     val (topic, schema, tableName, checkpointPath) = mode.toLowerCase match {
       case "players" => 
-        ("players", PlayerSchema.schema, "dbo.Players", "/tmp/checkpoints/players")
+        ("players", PlayerSchema.schema, "dbo.Players", "/checkpoints/players")
       case "scoreboard" | _ => 
-        ("scoreboardplayers", ScoreboardSchema.schema, "dbo.Scoreboard", "/tmp/checkpoints/scoreboardplayers")
+        ("scoreboardplayers", ScoreboardSchema.schema, "dbo.Scoreboard", "/checkpoints/scoreboardplayers")
     }
 
     println(s"[Consumer] 🚀 Démarrage du consumer sur topic: $topic → table: $tableName")
 
     val spark = SparkSession.builder()
-      .appName("KafkaToAzureSQL")
+      .appName(s"KafkaToAzureSQL-$mode")
       .master(sys.env.getOrElse("SPARK_MASTER", "spark://spark-master:7077"))
+      .config("spark.executor.cores", "2")
+      .config("spark.executor.memory", "1g")
+      .config("spark.cores.max", "4")  // Limiter à 4 cores par application
       .getOrCreate()
 
     spark.sparkContext.setLogLevel("WARN")
@@ -79,7 +82,9 @@ object SparkToAzureSql {
       .select(from_json(col("json"), schema).as("data"))
       .select("data.*")
       .filter(col("id").isNotNull) // Filtrer les lignes invalides
-      .dropDuplicates("rowId") // Déduplication après parsing (rowId est unique et ajouté par le producer)
+      .dropDuplicates(
+        if (mode.toLowerCase == "scoreboard") "uniqueline" else "id"
+      ) // Déduplication : uniqueline pour scoreboard, id pour players
 
  println("\n[DEBUG] 🧩 Schema après parsing JSON :")
     parsed.printSchema()

@@ -6,7 +6,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     networks:
-      - spark-net
+      - producer-net
+      - consumer-net
 
   kafka:
     image: confluentinc/cp-kafka:7.3.2
@@ -33,7 +34,8 @@ services:
       timeout: 2s
       retries: 3
     networks:
-      - spark-net
+      - producer-net
+      - consumer-net
 
   postgres:
     image: postgres:15
@@ -52,7 +54,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./postgres-init:/docker-entrypoint-initdb.d
     networks:
-      - spark-net
+      - producer-net
 
   pgadmin:
     image: dpage/pgadmin4
@@ -64,7 +66,7 @@ services:
     ports:
       - "8081:80"
     networks:
-      - spark-net
+      - producer-net
 
   spark-master:
     image: spark:3.5.1
@@ -76,16 +78,20 @@ services:
       - "7077:7077"
       - "8080:8080"
     networks:
-      - spark-net
+      - consumer-net
 
   spark-worker:
     image: spark:3.5.1
     container_name: spark-worker
+    user: root
     depends_on:
       - spark-master
-    entrypoint: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077"]
+    entrypoint: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "--cores", "12", "--memory", "6g", "spark://spark-master:7077"]
+    volumes:
+      - spark-checkpoints-players:/checkpoints/players
+      - spark-checkpoints-scoreboardplayers:/checkpoints/scoreboardplayers
     networks:
-      - spark-net
+      - consumer-net
 
   producer-players:
     build:
@@ -106,7 +112,7 @@ services:
     command: ["players"]
     restart: always
     networks:
-      - spark-net
+      - producer-net
 
   producer-scoreboard:
     build:
@@ -127,7 +133,7 @@ services:
     command: ["scoreboard"]
     restart: always
     networks:
-      - spark-net
+      - producer-net
 
 
 
@@ -153,9 +159,9 @@ services:
       AZURE_SQL_PASSWORD: "${AZURE_SQL_PASSWORD}"
       CONSUMER_MODE: "players"
     volumes:
-      - spark-checkpoints-players:/tmp/checkpoints
+      - spark-checkpoints-players:/checkpoints
     networks:
-      - spark-net
+      - consumer-net
     restart: always
 
   spark-consumer-scoreboard:
@@ -180,13 +186,15 @@ services:
       AZURE_SQL_PASSWORD: "${AZURE_SQL_PASSWORD}"
       CONSUMER_MODE: "scoreboard"
     volumes:
-      - spark-checkpoints-scoreboardplayers:/tmp/checkpoints
+      - spark-checkpoints-scoreboardplayers:/checkpoints
     networks:
-      - spark-net
+      - consumer-net
     restart: always
 
 networks:
-  spark-net:
+  producer-net:
+    driver: bridge
+  consumer-net:
     driver: bridge
 
 volumes:
