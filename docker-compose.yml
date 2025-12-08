@@ -110,7 +110,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     command: ["players"]
-    restart: always
     networks:
       - producer-net
 
@@ -131,7 +130,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     command: ["scoreboard"]
-    restart: always
     networks:
       - producer-net
 

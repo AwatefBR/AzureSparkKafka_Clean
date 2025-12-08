@@ -61,8 +61,8 @@ object MainApp {
     //   STREAMING CONTINU SIMULÉ AVEC CHECKPOINT
     // -----------------------------
     
-    val batchSize = 5
-    val intervalSeconds = 2
+    val batchSize = 1000
+    val intervalSeconds = 1
     
     // Récupérer le dernier offset Kafka pour reprendre où on s'est arrêté
     val lastOffset = getLastOffset(tableName, Config.bootstrap)
@@ -89,66 +89,48 @@ object MainApp {
     
     println(s"[SimStream] Loaded $totalRows rows from $tableName")
     
-    // → Boucle infinie pour streaming continu
-    var cycle = 0
-    while (true) {
-      try {
-        if (totalRows == 0) {
-          println(s"[SimStream] No data in table $tableName, exiting...")
-          return
-        }
-        
-        // Calculer le point de départ : soit depuis le checkpoint, soit depuis 0
-        val startCursor = if (lastOffset > 0 && cycle == 0) {
-          // Au premier cycle après redémarrage, reprendre depuis le checkpoint
-          val checkpointRow = math.min(lastOffset, totalRows)
-          println(s"[Checkpoint] 🔄 Reprise depuis la ligne $checkpointRow (offset Kafka: $lastOffset)")
-          checkpointRow
-        } else {
-          // Cycles suivants : repartir de 0 pour re-traiter toute la table
-          0L
-        }
-        
-        // Envoyer les données par batch
-        var cursor = startCursor
-        while (cursor < totalRows) {
-          val batch = dfIndexed.filter(
-            col("rowId") >= cursor &&
-            col("rowId") < cursor + batchSize
-          )
-
-          if (!batch.isEmpty) {
-            val forKafka = batch.selectExpr(
-              "CAST(rowId AS STRING) AS key",
-              "to_json(struct(*)) AS value"
-            )
-
-            // envoi dans kafka
-            forKafka.write
-              .format("kafka")
-              .option("kafka.bootstrap.servers", Config.bootstrap)
-              .option("topic", tableName)
-              .save()
-
-            println(s"[SimStream] Cycle $cycle: Sent rows $cursor to ${cursor + batchSize - 1} (total: $totalRows)")
-          }
-
-          cursor += batchSize
-          Thread.sleep(intervalSeconds * 1000)
-        }
-        
-        println(s"[SimStream] Cycle $cycle completed: Processed $totalRows rows. Restarting cycle...")
-        cycle += 1
-        
-        // Pause entre les cycles pour éviter de surcharger
-        Thread.sleep(5000)
-      } catch {
-        case e: Exception =>
-          println(s"[SimStream] ERROR in cycle $cycle: ${e.getMessage}")
-          e.printStackTrace()
-          println(s"[SimStream] Retrying in 10 seconds...")
-          Thread.sleep(10000)
-      }
+    if (totalRows == 0) {
+      println(s"[SimStream] No data in table $tableName, exiting...")
+      return
     }
+    
+    // Calculer le point de départ : reprendre depuis le checkpoint si disponible
+    val startCursor = if (lastOffset > 0) {
+      val checkpointRow = math.min(lastOffset, totalRows)
+      println(s"[Checkpoint] 🔄 Reprise depuis la ligne $checkpointRow (offset Kafka: $lastOffset)")
+      checkpointRow
+    } else {
+      0L
+    }
+    
+    // Envoyer les données par batch (un seul cycle complet)
+    var cursor = startCursor
+    while (cursor < totalRows) {
+      val batch = dfIndexed.filter(
+        col("rowId") >= cursor &&
+        col("rowId") < cursor + batchSize
+      )
+
+      if (!batch.isEmpty) {
+        val forKafka = batch.selectExpr(
+          "CAST(rowId AS STRING) AS key",
+          "to_json(struct(*)) AS value"
+        )
+
+        // Envoi dans Kafka
+        forKafka.write
+          .format("kafka")
+          .option("kafka.bootstrap.servers", Config.bootstrap)
+          .option("topic", tableName)
+          .save()
+
+        println(s"[SimStream] Sent rows $cursor to ${cursor + batchSize - 1} (total: $totalRows)")
+      }
+
+      cursor += batchSize
+      Thread.sleep(intervalSeconds * 1000)
+    }
+    
+    println(s"[SimStream] ✅ Completed: All $totalRows rows sent to Kafka topic '$tableName'")
   }
 }
