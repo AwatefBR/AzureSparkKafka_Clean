@@ -81,9 +81,8 @@ object SparkToAzureSql {
       .selectExpr("CAST(value AS STRING) AS json")
       .select(from_json(col("json"), schema).as("data"))
       .select("data.*")
-      .filter(col("id").isNotNull) // Filtrer les lignes invalides
       .dropDuplicates(
-        if (mode.toLowerCase == "scoreboard") "uniqueline" else "id"
+        if (mode.toLowerCase == "scoreboard") "uniqueline" else "overviewpage"
       ) // Déduplication : uniqueline pour scoreboard, id pour players
 
  println("\n[DEBUG] 🧩 Schema après parsing JSON :")
