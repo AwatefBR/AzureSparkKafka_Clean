@@ -4,6 +4,7 @@ import common.Config
 import consumer.schemas.{PlayerSchema, ScoreboardSchema}
 import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.Trigger
 
 object SparkToAzureSql {
 
@@ -39,10 +40,7 @@ object SparkToAzureSql {
   def main(args: Array[String]): Unit = {
     val bootstrap = Config.bootstrap
     
-    // Déterminer le topic et le schéma à utiliser
-    // Priorité: argument > variable d'environnement > défaut (scoreboard)
     val mode = args.headOption
-      .orElse(sys.env.get("CONSUMER_MODE"))
       .getOrElse("scoreboard")
     
     val (topic, schema, tableName, checkpointPath) = mode.toLowerCase match {
@@ -59,22 +57,16 @@ object SparkToAzureSql {
       .master(sys.env.getOrElse("SPARK_MASTER", "spark://spark-master:7077"))
       .config("spark.executor.cores", "2")
       .config("spark.executor.memory", "1g")
-      .config("spark.cores.max", "4")  // Limiter à 4 cores par application
+      .config("spark.cores.max", "4") 
       .getOrCreate()
-
-    spark.sparkContext.setLogLevel("WARN")
-
     // Lecture du stream Kafka
     val stream = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", bootstrap)
       .option("subscribe", topic)
       .option("startingOffsets", "earliest")
-      .option("failOnDataLoss", "false")
+      .option("maxOffsetsPerTrigger", "1000")  // Maximum 1000 messages par batch
       .load()
-
-      println("\n[DEBUG] 📥 Schema Kafka brut :")
-    stream.printSchema()
 
     // Parsing JSON avec le schéma approprié
     val parsed = stream
@@ -84,15 +76,10 @@ object SparkToAzureSql {
       .dropDuplicates(
         if (mode.toLowerCase == "scoreboard") "uniqueline" else "overviewpage"
       ) // Déduplication : uniqueline pour scoreboard, id pour players
-
- println("\n[DEBUG] 🧩 Schema après parsing JSON :")
-    parsed.printSchema()
-
-    // Spark gère automatiquement la création des répertoires de checkpoint
-    println(s"[Consumer] Checkpoint location: $checkpointPath")
-
+      
     // Écriture dans Azure SQL
     val query = parsed.writeStream
+      .trigger(Trigger.ProcessingTime("1 seconds"))
       .foreachBatch((batchDF: DataFrame, batchId: Long) => writeToAzure(tableName)(batchDF, batchId))
       .outputMode("append")
       .option("checkpointLocation", checkpointPath)

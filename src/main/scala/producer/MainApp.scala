@@ -40,7 +40,7 @@ object MainApp {
     )
     require(
       Set("players", "scoreboard").contains(args.head.toLowerCase),
-      s"Invalid mode: ${args.head}. Usage: MainApp [players|scoreboard]"
+      s"Mode invalide: ${args.head}. Usage: MainApp [players|scoreboard]"
     )
 
     val spark = SparkSession.builder()
@@ -57,10 +57,6 @@ object MainApp {
       else
         "scoreboardplayers"
 
-    // -----------------------------
-    //   STREAMING CONTINU SIMULÉ AVEC CHECKPOINT
-    // -----------------------------
-    
     val batchSize = 1000
     val intervalSeconds = 1
     
@@ -68,13 +64,10 @@ object MainApp {
     val lastOffset = getLastOffset(tableName, Config.bootstrap)
     println(s"[Checkpoint] 📍 Dernier offset Kafka pour topic $tableName: $lastOffset")
     
-    println(s"[SimStream] Starting continuous streaming simulation on table=$tableName")
-    println(s"[SimStream] Sending $batchSize rows every $intervalSeconds seconds in a continuous loop")
+    println(s"[SimStream] Envoi de $batchSize lignes toutes les $intervalSeconds secondes en boucle continue")
     if (lastOffset > 0) {
       println(s"[SimStream] ⚠️  Reprise depuis l'offset $lastOffset (${lastOffset} lignes déjà envoyées)")
     }
-    println(s"[SimStream] Press Ctrl+C to stop")
-
     // Charger la table UNE SEULE FOIS au démarrage
     val data: DataFrame = spark.read.format("jdbc")
       .option("url", Config.pgUrl)
@@ -87,10 +80,11 @@ object MainApp {
     val dfIndexed = data.withColumn("rowId", monotonically_increasing_id()).cache()
     val totalRows = dfIndexed.count()
     
-    println(s"[SimStream] Loaded $totalRows rows from $tableName")
+    println(s"[SimStream] $totalRows lignes chargées depuis $tableName")
     
-    if (totalRows == 0) {
-      println(s"[SimStream] No data in table $tableName, exiting...")
+    if (totalRows == 0) {    val dfIndexed = data.withColumn("rowId", monotonically_increasing_id()).cache()
+
+      println(s"[SimStream] Aucune donnée dans la table $tableName, arrêt...")
       return
     }
     
@@ -124,13 +118,13 @@ object MainApp {
           .option("topic", tableName)
           .save()
 
-        println(s"[SimStream] Sent rows $cursor to ${cursor + batchSize - 1} (total: $totalRows)")
+        println(s"[SimStream] Lignes $cursor à ${cursor + batchSize - 1} envoyées (total: $totalRows)")
       }
 
       cursor += batchSize
       Thread.sleep(intervalSeconds * 1000)
     }
     
-    println(s"[SimStream] ✅ Completed: All $totalRows rows sent to Kafka topic '$tableName'")
+    println(s"[SimStream] ✅ Terminé : Toutes les $totalRows lignes ont été envoyées au topic Kafka '$tableName'")
   }
 }
