@@ -1,10 +1,42 @@
 name: Deploy to lol-vm
 
 on:
-  workflow_dispatch:  
+  workflow_dispatch:   # Déclenchement manuel uniquement
 
 jobs:
+  precheck_ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+
+      - name: Cache sbt / ivy2
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            ${{ runner.os }}-sbt-
+
+      - name: sbt clean assembly
+        run: |
+          sbt clean assembly
+
+      - name: Docker compose build
+        run: |
+          docker compose build --no-cache || docker-compose build --no-cache
+
   deploy:
+    needs: precheck_ci          # 👈 NE TOURNE QUE SI precheck_ci = OK
     runs-on: ubuntu-latest
 
     steps:
@@ -21,5 +53,5 @@ jobs:
             cd /home/azureuser/lol-streaming-clean
             git pull origin spark-clean-devops
 
-            docker compose pull || true
-            docker compose up -d
+            docker compose pull || docker-compose pull || true
+            docker compose up -d || docker-compose up -d

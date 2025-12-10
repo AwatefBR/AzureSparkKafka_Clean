@@ -1,0 +1,47 @@
+name: CI - sbt assembly & Docker build
+
+on:
+  push:
+    branches:
+      - spark-clean-devops   
+  pull_request:
+    branches:
+      - spark-clean-devops
+
+jobs:
+  build-and-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Récupérer le code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2) Installer Java pour sbt (Spark tourne bien avec Java 11)
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+
+      # 3) Cache SBT/Ivy pour accélérer les builds
+      - name: Cache sbt / ivy2
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            ${{ runner.os }}-sbt-
+
+      # 4) sbt clean assembly
+      - name: sbt clean assembly
+        run: |
+          sbt clean assembly
+
+      # 5) Build des images Docker avec docker compose
+      - name: Docker compose build
+        run: |
+          docker compose version 
+          docker compose build --no-cache 
