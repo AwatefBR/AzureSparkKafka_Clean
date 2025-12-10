@@ -23,5 +23,5 @@ jobs:
             cd /home/azureuser/lol-streaming-clean
             git pull origin spark-clean-devops
 
-            docker-compose pull || true
-            docker-compose up -d
+            docker compose pull || true
+            docker compose up -d
