@@ -69,7 +69,7 @@ services:
       - producer-net
 
   spark-master:
-    image: spark:3.5.1
+    image: spark:3.5.1 
     container_name: spark-master
     entrypoint: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master"]
     environment:
