@@ -11,10 +11,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
+      - name: Set up Scala (sbt + JDK)
+        uses: olafurpg/setup-scala@v14
+        with: 
           java-version: "11"
 
       - name: Cache sbt / ivy2
@@ -36,7 +35,7 @@ jobs:
           docker compose build --no-cache || docker-compose build --no-cache
 
   deploy:
-    needs: precheck_ci          # 👈 NE TOURNE QUE SI precheck_ci = OK
+    needs: precheck_ci         
     runs-on: ubuntu-latest
 
     steps:
@@ -53,5 +52,5 @@ jobs:
             cd /home/azureuser/lol-streaming-clean
             git pull origin spark-clean-devops
 
-            docker compose pull || docker-compose pull || true
-            docker compose up -d || docker-compose up -d
+            docker compose pull 
+            docker compose up -d 
