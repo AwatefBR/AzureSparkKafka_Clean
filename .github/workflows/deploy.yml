@@ -1,9 +1,3 @@
-name: Deploy to lol-vm
-
-on:
-  workflow_dispatch:   # Déclenchement manuel uniquement
-
-jobs:
   precheck_ci:
     runs-on: ubuntu-latest
 
@@ -11,9 +5,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Scala (sbt + JDK)
+      - name: Set up Scala & sbt
         uses: olafurpg/setup-scala@v14
-        with: 
+        with:
           java-version: "11"
 
       - name: Cache sbt / ivy2
@@ -27,30 +21,8 @@ jobs:
             ${{ runner.os }}-sbt-
 
       - name: sbt clean assembly
-        run: |
-          sbt clean assembly
+        run: sbt clean assembly
 
       - name: Docker compose build
         run: |
           docker compose build --no-cache || docker-compose build --no-cache
-
-  deploy:
-    needs: precheck_ci         
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: SSH into VM and deploy
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            cd /home/azureuser/lol-streaming-clean
-            git pull origin spark-clean-devops
-
-            docker compose pull 
-            docker compose up -d 
