@@ -23,7 +23,7 @@ jobs:
           docker run --rm \
             -v "$PWD:/app" \
             -w /app \
-            sbtscala/sbt:latest \
+            sbtscala/scala-sbt:eclipse-temurin-17.0.4_1.7.1_3.2.0 \
             sbt clean assembly
 
       # 3) Build des images Docker avec docker compose
