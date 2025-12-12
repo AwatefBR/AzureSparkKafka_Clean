@@ -36,7 +36,7 @@ jobs:
               docker compose build || docker-compose build
               docker compose up -d || docker-compose up -d
             else
-              docker compose up -d || docker-compose up -d
+              docker compose up -d 
             fi
 
-            docker compose ps || docker-compose ps
+            docker compose ps
