@@ -8,11 +8,39 @@ import org.apache.spark.sql.streaming.Trigger
 
 object SparkToAzureSql {
 
+  // Fonction simple d'écriture dans Azure SQL
+  def writeToAzure(tableName: String)(batchDF: DataFrame, batchId: Long): Unit = {
+    try {
+      if (batchDF == null || batchDF.isEmpty) {
+        println(s"[Azure] Batch $batchId vide → ignoré")
+        return
+      }
+
+      val count = batchDF.count()
+      println(s"[Azure] Batch $batchId : écriture de $count lignes → $tableName")
+
+      batchDF.write
+        .format("jdbc")
+        .option("url", Config.azureJdbcUrl)
+        .option("driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver")
+        .option("dbtable", tableName)
+        .option("user", Config.azureUser)
+        .option("password", Config.azurePassword)
+        .mode("append")
+        .save()
+
+      println(s"[Azure] ✅ Batch $batchId : $count lignes écrites avec succès")
+    } catch {
+      case e: Exception =>
+        println(s"[Azure] ❌ Batch $batchId : erreur → ${e.getMessage}")
+        e.printStackTrace()
+    }
+  }
+
   def main(args: Array[String]): Unit = {
     val bootstrap = Config.bootstrap
     
-    val mode = args.headOption
-      .getOrElse("scoreboard")
+    val mode = args.headOption.getOrElse("scoreboard")
     
     val (topic, schema, tableName, checkpointPath) = mode.toLowerCase match {
       case "players" => 
@@ -45,13 +73,13 @@ object SparkToAzureSql {
       .select(from_json(col("json"), schema).as("data"))
       .select("data.*")
       .dropDuplicates(
-        if (mode.toLowerCase == "scoreboard") "uniqueline" else "overviewpage"
+        if (mode == "scoreboard") "uniqueline" else "overviewpage"
       ) // Déduplication : uniqueline pour scoreboard, id pour players
       
     // Écriture dans Azure SQL
     val query = parsed.writeStream
       .trigger(Trigger.ProcessingTime("1 seconds"))
-      .foreachBatch((batchDF: DataFrame, batchId: Long) => Utils.writeToAzure(tableName)(batchDF, batchId))
+      .foreachBatch((batchDF: DataFrame, batchId: Long) => writeToAzure(tableName)(batchDF, batchId))
       .outputMode("append")
       .option("checkpointLocation", checkpointPath)
       .start()

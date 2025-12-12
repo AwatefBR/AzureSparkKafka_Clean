@@ -40,6 +40,8 @@ project_name=$(basename "$PWD" | tr '[:upper:]' '[:lower:]')
 
 # Supprimer les volumes nommés explicitement
 docker volume rm -f "${project_name}_spark-checkpoints-players" 2>/dev/null || true
+docker volume rm -f "${project_name}_spark-checkpoints-players-stats" 2>/dev/null || true
+
 docker volume rm -f "${project_name}_spark-checkpoints-scoreboardplayers" 2>/dev/null || true
 docker volume rm -f "${project_name}_postgres-data" 2>/dev/null || true
 

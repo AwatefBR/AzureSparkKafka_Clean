@@ -33,6 +33,8 @@ services:
       interval: 10s
       timeout: 2s
       retries: 3
+    volumes:
+    - kafka-data:/var/lib/kafka/data
     networks:
       - producer-net
       - consumer-net
@@ -189,6 +191,33 @@ services:
       - consumer-net
     restart: always
 
+  spark-consumer-players-stats:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    user: root
+    depends_on:
+      spark-master:
+        condition: service_started 
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy 
+    env_file:
+      - .env
+    environment:
+      KAFKA_BOOTSTRAP: ${KAFKA_BOOTSTRAP}
+      AZURE_SQL_SERVER: "${AZURE_SQL_SERVER}"
+      AZURE_SQL_DB: "${AZURE_SQL_DB}"
+      AZURE_SQL_USER: "${AZURE_SQL_USER}"
+      AZURE_SQL_PASSWORD: "${AZURE_SQL_PASSWORD}"
+    command: ["/opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.AZURE_SQL_SERVER=${AZURE_SQL_SERVER} --conf spark.executorEnv.AZURE_SQL_DB=${AZURE_SQL_DB} --conf spark.executorEnv.AZURE_SQL_USER=${AZURE_SQL_USER} --conf spark.executorEnv.AZURE_SQL_PASSWORD=${AZURE_SQL_PASSWORD} --class consumer.PlayersStats /opt/app/app.jar"]
+    volumes:
+      - spark-checkpoints-players-stats:/checkpoints
+    networks:
+      - consumer-net
+    restart: always
+
 networks:
   producer-net:
     driver: bridge
@@ -199,3 +228,5 @@ volumes:
   postgres-data:
   spark-checkpoints-players:
   spark-checkpoints-scoreboardplayers:
+  spark-checkpoints-players-stats:
+  kafka-data:

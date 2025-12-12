@@ -1,1 +1,1 @@
-["common.TestAzure","consumer.SparkToAzureSql","producer.MainApp"]
+["common.TestAzure","consumer.PlayersStats","consumer.SparkToAzureSql","producer.MainApp"]
