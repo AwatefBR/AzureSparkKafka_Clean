@@ -1,18 +1,38 @@
-  precheck_ci:
+name: Deploy to lol-vm
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "resume (just restart) or update (pull+build+up)"
+        required: true
+        default: "resume"
+
+jobs:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: SSH into VM and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            set -e
+            cd /home/azureuser/lol-streaming-clean
 
-      - name: sbt clean assembly (via Docker)
-        run: |
-          docker run --rm \
-            -v "$PWD:/app" \
-            -w /app \
-            sbtscala/scala-sbt:eclipse-temurin-17.0.4_1.7.1_3.2.0 \
-            sbt clean assembly
+            MODE="${{ github.event.inputs.mode }}"
+            echo "Deploy mode: $MODE"
 
-      - name: Docker compose build
-        run: |
-          docker compose build --no-cache || docker-compose build --no-cache
+            if [ "$MODE" = "update" ]; then
+              git pull origin spark-clean-devops
+              sbt clean assembly
+              docker compose build || docker-compose build
+              docker compose up -d || docker-compose up -d
+            else
+              # resume mode
+              docker compose up -d || docker-compose up -d
+            fi
+
+            docker compose ps || docker-compose ps
