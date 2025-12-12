@@ -1,7 +1,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 12 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 4 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 3 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 2 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 1 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars start:[0m
@@ -9,16 +9,16 @@
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 2 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 116 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 95 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 280 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 165 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mProcess renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 26 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 19 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 190 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 305 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mBuilding assembly jar due to missing output...[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 538 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 251 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mReport merge results start:[0m
 [0m[[0m[0minfo[0m] [0m[0m1844 file(s) merged using strategy 'First' (Run the task at debug level to see the details)[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -10417,16 +10417,16 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-core/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 154 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 71 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 595 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 483 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 146 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 113 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 23310 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 21790 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 231 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 187 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mBuilt: /home/azureuser/lol-streaming-clean/target/scala-2.12/lol-streaming-assembly-0.1.0.jar[0m
-[0m[[0m[0minfo[0m] [0m[0mJar hash: 43b35132d4e843588c718964df77752def613860[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: cb99ea6c6f26cceeec11a69bf42d184d2860096e[0m
 [0m[[0m[0mdebug[0m] [0m[0mClose library jar references start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 8 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 19 ms[0m

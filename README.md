@@ -137,3 +137,8 @@ stocker les checkpoints Spark
 ou éventuellement gérer les shuffle / cache intermédiaires.
 
 C’est une erreur du système de fichiers, pas une erreur applicative Spark.
+
+cd ~/lol-streaming-clean
+git add .github/workflows/deploy.yml
+git commit -m "Use docker compose in deploy workflow"
+git push
