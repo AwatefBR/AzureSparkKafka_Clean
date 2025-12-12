@@ -9,31 +9,6 @@ import scala.collection.JavaConverters._
 
 object MainApp {
 
-  // Fonction pour obtenir le dernier offset du topic Kafka
-  def getLastOffset(topic: String, bootstrap: String): Long = {
-    try {
-      val props = new Properties()
-      props.put("bootstrap.servers", bootstrap)
-      props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-      props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-      props.put("group.id", s"producer-checkpoint-$topic")
-      
-      val consumer = new KafkaConsumer[String, String](props)
-      val partition = new TopicPartition(topic, 0)
-      consumer.assign(java.util.Collections.singletonList(partition))
-      consumer.seekToEnd(java.util.Collections.singletonList(partition))
-      val lastOffset = consumer.position(partition)
-      consumer.close()
-      
-      lastOffset
-    } catch {
-      case e: Exception =>
-        println(s"[Checkpoint] ⚠️  Erreur lors de la lecture de l'offset Kafka: ${e.getMessage}")
-        println(s"[Checkpoint] Repartant depuis 0...")
-        0L
-    }
-  }
-
   def main(args: Array[String]): Unit = {
     require(
       args.nonEmpty, "Usage: MainApp [players|scoreboard]"
@@ -61,7 +36,7 @@ object MainApp {
     val intervalSeconds = 1
     
     // Récupérer le dernier offset Kafka pour reprendre où on s'est arrêté
-    val lastOffset = getLastOffset(tableName, Config.bootstrap)
+    val lastOffset = Utils.getLastOffset(tableName, Config.bootstrap)
     println(s"[Checkpoint] 📍 Dernier offset Kafka pour topic $tableName: $lastOffset")
     
     println(s"[SimStream] Envoi de $batchSize lignes toutes les $intervalSeconds secondes en boucle continue")
