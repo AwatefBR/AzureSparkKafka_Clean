@@ -8,10 +8,13 @@ on:
 jobs:
   terraform-validate:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.0
 
@@ -22,16 +25,21 @@ jobs:
           terraform init -backend=false
           terraform validate
 
-  build-and-docker:
-    if: github.event_name == 'push'   # 🔴 important
+  build-and-push:
+    # 🔑 IMPORTANT : on ne pousse que sur push main (merge)
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      # 1) Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      # 2) sbt clean assembly (isolé)
       - name: sbt clean assembly
         run: |
           docker run --rm \
@@ -40,9 +48,11 @@ jobs:
             sbtscala/scala-sbt:eclipse-temurin-17.0.4_1.7.1_3.2.0 \
             sbt clean assembly
 
+      # 3) Docker build (compose)
       - name: Docker compose build
         run: docker compose build --no-cache
 
+      # 4) Login GHCR
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -50,14 +60,37 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Tag & push images
+      # 5) Tag & push images (LOWERCASE STRICT)
+      - name: Tag and push images to GHCR
         run: |
+          set -e
+
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          REPO=$(basename "${{ github.repository }}")
+          REPO=$(basename "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           TAG=main
 
-          docker tag azuresparkkafka_clean-producer-players:latest ghcr.io/$OWNER/$REPO/producer:$TAG
-          docker tag azuresparkkafka_clean-spark-consumer-players:latest ghcr.io/$OWNER/$REPO/consumer:$TAG
+          PRODUCER_IMAGE="ghcr.io/$OWNER/$REPO/producer"
+          CONSUMER_IMAGE="ghcr.io/$OWNER/$REPO/consumer"
 
-          docker push ghcr.io/$OWNER/$REPO/producer:$TAG
-          docker push ghcr.io/$OWNER/$REPO/consumer:$TAG
+          echo "📦 Using images:"
+          echo " - $PRODUCER_IMAGE:$TAG"
+          echo " - $CONSUMER_IMAGE:$TAG"
+
+          # 🔍 Debug images built
+          docker images
+
+          # Producer
+          docker tag azuresparkkafka_clean-producer-players:latest $PRODUCER_IMAGE:$TAG
+          docker tag azuresparkkafka_clean-producer-players:latest $PRODUCER_IMAGE:latest
+
+          # Consumer
+          docker tag azuresparkkafka_clean-spark-consumer-players:latest $CONSUMER_IMAGE:$TAG
+          docker tag azuresparkkafka_clean-spark-consumer-players:latest $CONSUMER_IMAGE:latest
+
+          # Push
+          docker push $PRODUCER_IMAGE:$TAG
+          docker push $PRODUCER_IMAGE:latest
+          docker push $CONSUMER_IMAGE:$TAG
+          docker push $CONSUMER_IMAGE:latest
+
+          echo "✅ Images pushed successfully"
