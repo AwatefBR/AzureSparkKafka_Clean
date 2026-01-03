@@ -17,3 +17,9 @@ postgres-init/*
 
 # OS
 .DS_Store
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+# Note: .terraform.lock.hcl should be committed (it's already tracked)
