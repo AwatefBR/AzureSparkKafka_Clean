@@ -41,6 +41,9 @@ jobs:
 
   build-and-docker:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       # 1) Récupérer le code

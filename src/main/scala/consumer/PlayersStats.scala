@@ -23,7 +23,7 @@ object PlayersStats {
 
     import spark.implicits._
 
-    // 2️⃣ Lecture Kafka
+    // 2️⃣ Lecture Kafka (même topic que le consumer scoreboard)
     val stream = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", Config.bootstrap)
@@ -38,7 +38,7 @@ object PlayersStats {
       .select(from_json(col("json"), ScoreboardSchema.schema).as("data"))
       .select("data.*")
 
-    // 4️⃣ Event time + renommage joueur
+    // 4️⃣ Event time + renommage clé joueur (link → player_id)
     val withEventTime = parsed
       .withColumn(
         "event_time",
@@ -47,9 +47,9 @@ object PlayersStats {
           current_timestamp()
         )
       )
-      .withColumnRenamed("name", "playerName")
+      .withColumnRenamed("link", "player_id")
 
-    // 5️⃣ CAST NUMÉRIQUE (POINT CLÉ)
+    // 5️⃣ CAST NUMÉRIQUE
     val numeric = withEventTime
       .withColumn("kills_i", col("kills").cast("double"))
       .withColumn("deaths_i", col("deaths").cast("double"))
@@ -63,10 +63,10 @@ object PlayersStats {
           greatest(col("deaths_i"), lit(1.0))
       )
 
-    // 7️⃣ Agrégations PlayerStats
+    // 7️⃣ Agrégations PlayerStats par player_id
     val playerStats = enriched
       .withWatermark("event_time", "10 minutes")
-      .groupBy("playerName")
+      .groupBy("player_id")
       .agg(
         // Moyennes
         avg("kills_i").as("avg_kills"),
@@ -92,39 +92,14 @@ object PlayersStats {
       )
       .withColumn("updated_at", current_timestamp())
 
-    // Variables de monitoring (partagées entre batches)
-    var totalMatchesProcessed = 0L
-    var totalPlayersSeen = scala.collection.mutable.Set[String]()
-
-    // 8️⃣ Écriture Azure SQL avec monitoring
+    // 8️⃣ Écriture Azure SQL
     val query = playerStats.writeStream
       .outputMode("update")
       .trigger(Trigger.ProcessingTime("30 seconds"))
       .foreachBatch { (batchDF: DataFrame, batchId: Long) =>
         if (!batchDF.isEmpty) {
-          val playerCount = batchDF.count()
-          val playersInBatch = batchDF.select("playerName").collect().map(_.getString(0)).toSet
-          
-          // Estimer les matchs traités depuis games_played (somme des parties des joueurs du batch)
-          val matchesRow = batchDF.agg(sum("games_played").as("total")).collect()(0)
-          val matchesInBatch = try {
-            val value = matchesRow.getAs[java.lang.Long]("total")
-            if (value != null) value.longValue() else 0L
-          } catch {
-            case _: Exception => 0L
-          }
-          totalMatchesProcessed += matchesInBatch
-          totalPlayersSeen ++= playersInBatch
-          
-          println(s"[PlayersStats] 📊 Batch $batchId →")
-          println(s"  - Joueurs dans le batch: $playerCount")
-          println(s"  - Matchs dans le batch: $matchesInBatch")
-          println(s"  - Joueurs uniques totaux: ${totalPlayersSeen.size}")
-          println(s"  - Matchs traités totaux: $totalMatchesProcessed")
-          println(s"  - Écriture vers Azure SQL (MERGE/UPSERT)...")
-          
+          println(s"[PlayersStats] 📊 Batch $batchId → écriture vers Azure SQL")
           Utils.writeToAzure("dbo.PlayerStats", useUpsert = true)(batchDF, batchId)
-          
           println(s"[PlayersStats] ✅ Batch $batchId terminé")
         } else {
           println(s"[PlayersStats] Batch $batchId vide")

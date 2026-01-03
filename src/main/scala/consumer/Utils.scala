@@ -48,20 +48,9 @@ object Utils {
     }
 
     private def writeWithUpsert(batchDF: DataFrame, tableName: String, batchId: Long): Unit = {
-        val tempTable = s"#temp_${batchId}_${System.currentTimeMillis()}"
+        // Utiliser une table staging permanente (créée une seule fois, réutilisée pour tous les batches)
+        val stagingTable = "dbo.PlayerStats_staging"
         
-        // 1. Écrire dans une table temporaire
-        batchDF.write
-            .format("jdbc")
-            .option("url", Config.azureJdbcUrl)
-            .option("driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver")
-            .option("dbtable", tempTable)
-            .option("user", Config.azureUser)
-            .option("password", Config.azurePassword)
-            .mode("overwrite")
-            .save()
-
-        // 2. Exécuter MERGE SQL
         var conn: Connection = null
         var stmt: Statement = null
         try {
@@ -69,10 +58,26 @@ object Utils {
             conn = DriverManager.getConnection(Config.azureJdbcUrl, Config.azureUser, Config.azurePassword)
             stmt = conn.createStatement()
 
+            // 1. Vider la table staging (TRUNCATE est plus rapide que DELETE)
+            stmt.executeUpdate(s"TRUNCATE TABLE $stagingTable")
+            println(s"[Azure] 🗑️ Table staging vidée : $stagingTable")
+
+            // 2. Écrire les données dans la table staging
+            batchDF.write
+                .format("jdbc")
+                .option("url", Config.azureJdbcUrl)
+                .option("driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver")
+                .option("dbtable", stagingTable)
+                .option("user", Config.azureUser)
+                .option("password", Config.azurePassword)
+                .mode("append")
+                .save()
+
+            // 3. Exécuter MERGE SQL depuis staging vers table cible
             val mergeSQL = s"""
                 MERGE INTO $tableName AS target
-                USING $tempTable AS source
-                ON target.playerName = source.playerName
+                USING $stagingTable AS source
+                ON target.player_id = source.player_id
                 WHEN MATCHED THEN
                     UPDATE SET
                         avg_kills = source.avg_kills,
@@ -86,15 +91,15 @@ object Utils {
                         kda_from_sums = source.kda_from_sums,
                         updated_at = source.updated_at
                 WHEN NOT MATCHED THEN
-                    INSERT (playerName, avg_kills, avg_deaths, avg_assists, sum_kills, sum_deaths, sum_assists, avg_kda, games_played, kda_from_sums, updated_at)
-                    VALUES (source.playerName, source.avg_kills, source.avg_deaths, source.avg_assists, source.sum_kills, source.sum_deaths, source.sum_assists, source.avg_kda, source.games_played, source.kda_from_sums, source.updated_at);
+                    INSERT (player_id, avg_kills, avg_deaths, avg_assists, sum_kills, sum_deaths, sum_assists, avg_kda, games_played, kda_from_sums, updated_at)
+                    VALUES (source.player_id, source.avg_kills, source.avg_deaths, source.avg_assists, source.sum_kills, source.sum_deaths, source.sum_assists, source.avg_kda, source.games_played, source.kda_from_sums, source.updated_at);
             """
 
             val rowsAffected = stmt.executeUpdate(mergeSQL)
             println(s"[Azure] 🔄 MERGE exécuté : $rowsAffected lignes affectées")
 
-            // Nettoyer la table temporaire
-            stmt.executeUpdate(s"DROP TABLE IF EXISTS $tempTable")
+            // 4. Vider la table staging pour le prochain batch
+            stmt.executeUpdate(s"TRUNCATE TABLE $stagingTable")
         } finally {
             if (stmt != null) stmt.close()
             if (conn != null) conn.close()

@@ -1,24 +1,24 @@
 [0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 3 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 4 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 2 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 1 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 1 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 2 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 3 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 104 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 135 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 265 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 262 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mProcess renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 20 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 16 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 302 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 251 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mBuilding assembly jar due to missing output...[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 266 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 232 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mReport merge results start:[0m
 [0m[[0m[0minfo[0m] [0m[0m1844 file(s) merged using strategy 'First' (Run the task at debug level to see the details)[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -4075,6 +4075,524 @@
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/StringValue$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/StringValue$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/StringValue$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldOptionsOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptionsOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptionsOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$GenericDescriptor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$GenericDescriptor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$GenericDescriptor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSortIndirect.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSortIndirect.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSortIndirect.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/longs/LongArrays$ArrayHashStrategy.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/longs/LongArrays$ArrayHashStrategy.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/longs/LongArrays$ArrayHashStrategy.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntCollection.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntCollection.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntCollection.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/PrimitiveNonBoxingCollection.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/PrimitiveNonBoxingCollection.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/PrimitiveNonBoxingCollection.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Internal$LongList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal$LongList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal$LongList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$OneofDescriptorProto$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$OneofDescriptorProto$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$OneofDescriptorProto$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/OptionOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/OptionOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/OptionOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Struct$FieldsDefaultEntryHolder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Struct$FieldsDefaultEntryHolder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Struct$FieldsDefaultEntryHolder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleArrays$ForkJoinQuickSortIndirect.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleArrays$ForkJoinQuickSortIndirect.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleArrays$ForkJoinQuickSortIndirect.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteConsumer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteConsumer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteConsumer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/LazyStringArrayList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyStringArrayList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyStringArrayList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$Descriptor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$Descriptor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$Descriptor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/BigSwapper.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/BigSwapper.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/BigSwapper.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/RpcUtil$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RpcUtil$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RpcUtil$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularStringFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularStringFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularStringFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/RepeatedFieldBuilderV3$MessageExternalList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RepeatedFieldBuilderV3$MessageExternalList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RepeatedFieldBuilderV3$MessageExternalList.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessage$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleBigArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleBigArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleBigArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorMessageInfoFactory$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorMessageInfoFactory$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorMessageInfoFactory$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$ServiceDescriptorProtoOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$ServiceDescriptorProtoOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$ServiceDescriptorProtoOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/MapFieldSchema.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MapFieldSchema.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MapFieldSchema.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/TextFormat$Printer$MapEntryAdapter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormat$Printer$MapEntryAdapter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormat$Printer$MapEntryAdapter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatBigArrays$BigArrayHashStrategy.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatBigArrays$BigArrayHashStrategy.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatBigArrays$BigArrayHashStrategy.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/CodedOutputStream$OutOfSpaceException.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedOutputStream$OutOfSpaceException.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedOutputStream$OutOfSpaceException.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/FieldOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/FieldOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/FieldOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$UnmodifiableListIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$UnmodifiableListIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$UnmodifiableListIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Internal.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Api$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/MessageReflection$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MessageReflection$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MessageReflection$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/LazyField.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyField.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyField.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSort.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Message.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Message.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Message.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/UnsafeByteOperations.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnsafeByteOperations.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnsafeByteOperations.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatArrays$Segment.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatArrays$Segment.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatArrays$Segment.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Mixin.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Mixin.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Mixin.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorProto$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorProto$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorProto$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/CodedInputStream$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedInputStream$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedInputStream$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/compiler/PluginProtos$CodeGeneratorResponse$Feature.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$CodeGeneratorResponse$Feature.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$CodeGeneratorResponse$Feature.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntComparators$OppositeImplicitComparator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntComparators$OppositeImplicitComparator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntComparators$OppositeImplicitComparator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$EnumDescriptorProto$EnumReservedRange.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumDescriptorProto$EnumReservedRange.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumDescriptorProto$EnumReservedRange.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = google/protobuf/any.proto[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = protobuf-java-3.19.6.jar, jar org = com.google.protobuf, entry target = google/protobuf/any.proto[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = google/protobuf/any.proto[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$MethodOptions$IdempotencyLevel$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MethodOptions$IdempotencyLevel$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MethodOptions$IdempotencyLevel$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldOptions$JSType$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptions$JSType$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptions$JSType$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/compiler/PluginProtos$Version$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$DescriptorPool$SearchFilter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$DescriptorPool$SearchFilter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$DescriptorPool$SearchFilter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Int32Value$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Int32Value$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Int32Value$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterable.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterable.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterable.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorSet$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorSet$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorSet$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$ArrayIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$ArrayIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$ArrayIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/TextFormatParseInfoTree$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormatParseInfoTree$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormatParseInfoTree$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/ProtoSyntax.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ProtoSyntax.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ProtoSyntax.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/compiler/PluginProtos$Version$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Label.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Label.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Label.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/MixinOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MixinOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MixinOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$EnumDescriptor$UnknownEnumValueReference.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$EnumDescriptor$UnknownEnumValueReference.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$EnumDescriptor$UnknownEnumValueReference.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessageV3$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/ManifestSchemaFactory.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ManifestSchemaFactory.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ManifestSchemaFactory.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Duration$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Duration$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Duration$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/UInt64Value.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UInt64Value.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UInt64Value.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/ListValue$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ListValue$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ListValue$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$MessageOptionsOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MessageOptionsOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MessageOptionsOrBuilder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectBidirectionalIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectBidirectionalIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectBidirectionalIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Api$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$EnumValueOptions$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumValueOptions$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumValueOptions$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/UnknownFieldSet$Field$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnknownFieldSet$Field$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnknownFieldSet$Field$Builder.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleComparators$OppositeImplicitComparator.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleComparators$OppositeImplicitComparator.class[0m
@@ -4282,524 +4800,6 @@
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ProtocolMessageEnum.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ProtocolMessageEnum.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Int32Value$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Int32Value$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Int32Value$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterable.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterable.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterable.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorSet$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorSet$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorSet$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$ArrayIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$ArrayIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$ArrayIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/TextFormatParseInfoTree$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormatParseInfoTree$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormatParseInfoTree$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/ProtoSyntax.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ProtoSyntax.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ProtoSyntax.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/compiler/PluginProtos$Version$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Label.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Label.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Label.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/MixinOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MixinOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MixinOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$EnumDescriptor$UnknownEnumValueReference.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$EnumDescriptor$UnknownEnumValueReference.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$EnumDescriptor$UnknownEnumValueReference.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessageV3$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/ManifestSchemaFactory.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ManifestSchemaFactory.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ManifestSchemaFactory.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Duration$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Duration$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Duration$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/UInt64Value.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UInt64Value.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UInt64Value.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/ListValue$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ListValue$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/ListValue$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$MessageOptionsOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MessageOptionsOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MessageOptionsOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectBidirectionalIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectBidirectionalIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectBidirectionalIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Api$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$EnumValueOptions$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumValueOptions$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumValueOptions$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/UnknownFieldSet$Field$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnknownFieldSet$Field$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnknownFieldSet$Field$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/MapFieldSchema.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MapFieldSchema.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MapFieldSchema.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/TextFormat$Printer$MapEntryAdapter.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormat$Printer$MapEntryAdapter.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/TextFormat$Printer$MapEntryAdapter.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatBigArrays$BigArrayHashStrategy.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatBigArrays$BigArrayHashStrategy.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatBigArrays$BigArrayHashStrategy.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/CodedOutputStream$OutOfSpaceException.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedOutputStream$OutOfSpaceException.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedOutputStream$OutOfSpaceException.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$GeneratedExtension$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/FieldOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/FieldOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/FieldOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$UnmodifiableListIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$UnmodifiableListIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntIterators$UnmodifiableListIterator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Internal.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Api$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Api$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/MessageReflection$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MessageReflection$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/MessageReflection$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/LazyField.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyField.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyField.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Message.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Message.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Message.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/UnsafeByteOperations.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnsafeByteOperations.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/UnsafeByteOperations.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatArrays$Segment.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatArrays$Segment.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/floats/FloatArrays$Segment.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Mixin.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Mixin.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Mixin.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorProto$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorProto$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FileDescriptorProto$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/CodedInputStream$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedInputStream$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/CodedInputStream$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/compiler/PluginProtos$CodeGeneratorResponse$Feature.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$CodeGeneratorResponse$Feature.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$CodeGeneratorResponse$Feature.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntComparators$OppositeImplicitComparator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntComparators$OppositeImplicitComparator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntComparators$OppositeImplicitComparator.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$EnumDescriptorProto$EnumReservedRange.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumDescriptorProto$EnumReservedRange.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$EnumDescriptorProto$EnumReservedRange.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = google/protobuf/any.proto[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = protobuf-java-3.19.6.jar, jar org = com.google.protobuf, entry target = google/protobuf/any.proto[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = google/protobuf/any.proto[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$MethodOptions$IdempotencyLevel$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MethodOptions$IdempotencyLevel$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$MethodOptions$IdempotencyLevel$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldOptions$JSType$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptions$JSType$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptions$JSType$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/compiler/PluginProtos$Version$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/compiler/PluginProtos$Version$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$DescriptorPool$SearchFilter.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$DescriptorPool$SearchFilter.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$DescriptorPool$SearchFilter.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/StringValue$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/StringValue$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/StringValue$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldOptionsOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptionsOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldOptionsOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$GenericDescriptor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$GenericDescriptor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$GenericDescriptor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSortIndirect.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSortIndirect.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/objects/ObjectArrays$ForkJoinQuickSortIndirect.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/longs/LongArrays$ArrayHashStrategy.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/longs/LongArrays$ArrayHashStrategy.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/longs/LongArrays$ArrayHashStrategy.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/ints/IntCollection.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntCollection.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/ints/IntCollection.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/PrimitiveNonBoxingCollection.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/PrimitiveNonBoxingCollection.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/PrimitiveNonBoxingCollection.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$FieldDescriptorProto$Builder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Internal$LongList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal$LongList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Internal$LongList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$OneofDescriptorProto$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$OneofDescriptorProto$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$OneofDescriptorProto$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/OptionOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/OptionOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/OptionOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Struct$FieldsDefaultEntryHolder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Struct$FieldsDefaultEntryHolder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Struct$FieldsDefaultEntryHolder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleArrays$ForkJoinQuickSortIndirect.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleArrays$ForkJoinQuickSortIndirect.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleArrays$ForkJoinQuickSortIndirect.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteConsumer.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteConsumer.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/bytes/ByteConsumer.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/LazyStringArrayList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyStringArrayList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/LazyStringArrayList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/Descriptors$Descriptor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$Descriptor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/Descriptors$Descriptor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/BigSwapper.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/BigSwapper.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/BigSwapper.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/RpcUtil$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RpcUtil$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RpcUtil$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularStringFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularStringFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessageV3$FieldAccessorTable$SingularStringFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/RepeatedFieldBuilderV3$MessageExternalList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RepeatedFieldBuilderV3$MessageExternalList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/RepeatedFieldBuilderV3$MessageExternalList.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/GeneratedMessage$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/GeneratedMessage$FieldAccessorTable$SingularEnumFieldAccessor.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleBigArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-column-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleBigArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = shaded/parquet/it/unimi/dsi/fastutil/doubles/DoubleBigArrays$ForkJoinQuickSort.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorMessageInfoFactory$3.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorMessageInfoFactory$3.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorMessageInfoFactory$3.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = org/apache/orc/protobuf/DescriptorProtos$ServiceDescriptorProtoOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-core-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$ServiceDescriptorProtoOrBuilder.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = orc-mapreduce-1.9.2.jar, jar org = org.apache.orc, entry target = org/apache/orc/protobuf/DescriptorProtos$ServiceDescriptorProtoOrBuilder.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: First[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -8965,182 +8965,117 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.eclipse.jetty/jetty-plus/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-kqueue-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/native/libnetty_transport_native_kqueue_x86_64.jnilib[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-kvstore_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-kvstore_2.12/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-common/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.sql.jdbc.JdbcConnectionProvider[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-classes-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-classes-epoll/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = antlr4-runtime-4.9.3.jar, jar org = org.antlr, entry target = META-INF/maven/org.antlr/antlr4-runtime/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-native-epoll/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-native-epoll/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-native-epoll/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-client/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.eclipse.jetty/jetty-client/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.15.2.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/versions/19/com/fasterxml/jackson/core/io/doubleparser/FastIntegerMath$UInt128.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = avro-1.11.2.jar, jar org = org.apache.avro, entry target = META-INF/maven/org.apache.avro/avro/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.avro/avro/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-simplekdc/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.15.2.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/services/com.fasterxml.jackson.core.JsonFactory[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-jackson-1.13.1.jar, jar org = org.apache.parquet, entry target = META-INF/services/com.fasterxml.jackson.core.JsonFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-collections4-4.4.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-collections4/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-common-2.40.jar, jar org = org.glassfish.jersey.core, entry target = META-INF/versions/11/org/glassfish/jersey/internal/jsr166/SubmissionPublisherFactory.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = metrics-core-4.2.19.jar, jar org = io.dropwizard.metrics, entry target = META-INF/maven/io.dropwizard.metrics/metrics-core/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = arrow-memory-core-12.0.1.jar, jar org = org.apache.arrow, entry target = META-INF/maven/org.apache.arrow/arrow-memory-core/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = zookeeper-jute-3.6.3.jar, jar org = org.apache.zookeeper, entry target = META-INF/maven/org.apache.zookeeper/zookeeper-jute/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-codec-1.16.0.jar, jar org = commons-codec, entry target = META-INF/maven/commons-codec/commons-codec/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-codec/commons-codec/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-server-2.40.jar, jar org = org.glassfish.jersey.core, entry target = META-INF/maven/org.glassfish.jersey.core/jersey-server/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = datasketches-memory-2.1.0.jar, jar org = org.apache.datasketches, entry target = META-INF/versions/11/module-info.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/versions/11/module-info.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/dnsjava/dnsjava/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = META-INF/maven/org.apache.parquet/parquet-hadoop/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.io.erasurecode.rawcoder.RawErasureCoderFactory[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-admin/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.15.2.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/versions/17/com/fasterxml/jackson/core/io/doubleparser/FastDoubleSwar.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-util-ajax/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-server-2.40.jar, jar org = org.glassfish.jersey.core, entry target = META-INF/services/org.glassfish.jersey.model.internal.spi.ParameterServiceProvider[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/sun.net.spi.nameservice.NameServiceDescriptor[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-pool2-2.11.1.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-pool2/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-buffer-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/native-image/io.netty/netty-buffer/native-image.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = leveldbjni-all-1.8.jar, jar org = org.fusesource.leveldbjni, entry target = META-INF/native/linux64/libleveldbjni.so[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-hk2-2.40.jar, jar org = org.glassfish.jersey.inject, entry target = META-INF/services/org.glassfish.jersey.internal.inject.InjectionManagerFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = log4j-1.2-api-2.20.0.jar, jar org = org.apache.logging.log4j, entry target = META-INF/maven/org.apache.logging.log4j/log4j-1.2-api/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = metrics-graphite-4.2.19.jar, jar org = io.dropwizard.metrics, entry target = META-INF/maven/io.dropwizard.metrics/metrics-graphite/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.security.SecurityInfo[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.javax.ws.rs.ext.MessageBodyWriter[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sketch_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-sketch_2.12/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/dnsjava/dnsjava/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-resolver-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-resolver/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-text-1.10.0.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-text/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-text/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = leveldbjni-all-1.8.jar, jar org = org.fusesource.leveldbjni, entry target = META-INF/native/linux32/libleveldbjni.so[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.com.fasterxml.jackson.core.JsonFactory[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = logback-classic-1.5.6.jar, jar org = ch.qos.logback, entry target = META-INF/services/jakarta.servlet.ServletContainerInitializer[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = activation-1.1.1.jar, jar org = javax.activation, entry target = META-INF/mimetypes.default[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.deploy.history.EventFilterBuilder[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.deploy.history.EventFilterBuilder[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.security.token.TokenRenewer[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jakarta.servlet-api-4.0.3.jar, jar org = jakarta.servlet, entry target = META-INF/maven/jakarta.servlet/jakarta.servlet-api/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -9286,117 +9221,182 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-kqueue-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/native/libnetty_transport_native_kqueue_x86_64.jnilib[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = metrics-graphite-4.2.19.jar, jar org = io.dropwizard.metrics, entry target = META-INF/maven/io.dropwizard.metrics/metrics-graphite/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-common/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.javax.ws.rs.ext.MessageBodyWriter[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-classes-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-classes-epoll/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sketch_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-sketch_2.12/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-native-epoll/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-native-epoll/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-transport-native-epoll-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-transport-native-epoll/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/dnsjava/dnsjava/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.15.2.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/versions/19/com/fasterxml/jackson/core/io/doubleparser/FastIntegerMath$UInt128.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-resolver-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/maven/io.netty/netty-resolver/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-simplekdc/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-text-1.10.0.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-text/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.commons/commons-text/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-collections4-4.4.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-collections4/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = leveldbjni-all-1.8.jar, jar org = org.fusesource.leveldbjni, entry target = META-INF/native/linux32/libleveldbjni.so[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = metrics-core-4.2.19.jar, jar org = io.dropwizard.metrics, entry target = META-INF/maven/io.dropwizard.metrics/metrics-core/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.shaded.com.fasterxml.jackson.core.JsonFactory[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = zookeeper-jute-3.6.3.jar, jar org = org.apache.zookeeper, entry target = META-INF/maven/org.apache.zookeeper/zookeeper-jute/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = logback-classic-1.5.6.jar, jar org = ch.qos.logback, entry target = META-INF/services/jakarta.servlet.ServletContainerInitializer[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-server-2.40.jar, jar org = org.glassfish.jersey.core, entry target = META-INF/maven/org.glassfish.jersey.core/jersey-server/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = activation-1.1.1.jar, jar org = javax.activation, entry target = META-INF/mimetypes.default[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/dnsjava/dnsjava/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.deploy.history.EventFilterBuilder[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.deploy.history.EventFilterBuilder[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.io.erasurecode.rawcoder.RawErasureCoderFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.security.token.TokenRenewer[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.15.2.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/versions/17/com/fasterxml/jackson/core/io/doubleparser/FastDoubleSwar.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.eclipse.jetty/jetty-plus/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-server-2.40.jar, jar org = org.glassfish.jersey.core, entry target = META-INF/services/org.glassfish.jersey.model.internal.spi.ParameterServiceProvider[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-kvstore_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.apache.spark/spark-kvstore_2.12/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-pool2-2.11.1.jar, jar org = org.apache.commons, entry target = META-INF/maven/org.apache.commons/commons-pool2/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-sql_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/services/org.apache.spark.sql.jdbc.JdbcConnectionProvider[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = leveldbjni-all-1.8.jar, jar org = org.fusesource.leveldbjni, entry target = META-INF/native/linux64/libleveldbjni.so[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = antlr4-runtime-4.9.3.jar, jar org = org.antlr, entry target = META-INF/maven/org.antlr/antlr4-runtime/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = log4j-1.2-api-2.20.0.jar, jar org = org.apache.logging.log4j, entry target = META-INF/maven/org.apache.logging.log4j/log4j-1.2-api/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-client/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = spark-core_2.12-3.5.1.jar, jar org = org.apache.spark, entry target = META-INF/maven/org.eclipse.jetty/jetty-client/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-api-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/org.apache.hadoop.security.SecurityInfo[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = avro-1.11.2.jar, jar org = org.apache.avro, entry target = META-INF/maven/org.apache.avro/avro/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.avro/avro/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jakarta.servlet-api-4.0.3.jar, jar org = jakarta.servlet, entry target = META-INF/maven/jakarta.servlet/jakarta.servlet-api/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.15.2.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/services/com.fasterxml.jackson.core.JsonFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-jackson-1.13.1.jar, jar org = org.apache.parquet, entry target = META-INF/services/com.fasterxml.jackson.core.JsonFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-common-2.40.jar, jar org = org.glassfish.jersey.core, entry target = META-INF/versions/11/org/glassfish/jersey/internal/jsr166/SubmissionPublisherFactory.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = arrow-memory-core-12.0.1.jar, jar org = org.apache.arrow, entry target = META-INF/maven/org.apache.arrow/arrow-memory-core/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-codec-1.16.0.jar, jar org = commons-codec, entry target = META-INF/maven/commons-codec/commons-codec/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/commons-codec/commons-codec/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = datasketches-memory-2.1.0.jar, jar org = org.apache.datasketches, entry target = META-INF/versions/11/module-info.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/versions/11/module-info.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = parquet-hadoop-1.13.1.jar, jar org = org.apache.parquet, entry target = META-INF/maven/org.apache.parquet/parquet-hadoop/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-admin/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.eclipse.jetty/jetty-util-ajax/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/services/sun.net.spi.nameservice.NameServiceDescriptor[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = netty-buffer-4.1.96.Final.jar, jar org = io.netty, entry target = META-INF/native-image/io.netty/netty-buffer/native-image.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jersey-hk2-2.40.jar, jar org = org.glassfish.jersey.inject, entry target = META-INF/services/org.glassfish.jersey.internal.inject.InjectionManagerFactory[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -10417,16 +10417,16 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hadoop-client-runtime-3.3.4.jar, jar org = org.apache.hadoop, entry target = META-INF/maven/org.apache.kerby/kerb-core/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 132 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 84 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 473 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 489 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 107 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 110 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 22359 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 22162 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 190 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 201 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mBuilt: /home/azureuser/lol-streaming-clean/target/scala-2.12/lol-streaming-assembly-0.1.0.jar[0m
-[0m[[0m[0minfo[0m] [0m[0mJar hash: d0099cce138be1dea439eed177bc9ce64a3a0b18[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: a80f6b7c4a7eed5e966261bff01da2ab91fbe5f8[0m
 [0m[[0m[0mdebug[0m] [0m[0mClose library jar references start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 5 ms[0m
