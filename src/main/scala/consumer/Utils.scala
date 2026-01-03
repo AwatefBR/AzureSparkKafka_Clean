@@ -52,6 +52,11 @@ object Utils {
         // Utiliser une table temporaire locale (#temp) dans la même connexion pour le MERGE
         // La table #temp est automatiquement supprimée quand la connexion se ferme
         
+        // Capturer les valeurs de Config AVANT foreachPartition pour éviter les problèmes de sérialisation
+        val jdbcUrl = Config.azureJdbcUrl
+        val user = Config.azureUser
+        val password = Config.azurePassword
+        
         var totalRowsAffected = 0L
 
         batchDF.foreachPartition { partition: Iterator[Row] =>
@@ -60,7 +65,7 @@ object Utils {
             var insertStmt: PreparedStatement = null
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
-                conn = DriverManager.getConnection(Config.azureJdbcUrl, Config.azureUser, Config.azurePassword)
+                conn = DriverManager.getConnection(jdbcUrl, user, password)
                 stmt = conn.createStatement()
 
                 // 1. Créer une table temporaire locale (#temp) dans cette session
