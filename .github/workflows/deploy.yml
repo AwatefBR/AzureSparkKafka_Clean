@@ -1,53 +1,47 @@
-name: Deploy to lol-vm
+name: CD - Test pull & docker compose up
 
 on:
-  workflow_dispatch:
-    inputs:
-      mode:
-        description: "resume (restart only) or update (pull + sbt + build + up)"
-        required: true
-        default: "resume"
-        type: choice
-        options:
-          - resume
-          - update
+  workflow_run:
+    workflows:
+      - CI - sbt assembly & Docker build
+    types:
+      - completed
 
 jobs:
-  deploy:
+  test-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     steps:
-      - name: SSH into VM and deploy
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
         with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            set -e
-            cd /home/azureuser/lol-streaming-clean
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-            MODE="${{ github.event.inputs.mode }}"
-            echo "🚀 Deploy mode: $MODE"
+      - name: Set deploy variables (branch tag)
+        run: |
+          echo "APP_TAG=spark-clean-devops" >> $GITHUB_ENV
+          echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "REPO=$(basename '${{ github.repository }}')" >> $GITHUB_ENV
 
-            if [ "$MODE" = "update" ]; then
-              # Check for uncommitted changes and handle them
-              if ! git diff --quiet || ! git diff --cached --quiet; then
-                echo "⚠️ Uncommitted changes detected. Stashing them..."
-                git stash push -m "Auto-stash before deploy $(date +%Y%m%d_%H%M%S)" || true
-              fi
-              
-              # Fetch and reset to match remote (discards local commits if any)
-              echo "📥 Fetching latest changes..."
-              git fetch origin spark-clean-devops
-              git reset --hard origin/spark-clean-devops
-              git clean -fd
-              
-              sbt clean assembly
-              docker compose build || docker-compose build
-              docker compose up -d || docker-compose up -d
-            else
-              docker compose up -d 
-            fi
+      - name: Pull images
+        run: |
+          docker pull ghcr.io/$OWNER/lol-streaming-clean-producer:$APP_TAG
+          docker pull ghcr.io/$OWNER/lol-streaming-clean-consumer:$APP_TAG
 
-            docker compose ps
+      - name: Docker compose pull
+        run: docker compose pull
+
+      - name: Docker compose up
+        run: docker compose up -d
+
+      - name: Status
+        run: docker compose ps
