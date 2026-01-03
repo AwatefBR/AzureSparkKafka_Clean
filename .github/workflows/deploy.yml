@@ -16,32 +16,20 @@ jobs:
       packages: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Login to GHCR
-        uses: docker/login-action@v3
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set deploy variables (branch tag)
-        run: |
-          echo "APP_TAG=spark-clean-devops" >> $GITHUB_ENV
-          echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-          echo "REPO=$(basename '${{ github.repository }}')" >> $GITHUB_ENV
+      - run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          REPO=$(basename "${{ github.repository }}")
+          TAG=main
 
-      - name: Pull images
-        run: |
-          docker pull ghcr.io/$OWNER/lol-streaming-clean-producer:$APP_TAG
-          docker pull ghcr.io/$OWNER/lol-streaming-clean-consumer:$APP_TAG
+          docker pull ghcr.io/$OWNER/$REPO/producer:$TAG
+          docker pull ghcr.io/$OWNER/$REPO/consumer:$TAG
 
-      - name: Docker compose pull
-        run: docker compose pull
-
-      - name: Docker compose up
-        run: docker compose up -d
-
-      - name: Status
-        run: docker compose ps
+      - run: docker compose up -d
