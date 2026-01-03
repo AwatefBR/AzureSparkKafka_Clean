@@ -1,32 +1,32 @@
-[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/azureuser/lol-streaming-clean/target/scala-2.12/classes.bak[0m
-[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/azureuser/lol-streaming-clean/target/scala-2.12/classes.bak[0m
-[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	PlayerSchema.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Scoreboard$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Config$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	PlayersStats$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ScoreboardSchema$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Config.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	TestAzure.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	PlayersStats.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Utils$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Utils.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Utils.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	SparkToAzureSql.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Scoreboard.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Player$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	PlayerStatsSchema.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	PlayerStatsSchema$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	PlayerSchema$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	SparkToAzureSql$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ScoreboardSchema.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Utils$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Player.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	MainApp.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	MainApp$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	TestAzure$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/azureuser/lol-streaming-clean/target/scala-2.12/classes.bak[0m
+[debug] Created transactional ClassFileManager with tempDir = /home/azureuser/lol-streaming-clean/target/scala-2.12/classes.bak
+[debug] About to delete class files:
+[debug] We backup class files:
+[debug] Created transactional ClassFileManager with tempDir = /home/azureuser/lol-streaming-clean/target/scala-2.12/classes.bak
+[debug] About to delete class files:
+[debug] We backup class files:
+[debug] Registering generated classes:
+[debug] 	PlayerSchema.class
+[debug] 	Scoreboard$.class
+[debug] 	Config$.class
+[debug] 	PlayersStats$.class
+[debug] 	ScoreboardSchema$.class
+[debug] 	Config.class
+[debug] 	TestAzure.class
+[debug] 	PlayersStats.class
+[debug] 	Utils$.class
+[debug] 	Utils.class
+[debug] 	Utils.class
+[debug] 	SparkToAzureSql.class
+[debug] 	Scoreboard.class
+[debug] 	Player$.class
+[debug] 	PlayerStatsSchema.class
+[debug] 	PlayerStatsSchema$.class
+[debug] 	PlayerSchema$.class
+[debug] 	SparkToAzureSql$.class
+[debug] 	ScoreboardSchema.class
+[debug] 	Utils$.class
+[debug] 	Player.class
+[debug] 	MainApp.class
+[debug] 	MainApp$.class
+[debug] 	TestAzure$.class
+[debug] Removing the temporary directory used for backing up class files: /home/azureuser/lol-streaming-clean/target/scala-2.12/classes.bak

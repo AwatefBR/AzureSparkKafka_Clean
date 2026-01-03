@@ -3,55 +3,39 @@ name: CI - sbt assembly & Docker build
 on:
   push:
     branches:
-      - spark-clean-devops
+      - main
   pull_request:
     branches:
-      - spark-clean-devops
+      - main
 
 jobs:
   terraform-validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.0
 
-      - name: Terraform Format Check
+      - name: Terraform fmt + validate
+        working-directory: infra
         run: |
-          echo "🔍 Vérification du formatage Terraform..."
-          if ! terraform fmt -check -recursive; then
-            echo "❌ Certains fichiers ne sont pas correctement formatés."
-            echo "💡 Exécutez 'terraform fmt -recursive' dans le dossier infra/ pour corriger."
-            exit 1
-          fi
-          echo "✅ Tous les fichiers sont correctement formatés."
-        working-directory: infra
-
-      - name: Terraform Init
-        run: terraform init -backend=false
-        working-directory: infra
-
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: infra
+          terraform fmt -check -recursive
+          terraform init -backend=false
+          terraform validate
 
   build-and-docker:
+    if: github.event_name == 'push'   # 🔴 important
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
 
     steps:
-      # 1) Récupérer le code
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # 2) sbt clean assembly dans un conteneur Docker
-      - name: sbt clean assembly (via Docker)
+      - name: sbt clean assembly
         run: |
           docker run --rm \
             -v "$PWD:/app" \
@@ -59,62 +43,24 @@ jobs:
             sbtscala/scala-sbt:eclipse-temurin-17.0.4_1.7.1_3.2.0 \
             sbt clean assembly
 
-      # 3) Build des images Docker avec docker compose
       - name: Docker compose build
-        run: |
-          docker compose build --no-cache || docker-compose build --no-cache
+        run: docker compose build --no-cache
 
-      # 4) Login to GitHub Container Registry
       - name: Login to GHCR
-        if: github.event_name == 'push'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 5) Tag and push images to GHCR
-      - name: Tag and push images
-        if: github.event_name == 'push'
+      - name: Tag & push images
         run: |
-          # Convert repository owner to lowercase (required for Docker image names)
-          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          # GitHub Container Registry format: ghcr.io/OWNER/IMAGE_NAME (only 2 levels allowed)
-          PRODUCER_IMAGE_NAME="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer"
-          CONSUMER_IMAGE_NAME="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer"
-          TAG="${GITHUB_REF#refs/heads/}"
-          TAG="${TAG//\//-}"
-          
-          # List all built images to find producer and consumer
-          echo "🔍 Listing built images..."
-          docker images
-          
-          # Find producer image (from Dockerfile.main - used by producer-players and producer-scoreboard)
-          PRODUCER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep -E "producer-(players|scoreboard)" | head -1 | cut -d: -f1)
-          
-          # Find consumer image (from Dockerfile.consumer - used by spark-consumer-*)
-          CONSUMER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep -E "spark-consumer" | head -1 | cut -d: -f1)
-          
-          # Tag and push producer image
-          if [ -n "$PRODUCER_IMAGE" ]; then
-            echo "📦 Tagging and pushing producer image: ${PRODUCER_IMAGE}"
-            docker tag ${PRODUCER_IMAGE}:latest ${PRODUCER_IMAGE_NAME}:${TAG}
-            docker tag ${PRODUCER_IMAGE}:latest ${PRODUCER_IMAGE_NAME}:latest
-            docker push ${PRODUCER_IMAGE_NAME}:${TAG}
-            docker push ${PRODUCER_IMAGE_NAME}:latest
-            echo "✅ Pushed producer image"
-          else
-            echo "⚠️ Producer image not found"
-          fi
-          
-          # Tag and push consumer image
-          if [ -n "$CONSUMER_IMAGE" ]; then
-            echo "📦 Tagging and pushing consumer image: ${CONSUMER_IMAGE}"
-            docker tag ${CONSUMER_IMAGE}:latest ${CONSUMER_IMAGE_NAME}:${TAG}
-            docker tag ${CONSUMER_IMAGE}:latest ${CONSUMER_IMAGE_NAME}:latest
-            docker push ${CONSUMER_IMAGE_NAME}:${TAG}
-            docker push ${CONSUMER_IMAGE_NAME}:latest
-            echo "✅ Pushed consumer image"
-          else
-            echo "⚠️ Consumer image not found"
-          fi
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          REPO=$(basename "${{ github.repository }}")
+          TAG=main
+
+          docker tag azuresparkkafka_clean-producer-players:latest ghcr.io/$OWNER/$REPO/producer:$TAG
+          docker tag azuresparkkafka_clean-spark-consumer-players:latest ghcr.io/$OWNER/$REPO/consumer:$TAG
+
+          docker push ghcr.io/$OWNER/$REPO/producer:$TAG
+          docker push ghcr.io/$OWNER/$REPO/consumer:$TAG
