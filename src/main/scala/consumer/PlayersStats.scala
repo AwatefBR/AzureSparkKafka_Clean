@@ -92,16 +92,40 @@ object PlayersStats {
       )
       .withColumn("updated_at", current_timestamp())
 
-    // 8️⃣ Écriture Azure SQL
+    // Variables de monitoring (partagées entre batches)
+    var totalMatchesProcessed = 0L
+    var totalPlayersSeen = scala.collection.mutable.Set[String]()
+
+    // 8️⃣ Écriture Azure SQL avec monitoring
     val query = playerStats.writeStream
       .outputMode("update")
       .trigger(Trigger.ProcessingTime("30 seconds"))
       .foreachBatch { (batchDF: DataFrame, batchId: Long) =>
         if (!batchDF.isEmpty) {
-          println(
-            s"[PlayersStats] Batch $batchId → écriture ${batchDF.count()} lignes"
-          )
-          Utils.writeToAzure("dbo.PlayerStats")(batchDF, batchId)
+          val playerCount = batchDF.count()
+          val playersInBatch = batchDF.select("playerName").collect().map(_.getString(0)).toSet
+          
+          // Estimer les matchs traités depuis games_played (somme des parties des joueurs du batch)
+          val matchesRow = batchDF.agg(sum("games_played").as("total")).collect()(0)
+          val matchesInBatch = try {
+            val value = matchesRow.getAs[java.lang.Long]("total")
+            if (value != null) value.longValue() else 0L
+          } catch {
+            case _: Exception => 0L
+          }
+          totalMatchesProcessed += matchesInBatch
+          totalPlayersSeen ++= playersInBatch
+          
+          println(s"[PlayersStats] 📊 Batch $batchId →")
+          println(s"  - Joueurs dans le batch: $playerCount")
+          println(s"  - Matchs dans le batch: $matchesInBatch")
+          println(s"  - Joueurs uniques totaux: ${totalPlayersSeen.size}")
+          println(s"  - Matchs traités totaux: $totalMatchesProcessed")
+          println(s"  - Écriture vers Azure SQL (MERGE/UPSERT)...")
+          
+          Utils.writeToAzure("dbo.PlayerStats", useUpsert = true)(batchDF, batchId)
+          
+          println(s"[PlayersStats] ✅ Batch $batchId terminé")
         } else {
           println(s"[PlayersStats] Batch $batchId vide")
         }

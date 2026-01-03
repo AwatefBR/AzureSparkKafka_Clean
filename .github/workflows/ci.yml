@@ -76,7 +76,9 @@ jobs:
         run: |
           # Convert repository owner to lowercase (required for Docker image names)
           REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE_PREFIX="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean"
+          # GitHub Container Registry format: ghcr.io/OWNER/IMAGE_NAME (only 2 levels allowed)
+          PRODUCER_IMAGE_NAME="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer"
+          CONSUMER_IMAGE_NAME="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer"
           TAG="${GITHUB_REF#refs/heads/}"
           TAG="${TAG//\//-}"
           
@@ -93,10 +95,10 @@ jobs:
           # Tag and push producer image
           if [ -n "$PRODUCER_IMAGE" ]; then
             echo "📦 Tagging and pushing producer image: ${PRODUCER_IMAGE}"
-            docker tag ${PRODUCER_IMAGE}:latest ${IMAGE_PREFIX}/producer:${TAG}
-            docker tag ${PRODUCER_IMAGE}:latest ${IMAGE_PREFIX}/producer:latest
-            docker push ${IMAGE_PREFIX}/producer:${TAG}
-            docker push ${IMAGE_PREFIX}/producer:latest
+            docker tag ${PRODUCER_IMAGE}:latest ${PRODUCER_IMAGE_NAME}:${TAG}
+            docker tag ${PRODUCER_IMAGE}:latest ${PRODUCER_IMAGE_NAME}:latest
+            docker push ${PRODUCER_IMAGE_NAME}:${TAG}
+            docker push ${PRODUCER_IMAGE_NAME}:latest
             echo "✅ Pushed producer image"
           else
             echo "⚠️ Producer image not found"
@@ -105,10 +107,10 @@ jobs:
           # Tag and push consumer image
           if [ -n "$CONSUMER_IMAGE" ]; then
             echo "📦 Tagging and pushing consumer image: ${CONSUMER_IMAGE}"
-            docker tag ${CONSUMER_IMAGE}:latest ${IMAGE_PREFIX}/consumer:${TAG}
-            docker tag ${CONSUMER_IMAGE}:latest ${IMAGE_PREFIX}/consumer:latest
-            docker push ${IMAGE_PREFIX}/consumer:${TAG}
-            docker push ${IMAGE_PREFIX}/consumer:latest
+            docker tag ${CONSUMER_IMAGE}:latest ${CONSUMER_IMAGE_NAME}:${TAG}
+            docker tag ${CONSUMER_IMAGE}:latest ${CONSUMER_IMAGE_NAME}:latest
+            docker push ${CONSUMER_IMAGE_NAME}:${TAG}
+            docker push ${CONSUMER_IMAGE_NAME}:latest
             echo "✅ Pushed consumer image"
           else
             echo "⚠️ Consumer image not found"
