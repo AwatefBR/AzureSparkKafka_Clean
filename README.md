@@ -1,144 +1,113 @@
-README — Streaming temps réel League of Legends → Azure SQL
- Objectif du projet
+README — lol-streaming-clean
+======================================
 
-Ce projet met en place un pipeline de données temps réel basé sur des données de matchs League of Legends.
-Il collecte des informations provenant de l’API Riot (players & scoreboard), les envoie dans Kafka, puis les consomme avec Spark Structured Streaming afin de les stocker dans Azure SQL Database.
+Introduction
+------------
+Ce projet met en place un pipeline de streaming complet pour des données de matchs League of Legends exécuté depuis une VM Azure. Sur la VM, la base PostgreSQL est (re)construite à partir d'un dump SQL : les producers Spark lisent ces tables sources, publient des messages JSON dans Kafka, et plusieurs consumers Spark consomment ces topics pour recréer/mettre à jour quatre tables en sortie (ex.: `dbo.Players`, `dbo.Scoreboard`, `dbo.PlayerStats`, `dbo.TeamStats`), dont l'une est essentiellement un copier/coller et l'autre une transformation agrégée (TeamStats). Les résultats sont écrits dans Azure SQL pour être exploités en BI (Power BI).
+    
+But
+----
 
-L’objectif est de :
+Pipeline de streaming temps réel pour données League of Legends :
 
-- Traiter des flux en continu
+- Lire des tables sources dans PostgreSQL (dump fourni)
+- Simuler / exporter ces données dans Kafka (producers Spark) 
+- Consommer les topics Kafka avec Spark Structured Streaming (consumers)
+- Transformer / agréger les données (PlayerStats, TeamStats...) et écrire dans **Azure SQL**
+- Exploiter les données depuis Power BI (ou autre outil de BI)
 
-- Nettoyer / transformer les données avant stockage
+Architecture (résumé)
+--------------------
 
-- Rendre les données disponibles pour l’analyse & la BI (Power BI)
+- Producers (services Docker) : lisent PostgreSQL et publient dans Kafka
+- Kafka + Zookeeper : broker de messages
+- PostgreSQL : base de données source (dump → restore)
+- Spark (master + worker) : exécute producers et consumers
+- Consumers Spark : lisent Kafka, appliquent schémas, dédup, calculs et écrivent dans Azure SQL
+- Volumes Docker : stockent checkpoints Spark (résilience/reprise)
 
+Principales briques (fichiers clés)
+----------------------------------
 
-Services deployés via Docker Compose :
+- `docker-compose.yml` : composition des services (kafka, zookeeper, postgres, spark, producers/consumers)
+- `Dockerfile.main` / `Dockerfile.consumer` : images pour producers et consumers
+- `src/main/scala/producer/*` : producers (ex: `MainApp.scala`) — lisent Postgres, envoient `players` et `scoreboardplayers`
+- `src/main/scala/consumer/*` : consumers (ex: `SparkToAzureSql.scala`, `PlayersStats.scala`)
+- `src/main/scala/common/Config.scala` : variables d'environnement requises
+- `db/dump.sql` et `postgres-init/` : scripts d'initialisation Postgres
+- `reset.sh` : script utile pour nettoyer topics, volumes, images et relancer l'environnement
 
-| Service               | Rôle                                                 |
-| --------------------- | ---------------------------------------------------- |
-| `players-producer`    | Récupère les infos joueurs + stats                   |
-| `scoreboard-producer` | Récupère les infos du scoreboard en match            |
-| `kafka`               | Message broker pour le streaming                     |
-| `zookeeper`           | Nécessaire au fonctionnement de Kafka                |
-| `spark-master`        | Master du cluster Spark                              |
-| `spark-worker`        | Worker exécutant les tâches Spark                    |
-| `spark-consumer`      | Lit Kafka, transforme & écrit dans Azure SQL         |
-| `kafka-ui`            | Interface graphique pour visualiser les topics Kafka |
+Flux de données (étapes)
+------------------------
 
-|Pré-requis
-| Logiciel       | Version    |
-| -------------- | ---------- |
-| Docker         | ≥ 24       |
-| Docker Compose | ≥ 2        |
-| Scala          | 2.12       |
-| SBT            | ≥ 1.8      |
-| Java           | OpenJDK 11 |
+1. Rebuild PostgreSQL depuis le dump (sur votre VM Azure)
+   - Option A (rapide, redéploiement propre) :
+     ```bash
+     docker compose down -v --remove-orphans
+     docker compose up -d postgres
+     # Le dossier `postgres-init/` est monté dans /docker-entrypoint-initdb.d et s'exécutera au premier démarrage
+     ```
+   - Option B (restauration manuelle d'un dump SQL existant) :
+     ```bash
+     # copier le dump dans la machine (si nécessaire) puis :
+     docker compose up -d postgres
+     sleep 5
+     docker exec -i $(docker compose ps -q postgres) psql -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-lol} < db/dump.sql
+     ```
 
-Azure SQL doit être accessible en public et la white-list IP configurée.
+2. Lancer / rebuild l'application
+   ```bash
+   sbt clean assembly                       # génère target/scala-2.12/lol-streaming-assembly-0.1.0.jar
+   docker compose build --no-cache
+   docker compose up -d
+   ```
 
- Démarrer le pipeline
+3. Vérifier les topics Kafka
+   ```bash
+   docker exec -it $(docker compose ps -q kafka) kafka-topics --bootstrap-server kafka:9092 --list
+   ```
+   - Topics utilisés par le code : **players** et **scoreboardplayers** (attention : l'ancien README mentionnait `scoreboard` mais le code produit `scoreboardplayers`).
 
-Compiler & packager le consumer Spark:
+4. Producers → Kafka
+   - Les producers lisent les tables Postgres (`players`, `scoreboardplayers`), ajoutent une `rowId` et publient des messages JSON dans Kafka.
 
-sbt clean assembly
+5. Consumers Spark → Azure SQL
+   - `SparkToAzureSql` consomme les topics, parse le JSON avec un schéma strict, déduplique et écrit dans Azure SQL :
+     - `dbo.Players` (copy des joueurs)
+     - `dbo.Scoreboard` (copy des lignes scoreboard)
+   - `PlayersStats` (job séparé) agrège les événements pour calculer des statistiques par joueur et écrit dans `dbo.PlayerStats`.
+   - Schéma `TeamStatsSchema` est présent (dans `consumer/schemas`) — si un job TeamStats est ajouté, il pourra écrire `dbo.TeamStats` (aggrégations par équipe).
 
-La commande génère le jar :
-target/scala-2.12/lol-streaming-assembly-0.1.0.jar
-
-(Re)build des images Docker:
-
-docker compose build
-
-Lancer le cluster + producers + consumer:
-
-docker compose up -d
-
-Vérifier que tout fonctionne:
-
-docker compose ps
-
-Consulter les logs (exemples):
-
-docker logs -f lol-streaming-clean-spark-consumer-1
-docker logs -f lol-streaming-clean-players-producer-1
-docker logs -f lol-streaming-clean-scoreboard-producer-1
-
- Arrêter l'ensemble
-docker compose down
-
-Durant le run:
-Si l'espace disk est saturé
-Check : df -h (si 100%) --> supprimer les conteneurs arrétés, images inutilisées, volumes non attachés --> docker system prune -a --volumes
-
-
-Tout relancer (base propre) :
-docker compose down -v --remove-orphans
-sleep 5
-docker system prune -af
-sleep 5
-docker volume prune -f
-sleep 5
-docker network prune -f
-sleep 5
-sbt clean assembly
-sleep 5
-docker compose build --no-cache
-sleep 5
-docker compose up -d
-sleep 5
+6. Visualisation
+   - Connecter Power BI (ou autre outil) à **Azure SQL** pour créer dashboards / rapports.
 
 
-verifier que les topics existent :
+Notes & points d'attention
+--------------------------
 
-docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
-  --bootstrap-server kafka:9092 --list
+- Azure SQL doit autoriser l'IP publique de la VM (white-list). Sinon, les writes échoueront.
+- Checkpoints Spark : montés sur volumes Docker (`spark-checkpoints-*`). Pour repartir proprement, supprimer ou réinitialiser ces volumes (`docker volume rm -f ...`) ou utiliser `reset.sh`.
+- Attention aux erreurs de disque plein : surveillez `df -h` et nettoyez images/volumes si nécessaire (`docker system prune -a --volumes`).
+- `Dockerfile.consumer` télécharge des jars au build ; assurez-vous d'avoir connectivité réseau lors de `docker compose build`.
+- Logs utiles :
+  - `docker logs -f <container>`
+  - `docker compose ps`
 
-creer les topics manuellement:
+Troubleshooting rapide
+---------------------
 
-docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
-  --create --topic players \
-  --bootstrap-server kafka:9092 \
-  --partitions 1 --replication-factor 1
+- Pas de messages Kafka → vérifier `KAFKA_BOOTSTRAP`, que les producers tournent et que les topics existent.
+- Consumers ne se connectent pas à Azure SQL → vérifier variables `AZURE_SQL_*` et la whitelist IP sur le serveur SQL.
+- Problèmes de reprise / doublons → vérifier les parcours de checkpoints et la configuration `checkpointLocation` dans les consumers.
 
-docker exec -it lol-streaming-clean-kafka-1 kafka-topics \
-  --create --topic scoreboard \
-  --bootstrap-server kafka:9092 \
-  --partitions 1 --replication-factor 1
+Commandes utiles
+-----------------
 
-
-Effacer les ckp defectueux
-
-sudo rm -rf /tmp/checkpoints/scoreboard
-sudo rm -rf /tmp/checkpoints/players
-
-docker compose down
-sudo rm -rf /tmp/checkpoints /tmp/spark*
-docker system prune -a --volumes -f
-sudo systemctl restart docker
-
-tout supprimer y compris les volumes persistants
-docker-compose down -v
+- Build jar : `sbt clean assembly`
+- Build images : `docker compose build`
+- Lancer tout : `docker compose up -d`
+- Arrêter et supprimer volumes : `docker compose down -v --remove-orphans`
+- Supprimer topics Kafka : utiliser `kafka-topics --delete` (script `reset.sh` automatise cela)
 
 
-SELECT *
-FROM dbo.Scoreboard
-ORDER BY CAST(id AS INT)
-LIMIT 100 
 
-java.io.IOException: No space left on device
-🧩 Interprétation
-Spark (ou ton container Docker) n’a plus d’espace disque disponible pour :
-
-écrire ses fichiers temporaires (/tmp, /tmp/blockmgr-...)
-
-stocker les checkpoints Spark
-
-ou éventuellement gérer les shuffle / cache intermédiaires.
-
-C’est une erreur du système de fichiers, pas une erreur applicative Spark.
-
-cd ~/lol-streaming-clean
-git add .github/workflows/deploy.yml
-git commit -m "Use docker compose in deploy workflow"
-git push
