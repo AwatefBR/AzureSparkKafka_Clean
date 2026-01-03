@@ -21,7 +21,14 @@ jobs:
           terraform_version: 1.5.0
 
       - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+        run: |
+          echo "🔍 Vérification du formatage Terraform..."
+          if ! terraform fmt -check -recursive; then
+            echo "❌ Certains fichiers ne sont pas correctement formatés."
+            echo "💡 Exécutez 'terraform fmt -recursive' dans le dossier infra/ pour corriger."
+            exit 1
+          fi
+          echo "✅ Tous les fichiers sont correctement formatés."
         working-directory: infra
 
       - name: Terraform Init
