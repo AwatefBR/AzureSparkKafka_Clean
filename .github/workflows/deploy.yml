@@ -1,24 +1,24 @@
 name: CD - Test pull & docker compose up
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - spark-clean-devops
+  workflow_run:
+    workflows:
+      - CI - sbt assembly & Docker build
+    types:
+      - completed
 
 jobs:
   test-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read
 
     steps:
-      # 1) Checkout (pour avoir docker-compose.yml)
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Login to GHCR
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -26,39 +26,22 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3) Export variables (APP_TAG)
-      - name: Set deploy variables
+      - name: Set deploy variables (branch tag)
         run: |
-          echo "APP_TAG=${{ github.sha }}" >> $GITHUB_ENV
+          echo "APP_TAG=spark-clean-devops" >> $GITHUB_ENV
           echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "REPO=$(basename '${{ github.repository }}')" >> $GITHUB_ENV
 
-      # 4) Pull images explicitly (optionnel mais lisible)
       - name: Pull images
         run: |
-          PRODUCER_IMAGE="ghcr.io/$OWNER/$REPO/producer:$APP_TAG"
-          CONSUMER_IMAGE="ghcr.io/$OWNER/$REPO/consumer:$APP_TAG"
+          docker pull ghcr.io/$OWNER/lol-streaming-clean-producer:$APP_TAG
+          docker pull ghcr.io/$OWNER/lol-streaming-clean-consumer:$APP_TAG
 
-          echo "📦 Pulling $PRODUCER_IMAGE"
-          docker pull $PRODUCER_IMAGE
-
-          echo "📦 Pulling $CONSUMER_IMAGE"
-          docker pull $CONSUMER_IMAGE
-
-      # 5) docker compose pull (double sécurité)
       - name: Docker compose pull
         run: docker compose pull
 
-      # 6) docker compose up -d
       - name: Docker compose up
         run: docker compose up -d
 
-      # 7) Status
-      - name: Check containers
-        run: |
-          docker compose ps
-          docker images | grep ghcr.io || true
-
-      # 8) Logs courts (debug)
-      - name: Show logs (short)
-        run: docker compose logs --tail=20 || true
+      - name: Status
+        run: docker compose ps
