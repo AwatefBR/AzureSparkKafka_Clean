@@ -1,220 +1,64 @@
-name: Deploy - Docker images to Azure VM
+name: CD - Test pull & docker compose up
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        type: choice
-        options:
-          - dev
-          - prod
   push:
     branches:
       - spark-clean-devops
-    paths-ignore:
-      - '**.md'
-      - '.gitignore'
 
 jobs:
-  deploy:
+  test-deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment || 'dev' }}
     permissions:
       contents: read
       packages: read
 
     steps:
-      # 1) Récupérer le code
+      # 1) Checkout (pour avoir docker-compose.yml)
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Setup Terraform
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      # 2) Login to GHCR
+      - name: Login to GHCR
+        uses: docker/login-action@v3
         with:
-          terraform_version: 1.5.0
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3) Login to Azure
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # 4) Terraform Init avec backend
-      - name: Terraform Init
-        run: terraform init
-        working-directory: infra
-        env:
-          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-
-      # 5) Terraform Plan et Apply pour obtenir les outputs (IP de la VM)
-      - name: Terraform Plan
+      # 3) Export variables (APP_TAG)
+      - name: Set deploy variables
         run: |
-          ENV="${{ github.event.inputs.environment || 'dev' }}"
-          terraform plan -var-file="envs/${ENV}/terraform.tfvars" -out=tfplan
-        working-directory: infra
-        env:
-          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          echo "APP_TAG=${{ github.sha }}" >> $GITHUB_ENV
+          echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "REPO=$(basename '${{ github.repository }}')" >> $GITHUB_ENV
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
-        working-directory: infra
-
-      # 6) Récupérer l'IP publique de la VM
-      - name: Get VM Public IP
-        id: terraform-output
+      # 4) Pull images explicitly (optionnel mais lisible)
+      - name: Pull images
         run: |
-          VM_IP=$(terraform output -raw vm_public_ip)
-          echo "vm_ip=${VM_IP}" >> $GITHUB_OUTPUT
-          echo "✅ VM Public IP: ${VM_IP}"
-        working-directory: infra
+          PRODUCER_IMAGE="ghcr.io/$OWNER/$REPO/producer:$APP_TAG"
+          CONSUMER_IMAGE="ghcr.io/$OWNER/$REPO/consumer:$APP_TAG"
 
-      # 7) Setup SSH key
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.AZURE_VM_SSH_PRIVATE_KEY }}
+          echo "📦 Pulling $PRODUCER_IMAGE"
+          docker pull $PRODUCER_IMAGE
 
-      # 8) Ajouter la VM aux known hosts
-      - name: Add VM to known hosts
+          echo "📦 Pulling $CONSUMER_IMAGE"
+          docker pull $CONSUMER_IMAGE
+
+      # 5) docker compose pull (double sécurité)
+      - name: Docker compose pull
+        run: docker compose pull
+
+      # 6) docker compose up -d
+      - name: Docker compose up
+        run: docker compose up -d
+
+      # 7) Status
+      - name: Check containers
         run: |
-          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
-          ssh-keyscan -H ${VM_IP} >> ~/.ssh/known_hosts
+          docker compose ps
+          docker images | grep ghcr.io || true
 
-      # 9) Login to GHCR sur la VM
-      - name: Login to GHCR on VM
-        run: |
-          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
-          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          
-          ssh azureuser@${VM_IP} << EOF
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.repository_owner }}" --password-stdin
-          EOF
-
-      # 10) Pull les images Docker depuis GHCR
-      - name: Pull Docker images from GHCR
-        run: |
-          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
-          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          TAG="${GITHUB_REF#refs/heads/}"
-          TAG="${TAG//\//-}"
-          
-          PRODUCER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:${TAG}"
-          CONSUMER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:${TAG}"
-          
-          echo "📦 Pulling producer image: ${PRODUCER_IMAGE}"
-          echo "📦 Pulling consumer image: ${CONSUMER_IMAGE}"
-          
-          ssh azureuser@${VM_IP} << EOF
-            docker pull ${PRODUCER_IMAGE} || docker pull ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:latest
-            docker pull ${CONSUMER_IMAGE} || docker pull ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:latest
-            
-            # Tag les images en latest si nécessaire
-            docker tag ${PRODUCER_IMAGE} ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:latest 2>/dev/null || true
-            docker tag ${CONSUMER_IMAGE} ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:latest 2>/dev/null || true
-          EOF
-
-      # 11) Mettre à jour docker-compose.yml pour utiliser les images GHCR (localement)
-      - name: Update docker-compose.yml to use GHCR images
-        run: |
-          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          TAG="${GITHUB_REF#refs/heads/}"
-          TAG="${TAG//\//-}"
-          
-          PRODUCER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:${TAG}"
-          CONSUMER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:${TAG}"
-          
-          # Installer PyYAML si nécessaire
-          pip3 install pyyaml --quiet || python3 -m pip install pyyaml --quiet
-          
-          # Utiliser Python pour modifier le docker-compose.yml
-          python3 << PYTHON_SCRIPT
-          import yaml
-          import sys
-          
-          producer_image = "${PRODUCER_IMAGE}"
-          consumer_image = "${CONSUMER_IMAGE}"
-          
-          with open('docker-compose.yml', 'r') as f:
-              compose = yaml.safe_load(f)
-          
-          # Mettre à jour les services producer
-          for service_name in ['producer-players', 'producer-scoreboard']:
-              if service_name in compose.get('services', {}):
-                  service = compose['services'][service_name]
-                  # Supprimer la section build
-                  if 'build' in service:
-                      del service['build']
-                  # Ajouter l'image
-                  service['image'] = producer_image
-          
-          # Mettre à jour les services consumer
-          for service_name in ['spark-consumer-players', 'spark-consumer-scoreboard', 'spark-consumer-players-stats']:
-              if service_name in compose.get('services', {}):
-                  service = compose['services'][service_name]
-                  # Supprimer la section build
-                  if 'build' in service:
-                      del service['build']
-                  # Ajouter l'image
-                  service['image'] = consumer_image
-          
-          with open('docker-compose.yml', 'w') as f:
-              yaml.dump(compose, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
-          
-          print("✅ docker-compose.yml updated successfully")
-          PYTHON_SCRIPT
-
-      # 12) Copier docker-compose.yml et .env sur la VM
-      - name: Copy deployment files to VM
-        run: |
-          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
-          
-          # Créer le répertoire de déploiement sur la VM
-          ssh azureuser@${VM_IP} "mkdir -p ~/lol-streaming-clean"
-          
-          # Copier docker-compose.yml (déjà modifié)
-          scp docker-compose.yml azureuser@${VM_IP}:~/lol-streaming-clean/
-          
-          # Copier .env si présent (peut être géré via secrets)
-          if [ -f .env ]; then
-            scp .env azureuser@${VM_IP}:~/lol-streaming-clean/
-          fi
-
-      # 13) Déployer avec docker-compose
-      - name: Deploy with docker-compose
-        run: |
-          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
-          
-          ssh azureuser@${VM_IP} << 'EOF'
-            cd ~/lol-streaming-clean
-            
-            echo "🚀 Stopping existing containers..."
-            docker compose down || docker-compose down || true
-            
-            echo "🚀 Pulling latest images..."
-            docker compose pull || docker-compose pull || true
-            
-            echo "🚀 Starting services..."
-            docker compose up -d || docker-compose up -d
-            
-            echo "✅ Deployment completed!"
-            echo "📊 Container status:"
-            docker compose ps || docker-compose ps
-          EOF
-
-      # 14) Vérifier le statut des conteneurs
-      - name: Verify deployment
-        run: |
-          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
-          
-          ssh azureuser@${VM_IP} << 'EOF'
-            echo "🔍 Checking container health..."
-            sleep 10
-            docker compose ps || docker-compose ps
-            docker compose logs --tail=50 || docker-compose logs --tail=50
-          EOF
-
+      # 8) Logs courts (debug)
+      - name: Show logs (short)
+        run: docker compose logs --tail=20 || true
