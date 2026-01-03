@@ -1,53 +1,220 @@
-name: Deploy to lol-vm
+name: Deploy - Docker images to Azure VM
 
 on:
   workflow_dispatch:
     inputs:
-      mode:
-        description: "resume (restart only) or update (pull + sbt + build + up)"
+      environment:
+        description: 'Environment to deploy to'
         required: true
-        default: "resume"
         type: choice
         options:
-          - resume
-          - update
+          - dev
+          - prod
+  push:
+    branches:
+      - spark-clean-devops
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'dev' }}
+    permissions:
+      contents: read
+      packages: read
 
     steps:
-      - name: SSH into VM and deploy
-        uses: appleboy/ssh-action@v1.2.0
+      # 1) Récupérer le code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2) Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            set -e
-            cd /home/azureuser/lol-streaming-clean
+          terraform_version: 1.5.0
 
-            MODE="${{ github.event.inputs.mode }}"
-            echo "🚀 Deploy mode: $MODE"
+      # 3) Login to Azure
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-            if [ "$MODE" = "update" ]; then
-              # Check for uncommitted changes and handle them
-              if ! git diff --quiet || ! git diff --cached --quiet; then
-                echo "⚠️ Uncommitted changes detected. Stashing them..."
-                git stash push -m "Auto-stash before deploy $(date +%Y%m%d_%H%M%S)" || true
-              fi
-              
-              # Fetch and reset to match remote (discards local commits if any)
-              echo "📥 Fetching latest changes..."
-              git fetch origin spark-clean-devops
-              git reset --hard origin/spark-clean-devops
-              git clean -fd
-              
-              sbt clean assembly
-              docker compose build || docker-compose build
-              docker compose up -d || docker-compose up -d
-            else
-              docker compose up -d 
-            fi
+      # 4) Terraform Init avec backend
+      - name: Terraform Init
+        run: terraform init
+        working-directory: infra
+        env:
+          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
 
-            docker compose ps
+      # 5) Terraform Plan et Apply pour obtenir les outputs (IP de la VM)
+      - name: Terraform Plan
+        run: |
+          ENV="${{ github.event.inputs.environment || 'dev' }}"
+          terraform plan -var-file="envs/${ENV}/terraform.tfvars" -out=tfplan
+        working-directory: infra
+        env:
+          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+        working-directory: infra
+
+      # 6) Récupérer l'IP publique de la VM
+      - name: Get VM Public IP
+        id: terraform-output
+        run: |
+          VM_IP=$(terraform output -raw vm_public_ip)
+          echo "vm_ip=${VM_IP}" >> $GITHUB_OUTPUT
+          echo "✅ VM Public IP: ${VM_IP}"
+        working-directory: infra
+
+      # 7) Setup SSH key
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.AZURE_VM_SSH_PRIVATE_KEY }}
+
+      # 8) Ajouter la VM aux known hosts
+      - name: Add VM to known hosts
+        run: |
+          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
+          ssh-keyscan -H ${VM_IP} >> ~/.ssh/known_hosts
+
+      # 9) Login to GHCR sur la VM
+      - name: Login to GHCR on VM
+        run: |
+          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
+          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          
+          ssh azureuser@${VM_IP} << EOF
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.repository_owner }}" --password-stdin
+          EOF
+
+      # 10) Pull les images Docker depuis GHCR
+      - name: Pull Docker images from GHCR
+        run: |
+          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
+          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG="${GITHUB_REF#refs/heads/}"
+          TAG="${TAG//\//-}"
+          
+          PRODUCER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:${TAG}"
+          CONSUMER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:${TAG}"
+          
+          echo "📦 Pulling producer image: ${PRODUCER_IMAGE}"
+          echo "📦 Pulling consumer image: ${CONSUMER_IMAGE}"
+          
+          ssh azureuser@${VM_IP} << EOF
+            docker pull ${PRODUCER_IMAGE} || docker pull ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:latest
+            docker pull ${CONSUMER_IMAGE} || docker pull ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:latest
+            
+            # Tag les images en latest si nécessaire
+            docker tag ${PRODUCER_IMAGE} ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:latest 2>/dev/null || true
+            docker tag ${CONSUMER_IMAGE} ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:latest 2>/dev/null || true
+          EOF
+
+      # 11) Mettre à jour docker-compose.yml pour utiliser les images GHCR (localement)
+      - name: Update docker-compose.yml to use GHCR images
+        run: |
+          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG="${GITHUB_REF#refs/heads/}"
+          TAG="${TAG//\//-}"
+          
+          PRODUCER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-producer:${TAG}"
+          CONSUMER_IMAGE="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean-consumer:${TAG}"
+          
+          # Installer PyYAML si nécessaire
+          pip3 install pyyaml --quiet || python3 -m pip install pyyaml --quiet
+          
+          # Utiliser Python pour modifier le docker-compose.yml
+          python3 << PYTHON_SCRIPT
+          import yaml
+          import sys
+          
+          producer_image = "${PRODUCER_IMAGE}"
+          consumer_image = "${CONSUMER_IMAGE}"
+          
+          with open('docker-compose.yml', 'r') as f:
+              compose = yaml.safe_load(f)
+          
+          # Mettre à jour les services producer
+          for service_name in ['producer-players', 'producer-scoreboard']:
+              if service_name in compose.get('services', {}):
+                  service = compose['services'][service_name]
+                  # Supprimer la section build
+                  if 'build' in service:
+                      del service['build']
+                  # Ajouter l'image
+                  service['image'] = producer_image
+          
+          # Mettre à jour les services consumer
+          for service_name in ['spark-consumer-players', 'spark-consumer-scoreboard', 'spark-consumer-players-stats']:
+              if service_name in compose.get('services', {}):
+                  service = compose['services'][service_name]
+                  # Supprimer la section build
+                  if 'build' in service:
+                      del service['build']
+                  # Ajouter l'image
+                  service['image'] = consumer_image
+          
+          with open('docker-compose.yml', 'w') as f:
+              yaml.dump(compose, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+          
+          print("✅ docker-compose.yml updated successfully")
+          PYTHON_SCRIPT
+
+      # 12) Copier docker-compose.yml et .env sur la VM
+      - name: Copy deployment files to VM
+        run: |
+          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
+          
+          # Créer le répertoire de déploiement sur la VM
+          ssh azureuser@${VM_IP} "mkdir -p ~/lol-streaming-clean"
+          
+          # Copier docker-compose.yml (déjà modifié)
+          scp docker-compose.yml azureuser@${VM_IP}:~/lol-streaming-clean/
+          
+          # Copier .env si présent (peut être géré via secrets)
+          if [ -f .env ]; then
+            scp .env azureuser@${VM_IP}:~/lol-streaming-clean/
+          fi
+
+      # 13) Déployer avec docker-compose
+      - name: Deploy with docker-compose
+        run: |
+          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
+          
+          ssh azureuser@${VM_IP} << 'EOF'
+            cd ~/lol-streaming-clean
+            
+            echo "🚀 Stopping existing containers..."
+            docker compose down || docker-compose down || true
+            
+            echo "🚀 Pulling latest images..."
+            docker compose pull || docker-compose pull || true
+            
+            echo "🚀 Starting services..."
+            docker compose up -d || docker-compose up -d
+            
+            echo "✅ Deployment completed!"
+            echo "📊 Container status:"
+            docker compose ps || docker-compose ps
+          EOF
+
+      # 14) Vérifier le statut des conteneurs
+      - name: Verify deployment
+        run: |
+          VM_IP="${{ steps.terraform-output.outputs.vm_ip }}"
+          
+          ssh azureuser@${VM_IP} << 'EOF'
+            echo "🔍 Checking container health..."
+            sleep 10
+            docker compose ps || docker-compose ps
+            docker compose logs --tail=50 || docker-compose logs --tail=50
+          EOF
+
