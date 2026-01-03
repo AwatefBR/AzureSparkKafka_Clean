@@ -30,3 +30,54 @@ jobs:
       - name: Docker compose build
         run: |
           docker compose build --no-cache || docker-compose build --no-cache
+
+      # 4) Login to GitHub Container Registry
+      - name: Login to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 5) Tag and push images to GHCR
+      - name: Tag and push images
+        if: github.event_name == 'push'
+        run: |
+          IMAGE_PREFIX="ghcr.io/${{ github.repository }}"
+          TAG="${GITHUB_REF#refs/heads/}"
+          TAG="${TAG//\//-}"
+          
+          # List all built images to find producer and consumer
+          echo "🔍 Listing built images..."
+          docker images
+          
+          # Find producer image (from Dockerfile.main - used by producer-players and producer-scoreboard)
+          PRODUCER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep -E "producer-(players|scoreboard)" | head -1 | cut -d: -f1)
+          
+          # Find consumer image (from Dockerfile.consumer - used by spark-consumer-*)
+          CONSUMER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep -E "spark-consumer" | head -1 | cut -d: -f1)
+          
+          # Tag and push producer image
+          if [ -n "$PRODUCER_IMAGE" ]; then
+            echo "📦 Tagging and pushing producer image: ${PRODUCER_IMAGE}"
+            docker tag ${PRODUCER_IMAGE}:latest ${IMAGE_PREFIX}/producer:${TAG}
+            docker tag ${PRODUCER_IMAGE}:latest ${IMAGE_PREFIX}/producer:latest
+            docker push ${IMAGE_PREFIX}/producer:${TAG}
+            docker push ${IMAGE_PREFIX}/producer:latest
+            echo "✅ Pushed producer image"
+          else
+            echo "⚠️ Producer image not found"
+          fi
+          
+          # Tag and push consumer image
+          if [ -n "$CONSUMER_IMAGE" ]; then
+            echo "📦 Tagging and pushing consumer image: ${CONSUMER_IMAGE}"
+            docker tag ${CONSUMER_IMAGE}:latest ${IMAGE_PREFIX}/consumer:${TAG}
+            docker tag ${CONSUMER_IMAGE}:latest ${IMAGE_PREFIX}/consumer:latest
+            docker push ${IMAGE_PREFIX}/consumer:${TAG}
+            docker push ${IMAGE_PREFIX}/consumer:latest
+            echo "✅ Pushed consumer image"
+          else
+            echo "⚠️ Consumer image not found"
+          fi
