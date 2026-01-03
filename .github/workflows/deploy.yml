@@ -11,25 +11,61 @@ jobs:
   test-deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: read
 
     steps:
-      - uses: actions/checkout@v4
+      # 1) Checkout pour récupérer docker-compose.yml
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: docker/login-action@v3
+      # 2) Login à GHCR
+      - name: Login to GHCR
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: |
+      # 3) Définir les variables (TOUT en lowercase)
+      - name: Set deploy variables
+        run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          REPO=$(basename "${{ github.repository }}")
-          TAG=main
+          REPO=$(basename "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
 
-          docker pull ghcr.io/$OWNER/$REPO/producer:$TAG
-          docker pull ghcr.io/$OWNER/$REPO/consumer:$TAG
+          echo "OWNER=$OWNER" >> $GITHUB_ENV
+          echo "REPO=$REPO" >> $GITHUB_ENV
+          echo "APP_TAG=main" >> $GITHUB_ENV
 
-      - run: docker compose up -d
+          echo "➡️ OWNER=$OWNER"
+          echo "➡️ REPO=$REPO"
+          echo "➡️ APP_TAG=main"
+
+      # 4) Pull explicite des images (test registry)
+      - name: Pull images from GHCR
+        run: |
+          echo "📦 Pull producer image"
+          docker pull ghcr.io/$OWNER/$REPO/producer:$APP_TAG
+
+          echo "📦 Pull consumer image"
+          docker pull ghcr.io/$OWNER/$REPO/consumer:$APP_TAG
+
+      # 5) docker compose pull (double sécurité)
+      - name: Docker compose pull
+        run: docker compose pull
+
+      # 6) docker compose up -d (runtime test)
+      - name: Docker compose up
+        run: docker compose up -d
+
+      # 7) Vérification des conteneurs
+      - name: Check containers status
+        run: |
+          docker compose ps
+          docker images | grep ghcr.io || true
+
+      # 8) Logs courts (debug)
+      - name: Show logs (last 20 lines)
+        run: docker compose logs --tail=20 || true
