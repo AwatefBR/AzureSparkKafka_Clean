@@ -74,7 +74,9 @@ jobs:
       - name: Tag and push images
         if: github.event_name == 'push'
         run: |
-          IMAGE_PREFIX="ghcr.io/${{ github.repository_owner }}/lol-streaming-clean"
+          # Convert repository owner to lowercase (required for Docker image names)
+          REPO_OWNER_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_PREFIX="ghcr.io/${REPO_OWNER_LOWER}/lol-streaming-clean"
           TAG="${GITHUB_REF#refs/heads/}"
           TAG="${TAG//\//-}"
           
