@@ -31,7 +31,18 @@ jobs:
             echo "🚀 Deploy mode: $MODE"
 
             if [ "$MODE" = "update" ]; then
-              git pull origin spark-clean-devops
+              # Check for uncommitted changes and handle them
+              if ! git diff --quiet || ! git diff --cached --quiet; then
+                echo "⚠️ Uncommitted changes detected. Stashing them..."
+                git stash push -m "Auto-stash before deploy $(date +%Y%m%d_%H%M%S)" || true
+              fi
+              
+              # Fetch and reset to match remote (discards local commits if any)
+              echo "📥 Fetching latest changes..."
+              git fetch origin spark-clean-devops
+              git reset --hard origin/spark-clean-devops
+              git clean -fd
+              
               sbt clean assembly
               docker compose build || docker-compose build
               docker compose up -d || docker-compose up -d
