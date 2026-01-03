@@ -9,6 +9,29 @@ on:
       - spark-clean-devops
 
 jobs:
+  terraform-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+        working-directory: infra
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+        working-directory: infra
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: infra
+
   build-and-docker:
     runs-on: ubuntu-latest
 
@@ -44,7 +67,7 @@ jobs:
       - name: Tag and push images
         if: github.event_name == 'push'
         run: |
-          IMAGE_PREFIX="ghcr.io/${{ github.repository }}"
+          IMAGE_PREFIX="ghcr.io/${{ github.repository_owner }}/lol-streaming-clean"
           TAG="${GITHUB_REF#refs/heads/}"
           TAG="${TAG//\//-}"
           
