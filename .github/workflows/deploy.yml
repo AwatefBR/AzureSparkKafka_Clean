@@ -17,6 +17,60 @@ jobs:
       packages: read
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Configure Azure credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        continue-on-error: true  # Fallback sur secrets si Terraform non configuré
+
+      - name: Get Infrastructure Values from Terraform
+        id: terraform
+        working-directory: infra
+        continue-on-error: true
+        env:
+          TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
+        run: |
+          # Essayer d'utiliser Terraform pour récupérer les valeurs
+          if terraform init -backend-config=backend-config.tfvars -input=false 2>/dev/null; then
+            VM_IP=$(terraform output -raw vm_public_ip 2>/dev/null || echo "")
+            SQL_FQDN=$(terraform output -raw sql_server_fqdn 2>/dev/null || echo "")
+            
+            if [ -n "$VM_IP" ] && [ -n "$SQL_FQDN" ]; then
+              echo "✅ Using Terraform outputs"
+              echo "vm_ip=$VM_IP" >> $GITHUB_OUTPUT
+              echo "sql_fqdn=$SQL_FQDN" >> $GITHUB_OUTPUT
+              echo "use_terraform=true" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️  Terraform outputs not available, using secrets"
+              echo "use_terraform=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "⚠️  Terraform not configured, using secrets"
+            echo "use_terraform=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set deployment variables
+        id: vars
+        run: |
+          # Déterminer les valeurs à utiliser (Terraform ou secrets)
+          if [ "${{ steps.terraform.outputs.use_terraform }}" == "true" ]; then
+            echo "VM_HOST=${{ steps.terraform.outputs.vm_ip }}" >> $GITHUB_OUTPUT
+            echo "AZURE_SQL_SERVER=${{ steps.terraform.outputs.sql_fqdn }}" >> $GITHUB_OUTPUT
+            echo "Using Terraform outputs" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "VM_HOST=${{ secrets.VM_HOST }}" >> $GITHUB_OUTPUT
+            echo "AZURE_SQL_SERVER=${{ secrets.AZURE_SQL_SERVER }}" >> $GITHUB_OUTPUT
+            echo "Using GitHub secrets (Terraform not configured)" >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: Deploy on VM via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
@@ -32,12 +86,14 @@ jobs:
           KAFKA_BOOTSTRAP: ${{ secrets.KAFKA_BOOTSTRAP }}
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          AZURE_SQL_SERVER: ${{ secrets.AZURE_SQL_SERVER }}
+          # Utiliser les valeurs déterminées dans l'étape précédente
+          AZURE_SQL_SERVER: ${{ steps.vars.outputs.AZURE_SQL_SERVER }}
           AZURE_SQL_DB: ${{ secrets.AZURE_SQL_DB }}
           AZURE_SQL_USER: ${{ secrets.AZURE_SQL_USER }}
           AZURE_SQL_PASSWORD: ${{ secrets.AZURE_SQL_PASSWORD }}
         with:
-          host: ${{ secrets.VM_HOST }}
+          # Utiliser la valeur déterminée dans l'étape précédente
+          host: ${{ steps.vars.outputs.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           envs: GITHUB_REPOSITORY_OWNER,GITHUB_REPOSITORY,GITHUB_TOKEN,APP_TAG,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,PGADMIN_EMAIL,PGADMIN_PASSWORD,KAFKA_BOOTSTRAP,POSTGRES_HOST,POSTGRES_PORT,AZURE_SQL_SERVER,AZURE_SQL_DB,AZURE_SQL_USER,AZURE_SQL_PASSWORD
@@ -174,3 +230,5 @@ jobs:
 
             docker compose -f docker-compose.prod.yml up -d --no-build
             docker compose -f docker-compose.prod.yml ps
+
+            #CICD SHIT
