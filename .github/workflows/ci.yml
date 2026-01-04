@@ -92,5 +92,6 @@ jobs:
           docker push $PRODUCER_IMAGE:latest
           docker push $CONSUMER_IMAGE:$TAG
           docker push $CONSUMER_IMAGE:latest
+          ls -lh target/scala-2.12
 
           echo "✅ Images pushed successfully"
