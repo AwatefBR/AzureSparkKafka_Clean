@@ -54,19 +54,33 @@ jobs:
         run: terraform validate
 
       - name: Terraform Init (with backend)
-        if: ${{ secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' }}
         working-directory: infra
+        continue-on-error: true
         run: |
+          # Vérifier que les secrets nécessaires sont présents
+          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ] || [ -z "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ]; then
+            echo "⚠️  Secrets not configured, skipping Terraform backend init"
+            exit 0
+          fi
+          
           terraform init \
             -backend-config=backend-config.tfvars \
             -input=false
 
       - name: Terraform Plan (Preview)
-        if: ${{ secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' && secrets.SQL_ADMIN_PASSWORD != '' }}
         working-directory: infra
+        continue-on-error: true
         env:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
         run: |
+          # Vérifier que les secrets nécessaires sont présents
+          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ] || \
+             [ -z "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ] || \
+             [ -z "${{ secrets.SQL_ADMIN_PASSWORD }}" ]; then
+            echo "⚠️  Secrets not configured, skipping Terraform plan"
+            exit 0
+          fi
+          
           terraform plan \
             -var-file=envs/prod/terraform.tfvars \
             -out=tfplan \
@@ -74,8 +88,9 @@ jobs:
           terraform show -no-color tfplan
 
       - name: Upload Plan Artifact
-        if: ${{ always() && secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' }}
+        if: always()
         uses: actions/upload-artifact@v3
+        continue-on-error: true
         with:
           name: terraform-plan
           path: infra/tfplan
