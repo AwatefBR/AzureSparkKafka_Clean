@@ -36,23 +36,15 @@ jobs:
           docker --version
           docker compose version
 
-      - name: Write .env from secrets (manual only) 🔐
+      - name: Preserve existing .env on VM 🔐
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-          # Only write .env when this workflow is manually dispatched (secrets available)
-          if [ -z "${{ secrets.POSTGRES_PASSWORD }}" ]; then
-            echo "No POSTGRES_PASSWORD secret found — skipping .env generation."
+          if [ -f .env ]; then
+            echo ".env already present on VM — using existing values."
             exit 0
           fi
-
-          cat > .env <<EOF
-          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-          PGADMIN_EMAIL=${{ secrets.PGADMIN_EMAIL }}
-          PGADMIN_PASSWORD=${{ secrets.PGADMIN_PASSWORD }}
-          EOF
-          echo ".env written (secrets redacted in logs)"
+          echo "No .env found on VM. Create it manually on the runner to be the source of truth."
+          exit 1
 
       - name: Login to GHCR
         uses: docker/login-action@v3
