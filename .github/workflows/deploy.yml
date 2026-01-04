@@ -1,4 +1,4 @@
-name: CD - Deploy (runtime only)
+name: CD - Deploy to Production
 
 on:
   workflow_dispatch:
@@ -11,69 +11,75 @@ on:
         options:
           - resume
           - update
-  workflow_run:
-    workflows:
-      - CI - sbt assembly & Docker build
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
-    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || (github.event_name == 'workflow_dispatch') }}
-    runs-on: [self-hosted, deploy-vm]
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read
       packages: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check runner prerequisites 🔍
-        run: |
-          echo "Checking Docker & Docker Compose versions..."
-          docker --version
-          docker compose version
-
-      - name: Preserve existing .env on VM 🔐
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          if [ -f .env ]; then
-            echo ".env already present on VM — using existing values."
-            exit 0
-          fi
-          echo "No .env found on VM. Create it manually on the runner to be the source of truth."
-          exit 1
-
-      - name: Login to GHCR
-        uses: docker/login-action@v3
+      - name: Deploy on VM via SSH
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          envs: |
+            GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
+            GITHUB_REPOSITORY=${{ github.repository }}
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+            APP_TAG=main
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            PGADMIN_EMAIL=${{ secrets.PGADMIN_EMAIL }}
+            PGADMIN_PASSWORD=${{ secrets.PGADMIN_PASSWORD }}
+            KAFKA_BOOTSTRAP=${{ secrets.KAFKA_BOOTSTRAP }}
+            POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+            AZURE_SQL_SERVER=${{ secrets.AZURE_SQL_SERVER }}
+            AZURE_SQL_DB=${{ secrets.AZURE_SQL_DB }}
+            AZURE_SQL_USER=${{ secrets.AZURE_SQL_USER }}
+            AZURE_SQL_PASSWORD=${{ secrets.AZURE_SQL_PASSWORD }}
+          script: |
+            set -euo pipefail
+            REPO_DIR="/home/azureuser/lol-streaming-clean"
+            OWNER="$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
+            REPO="$(basename "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')"
 
-      - name: Set runtime variables
-        run: |
-          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          REPO=$(basename "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+            cd "$REPO_DIR"
 
-          echo "OWNER=$OWNER" >> $GITHUB_ENV
-          echo "REPO=$REPO" >> $GITHUB_ENV
-          echo "APP_TAG=main" >> $GITHUB_ENV
+            if [ -f .env ]; then
+              cp .env .env.bak
+              echo ".env found, backup created: .env.bak"
+            fi
 
-      - name: Pull images
-        run: |
-          docker pull ghcr.io/$OWNER/$REPO/producer:$APP_TAG
-          docker pull ghcr.io/$OWNER/$REPO/consumer:$APP_TAG
+            cat > .env <<EOF
+            POSTGRES_DB=${POSTGRES_DB}
+            POSTGRES_USER=${POSTGRES_USER}
+            POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            PGADMIN_EMAIL=${PGADMIN_EMAIL}
+            PGADMIN_PASSWORD=${PGADMIN_PASSWORD}
+            KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP}
+            POSTGRES_HOST=${POSTGRES_HOST}
+            POSTGRES_PORT=${POSTGRES_PORT}
+            AZURE_SQL_SERVER=${AZURE_SQL_SERVER}
+            AZURE_SQL_DB=${AZURE_SQL_DB}
+            AZURE_SQL_USER=${AZURE_SQL_USER}
+            AZURE_SQL_PASSWORD=${AZURE_SQL_PASSWORD}
+            EOF
 
-      - name: Deploy containers (NO BUILD)
-        run: |
-          docker compose \
-            -f docker-compose.prod.yml \
-            up -d --no-build
+            echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$OWNER" --password-stdin
 
-      - name: Check status
-        run: |
-          docker compose -f docker-compose.prod.yml ps
-          docker images | grep ghcr.io || true
+            docker pull "ghcr.io/$OWNER/$REPO/producer:$APP_TAG"
+            docker pull "ghcr.io/$OWNER/$REPO/consumer:$APP_TAG"
+
+            docker compose -f docker-compose.prod.yml up -d --no-build
+            docker compose -f docker-compose.prod.yml ps
