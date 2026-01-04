@@ -33,53 +33,26 @@ jobs:
 
       - name: Configure Azure credentials for Terraform
         run: |
-          # Parser le JSON des credentials pour extraire les valeurs
-          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
-            echo "❌ AZURE_CREDENTIALS secret not set"
+          if [ -z "${{ secrets.ARM_CLIENT_ID }}" ] || \
+             [ -z "${{ secrets.ARM_CLIENT_SECRET }}" ] || \
+             [ -z "${{ secrets.ARM_SUBSCRIPTION_ID }}" ] || \
+             [ -z "${{ secrets.ARM_TENANT_ID }}" ]; then
             exit 1
           fi
-          
-          # Sauvegarder le JSON et valider qu'il est valide
-          echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
-          
-          # Vérifier que le JSON est valide
-          if ! jq empty /tmp/azure_creds.json 2>/dev/null; then
-            echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
-            exit 1
-          fi
-          
-          # Extraire les valeurs
-          ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json 2>/dev/null || echo "")
-          ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json 2>/dev/null || echo "")
-          ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json 2>/dev/null || echo "")
-          ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json 2>/dev/null || echo "")
-          
-          # Vérifier que toutes les valeurs sont présentes
-          if [ -z "$ARM_CLIENT_ID" ] || [ -z "$ARM_CLIENT_SECRET" ] || \
-             [ -z "$ARM_SUBSCRIPTION_ID" ] || [ -z "$ARM_TENANT_ID" ]; then
-            echo "❌ Missing required fields in AZURE_CREDENTIALS"
-            exit 1
-          fi
-          
-          # Configurer les variables d'environnement
-          echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
-          echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
-          echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV
-          echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
-          
-          echo "✅ Azure credentials configured for Terraform"
+          echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
 
       - name: Create backend config from secrets
         working-directory: infra
         run: |
-          # Créer backend-config.tfvars à partir des secrets GitHub
           cat > backend-config.tfvars <<EOF
           resource_group_name  = "RG-SPARKLOL"
           storage_account_name = "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
           container_name       = "tfstate"
           key                  = "prod.terraform.tfstate"
           EOF
-          echo "✅ Backend config created from secrets"
 
       - name: Terraform Init
         working-directory: infra
@@ -93,13 +66,10 @@ jobs:
         env:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
         run: |
-          echo "📋 Planning infrastructure changes for environment: ${{ github.event.inputs.environment }}"
           terraform plan \
             -var-file=envs/${{ github.event.inputs.environment }}/terraform.tfvars \
             -out=tfplan \
             -no-color
-          echo ""
-          echo "📊 Plan Summary:"
           terraform show -no-color tfplan | grep -E "Plan:|will be|must be" || true
 
       - name: Terraform Apply
@@ -107,14 +77,10 @@ jobs:
         env:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
         run: |
-          if [ "${{ github.event.inputs.auto_approve }}" == "true" ]; then
-            echo "✅ Auto-approve enabled, applying changes..."
-            terraform apply -auto-approve tfplan
-          else
-            echo "⚠️  Auto-approve disabled. Please review the plan above."
-            echo "To apply, re-run this workflow with 'auto_approve: true'"
+          if [ "${{ github.event.inputs.auto_approve }}" != "true" ]; then
             exit 1
           fi
+          terraform apply -auto-approve tfplan
 
       - name: Output Infrastructure Info
         if: success()
