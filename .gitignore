@@ -21,4 +21,14 @@ postgres-init/*
 .terraform/
 *.tfstate
 *.tfstate.*
+# Backend configuration (contient des secrets)
+infra/backend-config.tfvars
+infra/storage-account-info.txt
 # Note: .terraform.lock.hcl should be committed (it's already tracked)
+
+# GitHub Secrets (NE JAMAIS COMMITER)
+.github/AZURE_CREDENTIALS.json
+
+*.md
+*.sh
+*.pptx

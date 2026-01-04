@@ -173,3 +173,5 @@ docker logs -f lol-streaming-clean-spark-consumer-players-stats-1
 docker logs -f lol-streaming-clean-spark-consumer-players-stats-1 | grep --line-buffered "PlayersStats"
 ```
 
+
+

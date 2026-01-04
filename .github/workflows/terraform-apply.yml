@@ -1,0 +1,99 @@
+name: Terraform Apply - Infrastructure Changes
+
+on:
+  workflow_dispatch:  # Déclenchement manuel uniquement
+    inputs:
+      environment:
+        description: 'Environment to apply changes to'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - prod
+      auto_approve:
+        description: 'Auto-approve (skip confirmation)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+    # Protection d'environnement recommandée (configurer dans GitHub Settings)
+    # environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Configure Azure credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create backend config from secrets
+        working-directory: infra
+        run: |
+          # Créer backend-config.tfvars à partir des secrets GitHub
+          cat > backend-config.tfvars <<EOF
+          resource_group_name  = "RG-SPARKLOL"
+          storage_account_name = "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
+          container_name       = "tfstate"
+          key                  = "prod.terraform.tfstate"
+          EOF
+          echo "✅ Backend config created from secrets"
+
+      - name: Terraform Init
+        working-directory: infra
+        run: |
+          terraform init \
+            -backend-config=backend-config.tfvars \
+            -input=false
+
+      - name: Terraform Plan
+        working-directory: infra
+        env:
+          TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
+        run: |
+          echo "📋 Planning infrastructure changes for environment: ${{ github.event.inputs.environment }}"
+          terraform plan \
+            -var-file=envs/${{ github.event.inputs.environment }}/terraform.tfvars \
+            -out=tfplan \
+            -no-color
+          echo ""
+          echo "📊 Plan Summary:"
+          terraform show -no-color tfplan | grep -E "Plan:|will be|must be" || true
+
+      - name: Terraform Apply
+        working-directory: infra
+        env:
+          TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
+        run: |
+          if [ "${{ github.event.inputs.auto_approve }}" == "true" ]; then
+            echo "✅ Auto-approve enabled, applying changes..."
+            terraform apply -auto-approve tfplan
+          else
+            echo "⚠️  Auto-approve disabled. Please review the plan above."
+            echo "To apply, re-run this workflow with 'auto_approve: true'"
+            exit 1
+          fi
+
+      - name: Output Infrastructure Info
+        if: success()
+        working-directory: infra
+        run: |
+          echo "## ✅ Infrastructure Updated Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Current Infrastructure Values:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          terraform output -no-color >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+
+

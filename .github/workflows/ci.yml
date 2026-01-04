@@ -18,12 +18,68 @@ jobs:
         with:
           terraform_version: 1.5.0
 
-      - name: Terraform fmt + validate
+      - name: Configure Azure credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        continue-on-error: true  # Ne pas échouer si le secret n'existe pas encore
+
+      - name: Create backend config from secrets
+        working-directory: infra
+        continue-on-error: true
+        run: |
+          # Créer backend-config.tfvars à partir des secrets GitHub
+          if [ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ]; then
+            cat > backend-config.tfvars <<EOF
+          resource_group_name  = "RG-SPARKLOL"
+          storage_account_name = "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
+          container_name       = "tfstate"
+          key                  = "prod.terraform.tfstate"
+          EOF
+            echo "✅ Backend config created from secrets"
+          else
+            echo "⚠️  TF_STATE_STORAGE_ACCOUNT secret not set, skipping backend init"
+          fi
+
+      - name: Terraform Format Check
+        working-directory: infra
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init (without backend)
+        working-directory: infra
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        working-directory: infra
+        run: terraform validate
+
+      - name: Terraform Init (with backend)
+        if: secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != ''
         working-directory: infra
         run: |
-          terraform fmt -check -recursive
-          terraform init -backend=false
-          terraform validate
+          terraform init \
+            -backend-config=backend-config.tfvars \
+            -input=false
+
+      - name: Terraform Plan (Preview)
+        if: secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' && secrets.SQL_ADMIN_PASSWORD != ''
+        working-directory: infra
+        env:
+          TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
+        run: |
+          terraform plan \
+            -var-file=envs/prod/terraform.tfvars \
+            -out=tfplan \
+            -no-color
+          terraform show -no-color tfplan
+
+      - name: Upload Plan Artifact
+        if: always() && secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != ''
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-plan
+          path: infra/tfplan
+          retention-days: 1
 
   build-and-push:
     # 🔑 IMPORTANT : on ne pousse que sur push main (merge)
