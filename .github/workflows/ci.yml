@@ -3,10 +3,7 @@ name: CI - sbt assembly & Docker build
 on:
   push:
     branches:
-      - spark-clean-devops
-  pull_request:
-    branches:
-      - spark-clean-devops
+      - main
 
 jobs:
   terraform-validate:
