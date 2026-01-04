@@ -54,7 +54,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Init (with backend)
-        if: secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != ''
+        if: ${{ secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' }}
         working-directory: infra
         run: |
           terraform init \
@@ -62,7 +62,7 @@ jobs:
             -input=false
 
       - name: Terraform Plan (Preview)
-        if: secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' && secrets.SQL_ADMIN_PASSWORD != ''
+        if: ${{ secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' && secrets.SQL_ADMIN_PASSWORD != '' }}
         working-directory: infra
         env:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
@@ -74,7 +74,7 @@ jobs:
           terraform show -no-color tfplan
 
       - name: Upload Plan Artifact
-        if: always() && secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != ''
+        if: ${{ always() && secrets.AZURE_CREDENTIALS != '' && secrets.TF_STATE_STORAGE_ACCOUNT != '' }}
         uses: actions/upload-artifact@v3
         with:
           name: terraform-plan
