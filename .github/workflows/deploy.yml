@@ -96,6 +96,6 @@ jobs:
             # Remove leftover containers with fixed names to avoid conflicts.
             docker rm -f spark-master spark-worker 2>/dev/null || true
 
-            docker compose -f docker-compose.prod.yml down --remove-orphans
             docker compose -f docker-compose.prod.yml up -d --no-build
             docker compose -f docker-compose.prod.yml ps
+# dumb
