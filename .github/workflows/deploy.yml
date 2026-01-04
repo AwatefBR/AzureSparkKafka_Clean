@@ -25,18 +25,29 @@ jobs:
         with:
           terraform_version: 1.5.0
 
-      - name: Configure Azure credentials
-        id: azure-login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-        continue-on-error: true  # Fallback sur secrets si Terraform non configuré
-
-      - name: Verify Azure authentication
-        if: steps.azure-login.outcome == 'success'
+      - name: Configure Azure credentials for Terraform
+        id: azure-creds
+        continue-on-error: true
         run: |
-          echo "✅ Azure authentication successful"
-          az account show --query "{subscriptionId:id, name:name}" -o table || echo "⚠️  Cannot verify Azure account"
+          # Parser le JSON des credentials pour extraire les valeurs
+          if [ -n "${{ secrets.AZURE_CREDENTIALS }}" ]; then
+            echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
+            ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json)
+            ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json)
+            ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json)
+            ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json)
+            
+            echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
+            echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
+            echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV
+            echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
+            
+            echo "creds_configured=true" >> $GITHUB_OUTPUT
+            echo "✅ Azure credentials configured for Terraform"
+          else
+            echo "creds_configured=false" >> $GITHUB_OUTPUT
+            echo "⚠️  AZURE_CREDENTIALS secret not set"
+          fi
 
       - name: Create backend config from secrets
         id: backend-config
@@ -67,15 +78,15 @@ jobs:
         run: |
           # Vérifier les prérequis
           BACKEND_CONFIGURED="${{ steps.backend-config.outputs.backend_configured }}"
-          AZURE_CREDS="${{ secrets.AZURE_CREDENTIALS }}"
+          CREDS_CONFIGURED="${{ steps.azure-creds.outputs.creds_configured }}"
           
           echo "🔍 Debug info:"
           echo "  Backend configured: ${BACKEND_CONFIGURED:-false}"
-          echo "  Azure credentials: $([ -n "$AZURE_CREDS" ] && echo "present" || echo "missing")"
+          echo "  Azure credentials configured: ${CREDS_CONFIGURED:-false}"
           echo "  Storage account secret: $([ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ] && echo "present" || echo "missing")"
           
           # Essayer d'utiliser Terraform pour récupérer les valeurs
-          if [ "$BACKEND_CONFIGURED" == "true" ] && [ -n "$AZURE_CREDS" ]; then
+          if [ "$BACKEND_CONFIGURED" == "true" ] && [ "$CREDS_CONFIGURED" == "true" ]; then
             echo "📦 Initializing Terraform backend..."
             
             # Initialiser Terraform avec affichage des erreurs
@@ -106,7 +117,7 @@ jobs:
           else
             echo "⚠️  Terraform prerequisites not met, using secrets"
             echo "   Backend configured: ${BACKEND_CONFIGURED:-false}"
-            echo "   Azure credentials: $([ -n "$AZURE_CREDS" ] && echo "present" || echo "missing")"
+            echo "   Azure credentials configured: ${CREDS_CONFIGURED:-false}"
             echo "use_terraform=false" >> $GITHUB_OUTPUT
           fi
 

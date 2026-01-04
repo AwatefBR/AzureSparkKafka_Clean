@@ -31,10 +31,21 @@ jobs:
         with:
           terraform_version: 1.5.0
 
-      - name: Configure Azure credentials
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Configure Azure credentials for Terraform
+        run: |
+          # Parser le JSON des credentials pour extraire les valeurs
+          echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
+          ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json)
+          ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json)
+          ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json)
+          ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json)
+          
+          echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
+          
+          echo "✅ Azure credentials configured for Terraform"
 
       - name: Create backend config from secrets
         working-directory: infra
