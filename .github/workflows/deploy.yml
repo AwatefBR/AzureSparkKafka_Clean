@@ -26,10 +26,37 @@ jobs:
           terraform_version: 1.5.0
 
       - name: Configure Azure credentials
+        id: azure-login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
         continue-on-error: true  # Fallback sur secrets si Terraform non configuré
+
+      - name: Verify Azure authentication
+        if: steps.azure-login.outcome == 'success'
+        run: |
+          echo "✅ Azure authentication successful"
+          az account show --query "{subscriptionId:id, name:name}" -o table || echo "⚠️  Cannot verify Azure account"
+
+      - name: Create backend config from secrets
+        id: backend-config
+        working-directory: infra
+        continue-on-error: true
+        run: |
+          # Créer backend-config.tfvars à partir des secrets GitHub
+          if [ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ]; then
+            cat > backend-config.tfvars <<EOF
+          resource_group_name  = "RG-SPARKLOL"
+          storage_account_name = "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
+          container_name       = "tfstate"
+          key                  = "prod.terraform.tfstate"
+          EOF
+            echo "backend_configured=true" >> $GITHUB_OUTPUT
+            echo "✅ Backend config created from secrets"
+          else
+            echo "backend_configured=false" >> $GITHUB_OUTPUT
+            echo "⚠️  TF_STATE_STORAGE_ACCOUNT secret not set"
+          fi
 
       - name: Get Infrastructure Values from Terraform
         id: terraform
@@ -38,22 +65,48 @@ jobs:
         env:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
         run: |
+          # Vérifier les prérequis
+          BACKEND_CONFIGURED="${{ steps.backend-config.outputs.backend_configured }}"
+          AZURE_CREDS="${{ secrets.AZURE_CREDENTIALS }}"
+          
+          echo "🔍 Debug info:"
+          echo "  Backend configured: ${BACKEND_CONFIGURED:-false}"
+          echo "  Azure credentials: $([ -n "$AZURE_CREDS" ] && echo "present" || echo "missing")"
+          echo "  Storage account secret: $([ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ] && echo "present" || echo "missing")"
+          
           # Essayer d'utiliser Terraform pour récupérer les valeurs
-          if terraform init -backend-config=backend-config.tfvars -input=false 2>/dev/null; then
-            VM_IP=$(terraform output -raw vm_public_ip 2>/dev/null || echo "")
-            SQL_FQDN=$(terraform output -raw sql_server_fqdn 2>/dev/null || echo "")
+          if [ "$BACKEND_CONFIGURED" == "true" ] && [ -n "$AZURE_CREDS" ]; then
+            echo "📦 Initializing Terraform backend..."
             
-            if [ -n "$VM_IP" ] && [ -n "$SQL_FQDN" ]; then
-              echo "✅ Using Terraform outputs"
-              echo "vm_ip=$VM_IP" >> $GITHUB_OUTPUT
-              echo "sql_fqdn=$SQL_FQDN" >> $GITHUB_OUTPUT
-              echo "use_terraform=true" >> $GITHUB_OUTPUT
+            # Initialiser Terraform avec affichage des erreurs
+            if terraform init -backend-config=backend-config.tfvars -input=false; then
+              echo "✅ Terraform initialized successfully"
+              
+              # Récupérer les outputs
+              echo "📤 Getting Terraform outputs..."
+              VM_IP=$(terraform output -raw vm_public_ip 2>/dev/null || echo "")
+              SQL_FQDN=$(terraform output -raw sql_server_fqdn 2>/dev/null || echo "")
+              
+              echo "  VM IP: ${VM_IP:-not found}"
+              echo "  SQL FQDN: ${SQL_FQDN:-not found}"
+              
+              if [ -n "$VM_IP" ] && [ -n "$SQL_FQDN" ]; then
+                echo "✅ Using Terraform outputs"
+                echo "vm_ip=$VM_IP" >> $GITHUB_OUTPUT
+                echo "sql_fqdn=$SQL_FQDN" >> $GITHUB_OUTPUT
+                echo "use_terraform=true" >> $GITHUB_OUTPUT
+              else
+                echo "⚠️  Terraform outputs not available (empty values), using secrets"
+                echo "use_terraform=false" >> $GITHUB_OUTPUT
+              fi
             else
-              echo "⚠️  Terraform outputs not available, using secrets"
+              echo "❌ Terraform init failed, using secrets"
               echo "use_terraform=false" >> $GITHUB_OUTPUT
             fi
           else
-            echo "⚠️  Terraform not configured, using secrets"
+            echo "⚠️  Terraform prerequisites not met, using secrets"
+            echo "   Backend configured: ${BACKEND_CONFIGURED:-false}"
+            echo "   Azure credentials: $([ -n "$AZURE_CREDS" ] && echo "present" || echo "missing")"
             echo "use_terraform=false" >> $GITHUB_OUTPUT
           fi
 

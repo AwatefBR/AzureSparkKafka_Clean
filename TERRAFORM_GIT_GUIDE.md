@@ -151,3 +151,5 @@ git push --force origin spark-clean-devops
 - Utiliser des variables d'environnement ou Azure Key Vault pour les secrets
 - Utiliser un backend distant pour le state (Azure Storage avec chiffrement)
 
+
+

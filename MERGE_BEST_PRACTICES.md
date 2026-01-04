@@ -200,3 +200,5 @@ private def writeWithUpsert(batchDF: DataFrame, tableName: String, batchId: Long
 3. **Spark JDBC** crée une session différente de votre Connection JDBC
 4. **Solution** : Utiliser `##temp` pour que les deux sessions voient la table
 
+
+

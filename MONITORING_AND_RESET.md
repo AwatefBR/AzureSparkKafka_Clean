@@ -151,3 +151,5 @@ Pour suivre les logs en temps réel :
 docker compose logs -f spark-consumer-players-stats | grep -E "PlayersStats|Azure"
 ```
 
+
+
