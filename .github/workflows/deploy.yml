@@ -93,5 +93,6 @@ jobs:
             docker pull "ghcr.io/$OWNER/$REPO/producer:$APP_TAG"
             docker pull "ghcr.io/$OWNER/$REPO/consumer:$APP_TAG"
 
+            docker compose -f docker-compose.prod.yml down --remove-orphans
             docker compose -f docker-compose.prod.yml up -d --no-build
             docker compose -f docker-compose.prod.yml ps
