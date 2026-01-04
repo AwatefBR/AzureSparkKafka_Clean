@@ -1,16 +1,6 @@
 name: CD - Deploy to Production
 
 on:
-  workflow_dispatch:
-    inputs:
-      mode:
-        description: "resume (restart only) or update (pull + sbt + build + up)"
-        required: true
-        default: "resume"
-        type: choice
-        options:
-          - resume
-          - update
   workflow_run:
     workflows:
       - CI - sbt assembly & Docker build
