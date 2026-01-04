@@ -32,9 +32,18 @@ jobs:
           # Sauvegarder le JSON et valider qu'il est valide
           echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
           
+          # Afficher les premières lignes pour debug (sans secrets sensibles)
+          echo "📋 Checking JSON format..."
+          head -3 /tmp/azure_creds.json | sed 's/".*": ".*"/"key": "***"/g' || true
+          
           # Vérifier que le JSON est valide
-          if ! jq empty /tmp/azure_creds.json 2>/dev/null; then
+          JSON_ERROR=$(jq empty /tmp/azure_creds.json 2>&1 || echo "ERROR")
+          if [ "$JSON_ERROR" != "" ]; then
             echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
+            echo "   Error: $JSON_ERROR"
+            echo "   First 200 chars: $(head -c 200 /tmp/azure_creds.json)"
+            echo ""
+            echo "💡 Tip: Copy the JSON from .github/AZURE_CREDENTIALS.json (one-line or properly formatted)"
             echo "creds_configured=false" >> $GITHUB_OUTPUT
             exit 0
           fi
