@@ -50,34 +50,36 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
-          envs: |
-            GITHUB_REPOSITORY_OWNER
-            GITHUB_REPOSITORY
-            GITHUB_TOKEN
-            APP_TAG
-            POSTGRES_DB
-            POSTGRES_USER
-            POSTGRES_PASSWORD
-            PGADMIN_EMAIL
-            PGADMIN_PASSWORD
-            KAFKA_BOOTSTRAP
-            POSTGRES_HOST
-            POSTGRES_PORT
-            AZURE_SQL_SERVER
-            AZURE_SQL_DB
-            AZURE_SQL_USER
-            AZURE_SQL_PASSWORD
+          envs: GITHUB_REPOSITORY_OWNER,GITHUB_REPOSITORY,GITHUB_TOKEN,APP_TAG,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,PGADMIN_EMAIL,PGADMIN_PASSWORD,KAFKA_BOOTSTRAP,POSTGRES_HOST,POSTGRES_PORT,AZURE_SQL_SERVER,AZURE_SQL_DB,AZURE_SQL_USER,AZURE_SQL_PASSWORD
           script: |
-            set -euo pipefail
+            set -eo pipefail
             REPO_DIR="/home/azureuser/lol-streaming-clean"
-            OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-            REPO=$(basename "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+            OWNER="$(echo "${GITHUB_REPOSITORY_OWNER:-${{ github.repository_owner }}}" | tr '[:upper:]' '[:lower:]')"
+            REPO="$(basename "${GITHUB_REPOSITORY:-${{ github.repository }}}" | tr '[:upper:]' '[:lower:]')"
 
             cd "$REPO_DIR"
 
             if [ -f .env ]; then
               cp .env .env.bak
               echo ".env found, backup created: .env.bak"
+            fi
+
+            required_vars=(
+              POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD
+              PGADMIN_EMAIL PGADMIN_PASSWORD
+              KAFKA_BOOTSTRAP POSTGRES_HOST POSTGRES_PORT
+              AZURE_SQL_SERVER AZURE_SQL_DB AZURE_SQL_USER AZURE_SQL_PASSWORD
+            )
+            missing=0
+            for v in "${required_vars[@]}"; do
+              if [ -z "${!v:-}" ]; then
+                echo "Missing required env var: $v"
+                missing=1
+              fi
+            done
+            if [ "$missing" -ne 0 ]; then
+              echo "Aborting deploy due to missing secrets."
+              exit 1
             fi
 
             cat > .env <<EOF
