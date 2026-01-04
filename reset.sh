@@ -67,18 +67,6 @@ docker images | grep "$project_name" | awk '{print $3}' | xargs -r docker rmi -f
 echo "🌐 Nettoyage des réseaux Docker..."
 docker network prune -f
 
-### 7. Rebuild SBT
-echo "🔨 Rebuild SBT..."
-sbt clean assembly
-
-### 8. Reconstruction Docker
-echo "🔨 Reconstruction images..."
-docker compose build --no-cache
-
-### 9. Restart complet
-echo "🚀 Démarrage..."
-docker compose up -d
-
 ### 10. Attendre que PostgreSQL soit prêt et vérifier l'initialisation
 echo "⏳ Attente de l'initialisation de PostgreSQL..."
 sleep 10
