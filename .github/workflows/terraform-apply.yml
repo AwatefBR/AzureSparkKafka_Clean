@@ -34,12 +34,34 @@ jobs:
       - name: Configure Azure credentials for Terraform
         run: |
           # Parser le JSON des credentials pour extraire les valeurs
-          echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
-          ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json)
-          ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json)
-          ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json)
-          ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json)
+          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
+            echo "❌ AZURE_CREDENTIALS secret not set"
+            exit 1
+          fi
           
+          # Sauvegarder le JSON et valider qu'il est valide
+          echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
+          
+          # Vérifier que le JSON est valide
+          if ! jq empty /tmp/azure_creds.json 2>/dev/null; then
+            echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
+            exit 1
+          fi
+          
+          # Extraire les valeurs
+          ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json 2>/dev/null || echo "")
+          ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json 2>/dev/null || echo "")
+          ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json 2>/dev/null || echo "")
+          ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json 2>/dev/null || echo "")
+          
+          # Vérifier que toutes les valeurs sont présentes
+          if [ -z "$ARM_CLIENT_ID" ] || [ -z "$ARM_CLIENT_SECRET" ] || \
+             [ -z "$ARM_SUBSCRIPTION_ID" ] || [ -z "$ARM_TENANT_ID" ]; then
+            echo "❌ Missing required fields in AZURE_CREDENTIALS"
+            exit 1
+          fi
+          
+          # Configurer les variables d'environnement
           echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
           echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
           echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV

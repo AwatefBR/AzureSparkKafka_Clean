@@ -23,24 +23,44 @@ jobs:
         continue-on-error: true
         run: |
           # Parser le JSON des credentials pour extraire les valeurs
-          if [ -n "${{ secrets.AZURE_CREDENTIALS }}" ]; then
-            echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
-            ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json)
-            ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json)
-            ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json)
-            ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json)
-            
-            echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
-            echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
-            echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV
-            echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
-            
-            echo "creds_configured=true" >> $GITHUB_OUTPUT
-            echo "✅ Azure credentials configured for Terraform"
-          else
+          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
             echo "creds_configured=false" >> $GITHUB_OUTPUT
             echo "⚠️  AZURE_CREDENTIALS secret not set"
+            exit 0
           fi
+          
+          # Sauvegarder le JSON et valider qu'il est valide
+          echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
+          
+          # Vérifier que le JSON est valide
+          if ! jq empty /tmp/azure_creds.json 2>/dev/null; then
+            echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
+            echo "creds_configured=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Extraire les valeurs
+          ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json 2>/dev/null || echo "")
+          ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json 2>/dev/null || echo "")
+          ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json 2>/dev/null || echo "")
+          ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json 2>/dev/null || echo "")
+          
+          # Vérifier que toutes les valeurs sont présentes
+          if [ -z "$ARM_CLIENT_ID" ] || [ -z "$ARM_CLIENT_SECRET" ] || \
+             [ -z "$ARM_SUBSCRIPTION_ID" ] || [ -z "$ARM_TENANT_ID" ]; then
+            echo "❌ Missing required fields in AZURE_CREDENTIALS"
+            echo "creds_configured=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Configurer les variables d'environnement
+          echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
+          
+          echo "creds_configured=true" >> $GITHUB_OUTPUT
+          echo "✅ Azure credentials configured for Terraform"
 
       - name: Create backend config from secrets
         working-directory: infra
@@ -78,9 +98,13 @@ jobs:
         continue-on-error: true
         run: |
           # Vérifier que les secrets nécessaires sont présents
-          if [ "${{ steps.azure-creds.outputs.creds_configured }}" != "true" ] || \
-             [ "${{ steps.backend-config.outputs.backend_configured }}" != "true" ]; then
+          CREDS_CONFIGURED="${{ steps.azure-creds.outputs.creds_configured }}"
+          BACKEND_CONFIGURED="${{ steps.backend-config.outputs.backend_configured }}"
+          
+          if [ "$CREDS_CONFIGURED" != "true" ] || [ "$BACKEND_CONFIGURED" != "true" ]; then
             echo "⚠️  Secrets not configured, skipping Terraform backend init"
+            echo "   Creds configured: ${CREDS_CONFIGURED:-false}"
+            echo "   Backend configured: ${BACKEND_CONFIGURED:-false}"
             exit 0
           fi
           
@@ -95,10 +119,17 @@ jobs:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
         run: |
           # Vérifier que les secrets nécessaires sont présents
-          if [ "${{ steps.azure-creds.outputs.creds_configured }}" != "true" ] || \
-             [ "${{ steps.backend-config.outputs.backend_configured }}" != "true" ] || \
-             [ -z "${{ secrets.SQL_ADMIN_PASSWORD }}" ]; then
+          CREDS_CONFIGURED="${{ steps.azure-creds.outputs.creds_configured }}"
+          BACKEND_CONFIGURED="${{ steps.backend-config.outputs.backend_configured }}"
+          SQL_PASSWORD="${{ secrets.SQL_ADMIN_PASSWORD }}"
+          
+          if [ "$CREDS_CONFIGURED" != "true" ] || \
+             [ "$BACKEND_CONFIGURED" != "true" ] || \
+             [ -z "$SQL_PASSWORD" ]; then
             echo "⚠️  Secrets not configured, skipping Terraform plan"
+            echo "   Creds configured: ${CREDS_CONFIGURED:-false}"
+            echo "   Backend configured: ${BACKEND_CONFIGURED:-false}"
+            echo "   SQL password: $([ -n "$SQL_PASSWORD" ] && echo "present" || echo "missing")"
             exit 0
           fi
           
