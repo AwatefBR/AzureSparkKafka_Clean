@@ -99,22 +99,41 @@ jobs:
           echo "✅ Azure credentials configured for Terraform (from JSON)"
 
       - name: Create backend config from secrets
+        id: backend-config
         working-directory: infra
         continue-on-error: true
         run: |
+          # Debug : Vérifier si le secret existe
+          echo "🔍 Debug: Checking TF_STATE_STORAGE_ACCOUNT secret..."
+          SECRET_VALUE="${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
+          SECRET_LENGTH=${#SECRET_VALUE}
+          
+          echo "   Secret length: $SECRET_LENGTH"
+          echo "   Secret is empty: $([ -z "$SECRET_VALUE" ] && echo "yes" || echo "no")"
+          echo "   Secret is set: $([ -n "$SECRET_VALUE" ] && echo "yes" || echo "no")"
+          
+          # Afficher les premiers caractères (pour vérifier sans exposer le secret complet)
+          if [ -n "$SECRET_VALUE" ]; then
+            echo "   First 5 chars: ${SECRET_VALUE:0:5}..."
+          fi
+          
           # Créer backend-config.tfvars à partir des secrets GitHub
-          if [ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ]; then
+          if [ -n "$SECRET_VALUE" ]; then
             cat > backend-config.tfvars <<EOF
           resource_group_name  = "RG-SPARKLOL"
-          storage_account_name = "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
+          storage_account_name = "$SECRET_VALUE"
           container_name       = "tfstate"
           key                  = "prod.terraform.tfstate"
           EOF
             echo "backend_configured=true" >> $GITHUB_OUTPUT
             echo "✅ Backend config created from secrets"
+            echo "   Storage account: $SECRET_VALUE"
+            echo "   Config file created: backend-config.tfvars"
+            cat backend-config.tfvars
           else
             echo "backend_configured=false" >> $GITHUB_OUTPUT
-            echo "⚠️  TF_STATE_STORAGE_ACCOUNT secret not set, skipping backend init"
+            echo "⚠️  TF_STATE_STORAGE_ACCOUNT secret not set or empty"
+            echo "   Please check: Settings → Secrets → TF_STATE_STORAGE_ACCOUNT"
           fi
 
       - name: Terraform Format Check
