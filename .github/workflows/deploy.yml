@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, deploy-vm]   # ← run on your VM (self-hosted runner with label deploy-vm)
 
     permissions:
       contents: read
@@ -19,6 +19,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Check runner prerequisites 🔍
+        run: |
+          echo "Checking Docker & Docker Compose versions..."
+          docker --version
+          docker compose version
+
+      - name: Write .env from secrets (on VM) 🔐
+        if: ${{ secrets.POSTGRES_PASSWORD }}
+        run: |
+          cat > .env <<EOF
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          PGADMIN_EMAIL=${{ secrets.PGADMIN_EMAIL }}
+          PGADMIN_PASSWORD=${{ secrets.PGADMIN_PASSWORD }}
+          EOF
+          echo ".env written (secrets redacted in logs)"
 
       - name: Login to GHCR
         uses: docker/login-action@v3
