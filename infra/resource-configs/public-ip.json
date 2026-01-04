@@ -1,0 +1,29 @@
+{
+  "ddosSettings": {
+    "protectionMode": "VirtualNetworkInherited"
+  },
+  "etag": "W/\"98233885-bf6f-4e05-9b4e-8623421f17d7\"",
+  "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/publicIPAddresses/lol-vm-ip",
+  "idleTimeoutInMinutes": 4,
+  "ipAddress": "20.250.144.82",
+  "ipConfiguration": {
+    "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/networkInterfaces/lol-vm65_z1/ipConfigurations/ipconfig1",
+    "resourceGroup": "rg-sparkLOL"
+  },
+  "ipTags": [],
+  "location": "switzerlandnorth",
+  "name": "lol-vm-ip",
+  "provisioningState": "Succeeded",
+  "publicIPAddressVersion": "IPv4",
+  "publicIPAllocationMethod": "Static",
+  "resourceGroup": "rg-sparkLOL",
+  "resourceGuid": "4bf36914-8509-4456-b765-806755859168",
+  "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+  },
+  "type": "Microsoft.Network/publicIPAddresses",
+  "zones": [
+    "1"
+  ]
+}

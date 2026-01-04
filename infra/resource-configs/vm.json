@@ -1,0 +1,162 @@
+{
+  "additionalCapabilities": {
+    "hibernationEnabled": false,
+    "ultraSsdEnabled": null
+  },
+  "applicationProfile": null,
+  "availabilitySet": null,
+  "billingProfile": null,
+  "capacityReservation": null,
+  "diagnosticsProfile": {
+    "bootDiagnostics": {
+      "enabled": true,
+      "storageUri": null
+    }
+  },
+  "etag": "\"116\"",
+  "evictionPolicy": null,
+  "extendedLocation": null,
+  "extensionsTimeBudget": null,
+  "hardwareProfile": {
+    "vmSize": "Standard_B4as_v2",
+    "vmSizeProperties": null
+  },
+  "host": null,
+  "hostGroup": null,
+  "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/RG-SPARKLOL/providers/Microsoft.Compute/virtualMachines/lol-vm",
+  "identity": null,
+  "instanceView": null,
+  "licenseType": null,
+  "location": "switzerlandnorth",
+  "managedBy": null,
+  "name": "lol-vm",
+  "networkProfile": {
+    "networkApiVersion": null,
+    "networkInterfaceConfigurations": null,
+    "networkInterfaces": [
+      {
+        "deleteOption": "Detach",
+        "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/networkInterfaces/lol-vm65_z1",
+        "primary": null,
+        "resourceGroup": "rg-sparkLOL"
+      }
+    ]
+  },
+  "osProfile": {
+    "adminPassword": null,
+    "adminUsername": "azureuser",
+    "allowExtensionOperations": true,
+    "computerName": "lol-vm",
+    "customData": null,
+    "linuxConfiguration": {
+      "disablePasswordAuthentication": true,
+      "enableVmAgentPlatformUpdates": null,
+      "patchSettings": {
+        "assessmentMode": "ImageDefault",
+        "automaticByPlatformSettings": {
+          "bypassPlatformSafetyChecksOnUserSchedule": null,
+          "rebootSetting": "IfRequired"
+        },
+        "patchMode": "AutomaticByPlatform"
+      },
+      "provisionVmAgent": true,
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCoqhrp2D9/JHZ1LVvekbqoDYPaxffdROHONMvKHpg0K9XU1FSuxVcl3iIeFiGiNGUu+YRn2DRtgRnyVB4jjQJ8ugQQIOKVLWqoRzcls89nk5MIMGVB0fU245sX11zOj5KcGA1wLu2zC4b4r4QUILEYS8MYgBTlMIRi5Zc/Py6qIL3eMuD9oNxSoEw/GseMGDxcixoi5OfTgar4w1QadrsAC72ANvXcMXf6HSmmlUT9xI8w3FJsCejyFOuNi6SywglGLvueRK1b0aA0yIziQh+ETPdjYhfe0PfKRQyjUC6MADwwkWLekSolkXwNoN66MiFISjRdKg+QBTDqhXYV0ENHV00fuqLpQWQUn7eTvRV5OjtUkKelRQ1KXGNOfoKHFR/zyslvVJAzT9In/hBUey4yhfk4i+rXuOONSR4VZIkIbmFECYKy0oCsAg2y1u946Rw/5pQwueTnmSa4oGGBfTz32ihMUQf2XvoS/sdwBtM97oE7bhPveov8kk0RG5QgvA0= generated-by-azure",
+            "path": "/home/azureuser/.ssh/authorized_keys"
+          }
+        ]
+      }
+    },
+    "requireGuestProvisionSignal": true,
+    "secrets": [],
+    "windowsConfiguration": null
+  },
+  "placement": null,
+  "plan": null,
+  "platformFaultDomain": null,
+  "priority": null,
+  "provisioningState": "Succeeded",
+  "proximityPlacementGroup": null,
+  "resourceGroup": "RG-SPARKLOL",
+  "resources": [
+    {
+      "autoUpgradeMinorVersion": true,
+      "enableAutomaticUpgrade": null,
+      "forceUpdateTag": null,
+      "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/RG-SPARKLOL/providers/Microsoft.Compute/virtualMachines/lol-vm/extensions/enablevmAccess",
+      "instanceView": null,
+      "location": "switzerlandnorth",
+      "name": "enablevmAccess",
+      "protectedSettings": null,
+      "protectedSettingsFromKeyVault": null,
+      "provisionAfterExtensions": null,
+      "provisioningState": "Succeeded",
+      "publisher": "Microsoft.OSTCExtensions",
+      "resourceGroup": "RG-SPARKLOL",
+      "settings": null,
+      "suppressFailures": null,
+      "tags": null,
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "typeHandlerVersion": "1.5",
+      "typePropertiesType": "VMAccessForLinux"
+    }
+  ],
+  "scheduledEventsPolicy": null,
+  "scheduledEventsProfile": null,
+  "securityProfile": {
+    "encryptionAtHost": null,
+    "encryptionIdentity": null,
+    "proxyAgentSettings": null,
+    "securityType": "TrustedLaunch",
+    "uefiSettings": {
+      "secureBootEnabled": true,
+      "vTpmEnabled": true
+    }
+  },
+  "storageProfile": {
+    "alignRegionalDisksToVmZone": null,
+    "dataDisks": [],
+    "diskControllerType": "SCSI",
+    "imageReference": {
+      "communityGalleryImageId": null,
+      "exactVersion": "22.04.202510230",
+      "id": null,
+      "offer": "0001-com-ubuntu-server-jammy",
+      "publisher": "canonical",
+      "sharedGalleryImageId": null,
+      "sku": "22_04-lts-gen2",
+      "version": "latest"
+    },
+    "osDisk": {
+      "caching": "ReadWrite",
+      "createOption": "FromImage",
+      "deleteOption": "Delete",
+      "diffDiskSettings": null,
+      "diskSizeGb": 30,
+      "encryptionSettings": null,
+      "image": null,
+      "managedDisk": {
+        "diskEncryptionSet": null,
+        "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/RG-SPARKLOL/providers/Microsoft.Compute/disks/lol-vm_OsDisk_1_97b91659352e4a0cb8a9aa5e178f0cad",
+        "resourceGroup": "RG-SPARKLOL",
+        "securityProfile": null,
+        "storageAccountType": "Premium_LRS"
+      },
+      "name": "lol-vm_OsDisk_1_97b91659352e4a0cb8a9aa5e178f0cad",
+      "osType": "Linux",
+      "vhd": null,
+      "writeAcceleratorEnabled": null
+    }
+  },
+  "tags": null,
+  "timeCreated": "2025-10-31T13:45:15.011442+00:00",
+  "type": "Microsoft.Compute/virtualMachines",
+  "userData": null,
+  "virtualMachineScaleSet": null,
+  "vmId": "8b47125a-bd68-41f5-8b76-06c3b6261c5b",
+  "zones": [
+    "1"
+  ]
+}

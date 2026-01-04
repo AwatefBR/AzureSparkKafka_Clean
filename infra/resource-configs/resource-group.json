@@ -1,0 +1,11 @@
+{
+  "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL",
+  "location": "francecentral",
+  "managedBy": null,
+  "name": "rg-sparkLOL",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": {},
+  "type": "Microsoft.Resources/resourceGroups"
+}

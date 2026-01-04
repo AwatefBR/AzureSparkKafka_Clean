@@ -1,0 +1,57 @@
+{
+  "auxiliaryMode": "None",
+  "auxiliarySku": "None",
+  "disableTcpStateTracking": false,
+  "dnsSettings": {
+    "appliedDnsServers": [],
+    "dnsServers": [],
+    "internalDomainNameSuffix": "fwtghhdepbuu5nxgfmh44lcbxd.zrhx.internal.cloudapp.net"
+  },
+  "enableAcceleratedNetworking": false,
+  "enableIPForwarding": false,
+  "etag": "W/\"fc3d7385-ec5b-43c8-8576-725b9779e467\"",
+  "hostedWorkloads": [],
+  "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/networkInterfaces/lol-vm65_z1",
+  "ipConfigurations": [
+    {
+      "etag": "W/\"fc3d7385-ec5b-43c8-8576-725b9779e467\"",
+      "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/networkInterfaces/lol-vm65_z1/ipConfigurations/ipconfig1",
+      "name": "ipconfig1",
+      "primary": true,
+      "privateIPAddress": "172.17.0.4",
+      "privateIPAddressVersion": "IPv4",
+      "privateIPAllocationMethod": "Dynamic",
+      "provisioningState": "Succeeded",
+      "publicIPAddress": {
+        "deleteOption": "Detach",
+        "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/publicIPAddresses/lol-vm-ip",
+        "resourceGroup": "rg-sparkLOL"
+      },
+      "resourceGroup": "rg-sparkLOL",
+      "subnet": {
+        "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/virtualNetworks/vnet-switzerlandnorth-1/subnets/snet-switzerlandnorth-1",
+        "resourceGroup": "rg-sparkLOL"
+      },
+      "type": "Microsoft.Network/networkInterfaces/ipConfigurations"
+    }
+  ],
+  "location": "switzerlandnorth",
+  "macAddress": "7C-ED-8D-43-0D-2F",
+  "name": "lol-vm65_z1",
+  "networkSecurityGroup": {
+    "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/networkSecurityGroups/lol-vm-nsg",
+    "resourceGroup": "rg-sparkLOL"
+  },
+  "nicType": "Standard",
+  "primary": true,
+  "provisioningState": "Succeeded",
+  "resourceGroup": "rg-sparkLOL",
+  "resourceGuid": "6ee3be68-365a-4b75-8a3d-c3c6bf5030dd",
+  "tapConfigurations": [],
+  "type": "Microsoft.Network/networkInterfaces",
+  "virtualMachine": {
+    "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Compute/virtualMachines/lol-vm",
+    "resourceGroup": "rg-sparkLOL"
+  },
+  "vnetEncryptionSupported": false
+}

@@ -1,0 +1,12 @@
+# Example backend configuration for Terraform
+# Copy this file to backend-config.tfvars and fill in your values
+# ⚠️  backend-config.tfvars is in .gitignore (contains sensitive info)
+
+resource_group_name  = "RG-SPARKLOL"
+storage_account_name = "tfstatelolXXXXX"  # Replace with your Storage Account name
+container_name       = "tfstate"
+key                  = "prod.terraform.tfstate"
+
+# Optional: if using a different subscription
+# subscription_id = "your-subscription-id"
+
