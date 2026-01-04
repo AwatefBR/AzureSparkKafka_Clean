@@ -48,6 +48,7 @@ object PlayersStats {
         )
       )
       .withColumnRenamed("link", "player_id")
+      .filter(col("player_id").isNotNull) // Filtrer les lignes avec player_id NULL
 
     // 5️⃣ CAST NUMÉRIQUE
     val numeric = withEventTime
