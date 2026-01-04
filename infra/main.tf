@@ -43,7 +43,7 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "subnet" {
   name                 = var.subnet_name
   resource_group_name  = data.azurerm_resource_group.rg.name
-  virtual_network_name  = azurerm_virtual_network.vnet.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["172.17.0.0/24"]
 }
 
@@ -104,13 +104,13 @@ resource "azurerm_network_interface_security_group_association" "vm_nic_nsg" {
 
 # SQL Server
 resource "azurerm_mssql_server" "sql_server" {
-  name                         = var.sql_server_name
-  resource_group_name          = data.azurerm_resource_group.rg.name
-  location                     = "switzerlandnorth"
-  version                      = "12.0"
-  administrator_login          = "dbadmin"
-  administrator_login_password = var.sql_admin_password
-  minimum_tls_version          = "1.2"
+  name                          = var.sql_server_name
+  resource_group_name           = data.azurerm_resource_group.rg.name
+  location                      = "switzerlandnorth"
+  version                       = "12.0"
+  administrator_login           = "dbadmin"
+  administrator_login_password  = var.sql_admin_password
+  minimum_tls_version           = "1.2"
   public_network_access_enabled = true
 
   tags = {}
@@ -118,9 +118,9 @@ resource "azurerm_mssql_server" "sql_server" {
 
 # SQL Database
 resource "azurerm_mssql_database" "sql_db" {
-  name           = var.sql_database_name
-  server_id      = azurerm_mssql_server.sql_server.id
-  collation      = "SQL_Latin1_General_CP1_CI_AS"
+  name      = var.sql_database_name
+  server_id = azurerm_mssql_server.sql_server.id
+  collation = "SQL_Latin1_General_CP1_CI_AS"
   # Note: license_type n'est pas supporté pour les bases serverless (GP_S_Gen5_1)
   max_size_gb    = 3
   sku_name       = "GP_S_Gen5_1"
@@ -129,7 +129,7 @@ resource "azurerm_mssql_database" "sql_db" {
   # Ignorer les propriétés read-only ou non configurables
   lifecycle {
     ignore_changes = [
-      storage_account_type,  # Propriété read-only, gérée par Azure
+      storage_account_type, # Propriété read-only, gérée par Azure
     ]
   }
 
