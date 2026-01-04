@@ -29,113 +29,34 @@ jobs:
         id: azure-creds
         continue-on-error: true
         run: |
-          # Essayer d'abord avec des secrets séparés (plus fiable)
           if [ -n "${{ secrets.ARM_CLIENT_ID }}" ] && \
              [ -n "${{ secrets.ARM_CLIENT_SECRET }}" ] && \
              [ -n "${{ secrets.ARM_SUBSCRIPTION_ID }}" ] && \
              [ -n "${{ secrets.ARM_TENANT_ID }}" ]; then
-            echo "✅ Using separate ARM_* secrets"
             echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
             echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
             echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
             echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
             echo "creds_configured=true" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          
-          # Fallback : Parser le JSON des credentials
-          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
+          else
             echo "creds_configured=false" >> $GITHUB_OUTPUT
-            echo "⚠️  AZURE_CREDENTIALS secret not set (and separate ARM_* secrets not found)"
-            exit 0
           fi
-          
-          # Sauvegarder le JSON et valider qu'il est valide
-          echo "${{ secrets.AZURE_CREDENTIALS }}" > /tmp/azure_creds.json
-          
-          # Essayer de réparer le JSON si nécessaire (ajouter des guillemets manquants)
-          # Si le JSON n'a pas de guillemets, on essaie de les ajouter
-          if ! jq empty /tmp/azure_creds.json 2>/dev/null; then
-            echo "⚠️  JSON validation failed, trying to fix format..."
-            # Essayer de réparer en ajoutant des guillemets si manquants
-            cat /tmp/azure_creds.json | sed 's/{\([^"]*\):\([^,}]*\)/{"\1":"\2/g' | \
-              sed 's/,\([^"]*\):\([^,}]*\)/,"\1":"\2/g' | \
-              sed 's/\([^"]\)}/"\1}/g' > /tmp/azure_creds_fixed.json 2>/dev/null || true
-            
-            if jq empty /tmp/azure_creds_fixed.json 2>/dev/null; then
-              echo "✅ JSON fixed, using repaired version"
-              mv /tmp/azure_creds_fixed.json /tmp/azure_creds.json
-            else
-              JSON_ERROR=$(jq empty /tmp/azure_creds.json 2>&1 || echo "ERROR")
-              echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
-              echo "   Error: $JSON_ERROR"
-              echo "   First 200 chars: $(head -c 200 /tmp/azure_creds.json)"
-              echo ""
-              echo "💡 Tip 1: Use separate secrets: ARM_CLIENT_ID, ARM_CLIENT_SECRET, ARM_SUBSCRIPTION_ID, ARM_TENANT_ID"
-              echo "💡 Tip 2: Copy the JSON from .github/AZURE_CREDENTIALS_ONE_LINE.txt"
-              echo "creds_configured=false" >> $GITHUB_OUTPUT
-              exit 0
-            fi
-          fi
-          
-          # Extraire les valeurs
-          ARM_CLIENT_ID=$(jq -r '.clientId' /tmp/azure_creds.json 2>/dev/null || echo "")
-          ARM_CLIENT_SECRET=$(jq -r '.clientSecret' /tmp/azure_creds.json 2>/dev/null || echo "")
-          ARM_SUBSCRIPTION_ID=$(jq -r '.subscriptionId' /tmp/azure_creds.json 2>/dev/null || echo "")
-          ARM_TENANT_ID=$(jq -r '.tenantId' /tmp/azure_creds.json 2>/dev/null || echo "")
-          
-          # Vérifier que toutes les valeurs sont présentes
-          if [ -z "$ARM_CLIENT_ID" ] || [ -z "$ARM_CLIENT_SECRET" ] || \
-             [ -z "$ARM_SUBSCRIPTION_ID" ] || [ -z "$ARM_TENANT_ID" ]; then
-            echo "❌ Missing required fields in AZURE_CREDENTIALS"
-            echo "creds_configured=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          
-          # Configurer les variables d'environnement
-          echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
-          echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
-          echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_ENV
-          echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
-          
-          echo "creds_configured=true" >> $GITHUB_OUTPUT
-          echo "✅ Azure credentials configured for Terraform (from JSON)"
 
       - name: Create backend config from secrets
         id: backend-config
         working-directory: infra
         continue-on-error: true
         run: |
-          # Debug : Vérifier si le secret existe
-          echo "🔍 Debug: Checking TF_STATE_STORAGE_ACCOUNT secret..."
-          SECRET_VALUE="${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
-          SECRET_LENGTH=${#SECRET_VALUE}
-          
-          echo "   Secret length: $SECRET_LENGTH"
-          echo "   Secret is empty: $([ -z "$SECRET_VALUE" ] && echo "yes" || echo "no")"
-          echo "   Secret is set: $([ -n "$SECRET_VALUE" ] && echo "yes" || echo "no")"
-          
-          # Afficher les premiers caractères (pour vérifier sans exposer le secret complet)
-          if [ -n "$SECRET_VALUE" ]; then
-            echo "   First 5 chars: ${SECRET_VALUE:0:5}..."
-          fi
-          
-          # Créer backend-config.tfvars à partir des secrets GitHub
-          if [ -n "$SECRET_VALUE" ]; then
+          if [ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ]; then
             cat > backend-config.tfvars <<EOF
           resource_group_name  = "RG-SPARKLOL"
-          storage_account_name = "$SECRET_VALUE"
+          storage_account_name = "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
           container_name       = "tfstate"
           key                  = "prod.terraform.tfstate"
           EOF
             echo "backend_configured=true" >> $GITHUB_OUTPUT
-            echo "✅ Backend config created from secrets"
-            echo "   Storage account: $SECRET_VALUE"
-            echo "   Config file created: backend-config.tfvars"
           else
             echo "backend_configured=false" >> $GITHUB_OUTPUT
-            echo "⚠️  TF_STATE_STORAGE_ACCOUNT secret not set or empty"
-            echo "   Please check: Settings → Secrets → TF_STATE_STORAGE_ACCOUNT"
           fi
 
       - name: Get Infrastructure Values from Terraform
@@ -145,63 +66,35 @@ jobs:
         env:
           TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
         run: |
-          # Vérifier les prérequis
-          BACKEND_CONFIGURED="${{ steps.backend-config.outputs.backend_configured }}"
-          CREDS_CONFIGURED="${{ steps.azure-creds.outputs.creds_configured }}"
-          
-          echo "🔍 Debug info:"
-          echo "  Backend configured: ${BACKEND_CONFIGURED:-false}"
-          echo "  Azure credentials configured: ${CREDS_CONFIGURED:-false}"
-          echo "  Storage account secret: $([ -n "${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" ] && echo "present" || echo "missing")"
-          
-          # Essayer d'utiliser Terraform pour récupérer les valeurs
-          if [ "$BACKEND_CONFIGURED" == "true" ] && [ "$CREDS_CONFIGURED" == "true" ]; then
-            echo "📦 Initializing Terraform backend..."
-            
-            # Initialiser Terraform avec affichage des erreurs
+          if [ "${{ steps.backend-config.outputs.backend_configured }}" == "true" ] && \
+             [ "${{ steps.azure-creds.outputs.creds_configured }}" == "true" ]; then
             if terraform init -backend-config=backend-config.tfvars -input=false; then
-              echo "✅ Terraform initialized successfully"
-              
-              # Récupérer les outputs
-              echo "📤 Getting Terraform outputs..."
               VM_IP=$(terraform output -raw vm_public_ip 2>/dev/null || echo "")
               SQL_FQDN=$(terraform output -raw sql_server_fqdn 2>/dev/null || echo "")
               
-              echo "  VM IP: ${VM_IP:-not found}"
-              echo "  SQL FQDN: ${SQL_FQDN:-not found}"
-              
               if [ -n "$VM_IP" ] && [ -n "$SQL_FQDN" ]; then
-                echo "✅ Using Terraform outputs"
                 echo "vm_ip=$VM_IP" >> $GITHUB_OUTPUT
                 echo "sql_fqdn=$SQL_FQDN" >> $GITHUB_OUTPUT
                 echo "use_terraform=true" >> $GITHUB_OUTPUT
               else
-                echo "⚠️  Terraform outputs not available (empty values), using secrets"
                 echo "use_terraform=false" >> $GITHUB_OUTPUT
               fi
             else
-              echo "❌ Terraform init failed, using secrets"
               echo "use_terraform=false" >> $GITHUB_OUTPUT
             fi
           else
-            echo "⚠️  Terraform prerequisites not met, using secrets"
-            echo "   Backend configured: ${BACKEND_CONFIGURED:-false}"
-            echo "   Azure credentials configured: ${CREDS_CONFIGURED:-false}"
             echo "use_terraform=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Set deployment variables
         id: vars
         run: |
-          # Déterminer les valeurs à utiliser (Terraform ou secrets)
           if [ "${{ steps.terraform.outputs.use_terraform }}" == "true" ]; then
             echo "VM_HOST=${{ steps.terraform.outputs.vm_ip }}" >> $GITHUB_OUTPUT
             echo "AZURE_SQL_SERVER=${{ steps.terraform.outputs.sql_fqdn }}" >> $GITHUB_OUTPUT
-            echo "Using Terraform outputs" >> $GITHUB_STEP_SUMMARY
           else
             echo "VM_HOST=${{ secrets.VM_HOST }}" >> $GITHUB_OUTPUT
             echo "AZURE_SQL_SERVER=${{ secrets.AZURE_SQL_SERVER }}" >> $GITHUB_OUTPUT
-            echo "Using GitHub secrets (Terraform not configured)" >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Deploy on VM via SSH
@@ -363,5 +256,3 @@ jobs:
 
             docker compose -f docker-compose.prod.yml up -d --no-build
             docker compose -f docker-compose.prod.yml ps
-
-            #CICD SHIT
