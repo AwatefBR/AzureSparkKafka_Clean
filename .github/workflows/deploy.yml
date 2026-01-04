@@ -36,9 +36,15 @@ jobs:
           docker --version
           docker compose version
 
-      - name: Write .env from secrets (on VM) 🔐
-        if: ${{ secrets.POSTGRES_PASSWORD }}
+      - name: Write .env from secrets (manual only) 🔐
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
+          # Only write .env when this workflow is manually dispatched (secrets available)
+          if [ -z "${{ secrets.POSTGRES_PASSWORD }}" ]; then
+            echo "No POSTGRES_PASSWORD secret found — skipping .env generation."
+            exit 0
+          fi
+
           cat > .env <<EOF
           POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           POSTGRES_USER=${{ secrets.POSTGRES_USER }}
