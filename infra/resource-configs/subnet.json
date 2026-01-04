@@ -1,0 +1,20 @@
+{
+  "addressPrefixes": [
+    "172.17.0.0/24"
+  ],
+  "delegations": [],
+  "etag": "W/\"6daf1985-acb9-44f9-893a-b2664b96d685\"",
+  "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/rg-sparkLOL/providers/Microsoft.Network/virtualNetworks/vnet-switzerlandnorth-1/subnets/snet-switzerlandnorth-1",
+  "ipConfigurations": [
+    {
+      "id": "/subscriptions/2e763331-f769-4adb-ac56-21fa1f9a6bcd/resourceGroups/RG-SPARKLOL/providers/Microsoft.Network/networkInterfaces/LOL-VM65_Z1/ipConfigurations/IPCONFIG1",
+      "resourceGroup": "RG-SPARKLOL"
+    }
+  ],
+  "name": "snet-switzerlandnorth-1",
+  "privateEndpointNetworkPolicies": "Disabled",
+  "privateLinkServiceNetworkPolicies": "Enabled",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "rg-sparkLOL",
+  "type": "Microsoft.Network/virtualNetworks/subnets"
+}
