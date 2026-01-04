@@ -22,10 +22,24 @@ jobs:
         id: azure-creds
         continue-on-error: true
         run: |
-          # Parser le JSON des credentials pour extraire les valeurs
+          # Essayer d'abord avec des secrets séparés (plus fiable)
+          if [ -n "${{ secrets.ARM_CLIENT_ID }}" ] && \
+             [ -n "${{ secrets.ARM_CLIENT_SECRET }}" ] && \
+             [ -n "${{ secrets.ARM_SUBSCRIPTION_ID }}" ] && \
+             [ -n "${{ secrets.ARM_TENANT_ID }}" ]; then
+            echo "✅ Using separate ARM_* secrets"
+            echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
+            echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
+            echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+            echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
+            echo "creds_configured=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Fallback : Parser le JSON des credentials
           if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
             echo "creds_configured=false" >> $GITHUB_OUTPUT
-            echo "⚠️  AZURE_CREDENTIALS secret not set"
+            echo "⚠️  AZURE_CREDENTIALS secret not set (and separate ARM_* secrets not found)"
             exit 0
           fi
           
@@ -36,16 +50,29 @@ jobs:
           echo "📋 Checking JSON format..."
           head -3 /tmp/azure_creds.json | sed 's/".*": ".*"/"key": "***"/g' || true
           
-          # Vérifier que le JSON est valide
-          JSON_ERROR=$(jq empty /tmp/azure_creds.json 2>&1 || echo "ERROR")
-          if [ "$JSON_ERROR" != "" ]; then
-            echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
-            echo "   Error: $JSON_ERROR"
-            echo "   First 200 chars: $(head -c 200 /tmp/azure_creds.json)"
-            echo ""
-            echo "💡 Tip: Copy the JSON from .github/AZURE_CREDENTIALS.json (one-line or properly formatted)"
-            echo "creds_configured=false" >> $GITHUB_OUTPUT
-            exit 0
+          # Essayer de réparer le JSON si nécessaire (ajouter des guillemets manquants)
+          # Si le JSON n'a pas de guillemets, on essaie de les ajouter
+          if ! jq empty /tmp/azure_creds.json 2>/dev/null; then
+            echo "⚠️  JSON validation failed, trying to fix format..."
+            # Essayer de réparer en ajoutant des guillemets si manquants
+            cat /tmp/azure_creds.json | sed 's/{\([^"]*\):\([^,}]*\)/{"\1":"\2/g' | \
+              sed 's/,\([^"]*\):\([^,}]*\)/,"\1":"\2/g' | \
+              sed 's/\([^"]\)}/"\1}/g' > /tmp/azure_creds_fixed.json 2>/dev/null || true
+            
+            if jq empty /tmp/azure_creds_fixed.json 2>/dev/null; then
+              echo "✅ JSON fixed, using repaired version"
+              mv /tmp/azure_creds_fixed.json /tmp/azure_creds.json
+            else
+              JSON_ERROR=$(jq empty /tmp/azure_creds.json 2>&1 || echo "ERROR")
+              echo "❌ Invalid JSON in AZURE_CREDENTIALS secret"
+              echo "   Error: $JSON_ERROR"
+              echo "   First 200 chars: $(head -c 200 /tmp/azure_creds.json)"
+              echo ""
+              echo "💡 Tip 1: Use separate secrets: ARM_CLIENT_ID, ARM_CLIENT_SECRET, ARM_SUBSCRIPTION_ID, ARM_TENANT_ID"
+              echo "💡 Tip 2: Copy the JSON from .github/AZURE_CREDENTIALS_ONE_LINE.txt"
+              echo "creds_configured=false" >> $GITHUB_OUTPUT
+              exit 0
+            fi
           fi
           
           # Extraire les valeurs
@@ -69,7 +96,7 @@ jobs:
           echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_ENV
           
           echo "creds_configured=true" >> $GITHUB_OUTPUT
-          echo "✅ Azure credentials configured for Terraform"
+          echo "✅ Azure credentials configured for Terraform (from JSON)"
 
       - name: Create backend config from secrets
         working-directory: infra
