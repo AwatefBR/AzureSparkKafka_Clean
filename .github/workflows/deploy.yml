@@ -27,27 +27,44 @@ jobs:
     steps:
       - name: Deploy on VM via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APP_TAG: main
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          PGADMIN_EMAIL: ${{ secrets.PGADMIN_EMAIL }}
+          PGADMIN_PASSWORD: ${{ secrets.PGADMIN_PASSWORD }}
+          KAFKA_BOOTSTRAP: ${{ secrets.KAFKA_BOOTSTRAP }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          AZURE_SQL_SERVER: ${{ secrets.AZURE_SQL_SERVER }}
+          AZURE_SQL_DB: ${{ secrets.AZURE_SQL_DB }}
+          AZURE_SQL_USER: ${{ secrets.AZURE_SQL_USER }}
+          AZURE_SQL_PASSWORD: ${{ secrets.AZURE_SQL_PASSWORD }}
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           envs: |
-            GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
-            GITHUB_REPOSITORY=${{ github.repository }}
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-            APP_TAG=main
-            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            PGADMIN_EMAIL=${{ secrets.PGADMIN_EMAIL }}
-            PGADMIN_PASSWORD=${{ secrets.PGADMIN_PASSWORD }}
-            KAFKA_BOOTSTRAP=${{ secrets.KAFKA_BOOTSTRAP }}
-            POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-            AZURE_SQL_SERVER=${{ secrets.AZURE_SQL_SERVER }}
-            AZURE_SQL_DB=${{ secrets.AZURE_SQL_DB }}
-            AZURE_SQL_USER=${{ secrets.AZURE_SQL_USER }}
-            AZURE_SQL_PASSWORD=${{ secrets.AZURE_SQL_PASSWORD }}
+            GITHUB_REPOSITORY_OWNER
+            GITHUB_REPOSITORY
+            GITHUB_TOKEN
+            APP_TAG
+            POSTGRES_DB
+            POSTGRES_USER
+            POSTGRES_PASSWORD
+            PGADMIN_EMAIL
+            PGADMIN_PASSWORD
+            KAFKA_BOOTSTRAP
+            POSTGRES_HOST
+            POSTGRES_PORT
+            AZURE_SQL_SERVER
+            AZURE_SQL_DB
+            AZURE_SQL_USER
+            AZURE_SQL_PASSWORD
           script: |
             set -euo pipefail
             REPO_DIR="/home/azureuser/lol-streaming-clean"
