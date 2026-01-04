@@ -1,8 +1,6 @@
 name: CD - Deploy (runtime only)
 
 on:
-<<<<<<< Updated upstream
-=======
   workflow_dispatch:
     inputs:
       mode:
@@ -13,7 +11,6 @@ on:
         options:
           - resume
           - update
->>>>>>> Stashed changes
   workflow_run:
     workflows:
       - CI - sbt assembly & Docker build
@@ -22,17 +19,12 @@ on:
 
 jobs:
   deploy:
-<<<<<<< Updated upstream
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: [self-hosted, deploy-vm]   # ← run on your VM (self-hosted runner with label deploy-vm)
+    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || (github.event_name == 'workflow_dispatch') }}
+    runs-on: [self-hosted, deploy-vm]
 
     permissions:
       contents: read
       packages: read
-=======
-    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || (github.event_name == 'workflow_dispatch') }}
-    runs-on: ubuntu-latest
->>>>>>> Stashed changes
 
     steps:
       - name: Checkout repository
@@ -44,9 +36,15 @@ jobs:
           docker --version
           docker compose version
 
-      - name: Write .env from secrets (on VM) 🔐
-        if: ${{ secrets.POSTGRES_PASSWORD }}
+      - name: Write .env from secrets (manual only) 🔐
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
+          # Only write .env when this workflow is manually dispatched (secrets available)
+          if [ -z "${{ secrets.POSTGRES_PASSWORD }}" ]; then
+            echo "No POSTGRES_PASSWORD secret found — skipping .env generation."
+            exit 0
+          fi
+
           cat > .env <<EOF
           POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           POSTGRES_USER=${{ secrets.POSTGRES_USER }}

@@ -3,15 +3,10 @@ name: CI - sbt assembly & Docker build
 on:
   push:
     branches:
-<<<<<<< Updated upstream
-      - main
-=======
       - spark-clean-devops
-      - main
   pull_request:
     branches:
       - spark-clean-devops
->>>>>>> Stashed changes
 
 jobs:
   terraform-validate:
