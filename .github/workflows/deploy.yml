@@ -1,4 +1,4 @@
-name: CD - Test pull & docker compose up
+name: CD - Deploy (runtime only)
 
 on:
   workflow_run:
@@ -8,7 +8,7 @@ on:
       - completed
 
 jobs:
-  test-deploy:
+  deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
@@ -17,11 +17,9 @@ jobs:
       packages: read
 
     steps:
-      # 1) Checkout pour récupérer docker-compose.yml
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Login à GHCR
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -29,8 +27,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3) Définir les variables (TOUT en lowercase)
-      - name: Set deploy variables
+      - name: Set runtime variables
         run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           REPO=$(basename "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
@@ -39,33 +36,18 @@ jobs:
           echo "REPO=$REPO" >> $GITHUB_ENV
           echo "APP_TAG=main" >> $GITHUB_ENV
 
-          echo "➡️ OWNER=$OWNER"
-          echo "➡️ REPO=$REPO"
-          echo "➡️ APP_TAG=main"
-
-      # 4) Pull explicite des images (test registry)
-      - name: Pull images from GHCR
+      - name: Pull images
         run: |
-          echo "📦 Pull producer image"
           docker pull ghcr.io/$OWNER/$REPO/producer:$APP_TAG
-
-          echo "📦 Pull consumer image"
           docker pull ghcr.io/$OWNER/$REPO/consumer:$APP_TAG
 
-      # 5) docker compose pull (double sécurité)
-      - name: Docker compose pull
-        run: docker compose pull
-
-      # 6) docker compose up -d (runtime test)
-      - name: Docker compose up
-        run: docker compose up -d
-
-      # 7) Vérification des conteneurs
-      - name: Check containers status
+      - name: Deploy containers (NO BUILD)
         run: |
-          docker compose ps
-          docker images | grep ghcr.io || true
+          docker compose \
+            -f docker-compose.prod.yml \
+            up -d --no-build
 
-      # 8) Logs courts (debug)
-      - name: Show logs (last 20 lines)
-        run: docker compose logs --tail=20 || true
+      - name: Check status
+        run: |
+          docker compose -f docker-compose.prod.yml ps
+          docker images | grep ghcr.io || true

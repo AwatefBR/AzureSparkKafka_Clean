@@ -96,8 +96,13 @@ object Utils {
                 insertStmt = conn.prepareStatement(insertSQL)
 
                 var batchCount = 0
-                partition.foreach { row =>
-                    insertStmt.setString(1, if (row.isNullAt(0)) null else row.getAs[String]("player_id"))
+                partition.filter { row =>
+                    // Filtrer les lignes avec player_id NULL ou vide
+                    val playerId = if (row.isNullAt(0)) null else row.getAs[String]("player_id")
+                    playerId != null && playerId.nonEmpty
+                }.foreach { row =>
+                    val playerId = row.getAs[String]("player_id")
+                    insertStmt.setString(1, playerId)
                     insertStmt.setDouble(2, if (row.isNullAt(1)) null.asInstanceOf[Double] else row.getAs[Double]("avg_kills"))
                     insertStmt.setDouble(3, if (row.isNullAt(2)) null.asInstanceOf[Double] else row.getAs[Double]("avg_deaths"))
                     insertStmt.setDouble(4, if (row.isNullAt(3)) null.asInstanceOf[Double] else row.getAs[Double]("avg_assists"))
