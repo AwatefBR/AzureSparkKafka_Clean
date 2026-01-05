@@ -37,9 +37,9 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = ["172.17.0.0/16"]
 
   tags = {
-  ManagedBy    = "Terraform"
-  Environment  = "Production"
-  LastUpdated  = "2025-01-15"
+    ManagedBy    = "Terraform"
+    Environment  = "Production"
+    LastUpdated  = "2025-01-15"
   }
 }
 
