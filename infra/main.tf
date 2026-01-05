@@ -39,7 +39,7 @@ resource "azurerm_virtual_network" "vnet" {
   tags = {
   ManagedBy    = "Terraform"
   Environment  = "Production"
-  LastUpdated  = "2024-01-15"
+  LastUpdated  = "2025-01-15"
   }
 }
 
