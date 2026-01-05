@@ -36,7 +36,11 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = data.azurerm_resource_group.rg.name
   address_space       = ["172.17.0.0/16"]
 
-  tags = {}
+  tags = {
+  ManagedBy    = "Terraform"
+  Environment  = "Production"
+  LastUpdated  = "2025-01-15"
+  }
 }
 
 # Subnet
@@ -58,7 +62,7 @@ resource "azurerm_public_ip" "vm_public_ip" {
 }
 
 # -------------------------
-# Network Security Group (data source - on ne le gère pas)
+# Network Security Group
 # -------------------------
 
 data "azurerm_network_security_group" "vm_nsg" {
@@ -89,14 +93,7 @@ resource "azurerm_network_interface_security_group_association" "vm_nic_nsg" {
   network_security_group_id = data.azurerm_network_security_group.vm_nsg.id
 }
 
-# -------------------------
-# Virtual Machine (temporairement en data, à convertir plus tard)
-# -------------------------
 
-#data "azurerm_linux_virtual_machine" "vm" {
-# name                = var.vm_name
-#  resource_group_name = data.azurerm_resource_group.rg.name
-#}
 
 # -------------------------
 # Azure SQL - Converti en resources pour gestion
@@ -140,10 +137,6 @@ resource "azurerm_mssql_database" "sql_db" {
 # Outputs
 # -------------------------
 
-#output "vm_name" {
-#  value       = data.azurerm_linux_virtual_machine.vm.name
-#  description = "Nom de la VM existante"
-#}
 
 output "vm_public_ip" {
   value       = azurerm_public_ip.vm_public_ip.ip_address
