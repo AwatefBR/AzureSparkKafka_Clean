@@ -36,7 +36,11 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = data.azurerm_resource_group.rg.name
   address_space       = ["172.17.0.0/16"]
 
-  tags = {}
+  tags = {
+  ManagedBy    = "Terraform"
+  Environment  = "Production"
+  LastUpdated  = "2025-01-15"
+  }
 }
 
 # Subnet
