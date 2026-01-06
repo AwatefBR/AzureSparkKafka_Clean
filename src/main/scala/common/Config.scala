@@ -8,14 +8,14 @@ import scala.io.Source
 object Config {
 
   // Lecture obligatoire d'une variable d'env
-  // ============================================================
+
   private def getEnv(name: String): String =
     sys.env.getOrElse(name,
       throw new RuntimeException(s"[Config] ❌ Missing required environment variable: $name")
     )
 
   // Kafka Configuration
-  // ============================================================
+  
   val bootstrap: String = getEnv("KAFKA_BOOTSTRAP")
 
   val kafkaProps: Properties = {
