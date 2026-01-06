@@ -5,6 +5,7 @@ import consumer.schemas.ScoreboardSchema
 import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.Trigger
+import spark.implicits._
 
 object PlayersStats {
 
@@ -21,14 +22,13 @@ object PlayersStats {
       .config("spark.cores.max", "4")
       .getOrCreate()
 
-    import spark.implicits._
 
     // 2️⃣ Lecture Kafka (même topic que le consumer scoreboard)
     val stream = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", Config.bootstrap)
       .option("subscribe", "scoreboardplayers")
-      .option("startingOffsets", "latest")
+      .option("startingOffsets", "earliest")
       .option("maxOffsetsPerTrigger", "1000")
       .load()
 

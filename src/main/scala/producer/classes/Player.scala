@@ -25,18 +25,3 @@ class Player(
   val birthdate: String,
   val deathdate: String
 )
-
-object Player {
-  def apply(
-    id: String, overviewpage: String, player: String, image: String, name: String,
-    nativename: String, namealphabet: String, namefull: String, country: String,
-    nationality: String, nationalityprimary: String, age: String, residencyformer: String, team: String, team2: String,
-    currentteams: String, teamsystem: String, team2system: String, residency: String,
-    role: String, favchamps: String, birthdate: String, deathdate: String
-  ): Player =
-    new Player(
-      id, overviewpage, player, image, name, nativename, namealphabet, namefull,
-      country, nationality, nationalityprimary, age, residencyformer, team, team2,
-      currentteams, teamsystem, team2system, residency, role, favchamps, birthdate, deathdate
-    )
-}
