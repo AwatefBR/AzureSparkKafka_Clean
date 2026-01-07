@@ -5,7 +5,6 @@ import consumer.schemas.ScoreboardSchema
 import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.Trigger
-import spark.implicits._
 
 object PlayersStats {
 
