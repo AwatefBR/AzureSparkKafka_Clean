@@ -2,10 +2,6 @@ package producer
 import common.Config
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions._
-import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.apache.kafka.common.TopicPartition
-import java.util.Properties
-import scala.collection.JavaConverters._
 
 object MainApp {
 

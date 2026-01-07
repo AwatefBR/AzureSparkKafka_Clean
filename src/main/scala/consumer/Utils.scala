@@ -1,10 +1,7 @@
 package consumer
 
 import common.Config
-import consumer.schemas.{PlayerSchema, ScoreboardSchema}
-import org.apache.spark.sql.{SparkSession, DataFrame, Row}
-import org.apache.spark.sql.functions._
-import org.apache.spark.sql.streaming.Trigger
+import org.apache.spark.sql.{DataFrame, Row}
 import java.sql.{Connection, DriverManager, PreparedStatement}
 
 object Utils {

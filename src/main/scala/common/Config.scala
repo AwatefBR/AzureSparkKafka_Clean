@@ -3,7 +3,6 @@ package common
 import java.util.Properties
 import org.apache.kafka.clients.producer.KafkaProducer
 import java.sql.{Connection, DriverManager}
-import scala.io.Source
 
 object Config {
 
@@ -26,8 +25,9 @@ object Config {
     props
   }
 
-  val kafkaProducer: KafkaProducer[String, String] =
-    new KafkaProducer[String, String](kafkaProps)
+  // KafkaProducer non utilisé - les producteurs utilisent Spark SQL pour écrire dans Kafka
+  // val kafkaProducer: KafkaProducer[String, String] =
+  //   new KafkaProducer[String, String](kafkaProps)
 
   // PostgreSQL Configuration
   // ============================================================
@@ -39,10 +39,11 @@ object Config {
 
   val pgUrl: String = s"jdbc:postgresql://$pgHost:$pgPort/$pgDb"
 
-  lazy val pgConnection: Connection = {
-    Class.forName("org.postgresql.Driver")
-    DriverManager.getConnection(pgUrl, pgUser, pgPass)
-  }
+  // pgConnection non utilisé - les connexions sont gérées directement dans le code
+  // lazy val pgConnection: Connection = {
+  //   Class.forName("org.postgresql.Driver")
+  //   DriverManager.getConnection(pgUrl, pgUser, pgPass)
+  // }
 
   //  Azure SQL Configuration (lazy - only initialized when needed)
   // ============================================================
@@ -61,10 +62,11 @@ object Config {
       s"hostNameInCertificate=*.database.windows.net;" +
       s"loginTimeout=30;"
 
-  lazy val azureConnection: Connection = {
-    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
-    DriverManager.getConnection(azureJdbcUrl)
-  }
+  // azureConnection non utilisé - les connexions sont gérées directement dans Utils.writeToAzure
+  // lazy val azureConnection: Connection = {
+  //   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
+  //   DriverManager.getConnection(azureJdbcUrl)
+  // }
 
   
 }
