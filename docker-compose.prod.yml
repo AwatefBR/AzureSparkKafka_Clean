@@ -199,7 +199,7 @@ services:
       AZURE_SQL_DB: ${AZURE_SQL_DB}
       AZURE_SQL_USER: ${AZURE_SQL_USER}
       AZURE_SQL_PASSWORD: ${AZURE_SQL_PASSWORD}
-    command: ["/opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --driver-memory 2g --executor-memory 2g --executor-cores 2 --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.AZURE_SQL_SERVER=${AZURE_SQL_SERVER} --conf spark.executorEnv.AZURE_SQL_DB=${AZURE_SQL_DB} --conf spark.executorEnv.AZURE_SQL_USER=${AZURE_SQL_USER} --conf spark.executorEnv.AZURE_SQL_PASSWORD=${AZURE_SQL_PASSWORD} --class consumer.PlayersStats /opt/app/app.jar"]
+    command: ["/opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client --driver-memory 2g --executor-memory 2g --executor-cores 2 --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.postgresql:postgresql:42.7.3,com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11 --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} --conf spark.executorEnv.AZURE_SQL_SERVER=${AZURE_SQL_SERVER} --conf spark.executorEnv.AZURE_SQL_DB=${AZURE_SQL_DB} --conf spark.executorEnv.AZURE_SQL_USER=${AZURE_SQL_USER} --conf spark.executorEnv.AZURE_SQL_PASSWORD=${AZURE_SQL_PASSWORD} --class consumer.PlayersStats /opt/app/app.jar"]
     deploy:
       resources:
         limits:

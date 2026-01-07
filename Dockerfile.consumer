@@ -5,23 +5,14 @@ WORKDIR /opt/app
 
 COPY target/scala-2.12/lol-streaming-assembly-0.1.0.jar /opt/app/app.jar
 
-RUN curl -L -o /opt/spark/jars/spark-sql-kafka-0-10_2.12-3.5.1.jar \
-    https://repo1.maven.org/maven2/org/apache/spark/spark-sql-kafka-0-10_2.12/3.5.1/spark-sql-kafka-0-10_2.12-3.5.1.jar && \
-    curl -L -o /opt/spark/jars/kafka-clients-3.5.1.jar \
-    https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.5.1/kafka-clients-3.5.1.jar && \
-    curl -L -o /opt/spark/jars/spark-token-provider-kafka-0-10_2.12-3.5.1.jar \
-    https://repo1.maven.org/maven2/org/apache/spark/spark-token-provider-kafka-0-10_2.12/3.5.1/spark-token-provider-kafka-0-10_2.12-3.5.1.jar && \
-    curl -L -o /opt/spark/jars/mssql-jdbc-12.6.1.jre11.jar \
-    https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/12.6.1.jre11/mssql-jdbc-12.6.1.jre11.jar && \
-    curl -L -o /opt/spark/jars/postgresql-42.7.3.jar \
-    https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar
-
-# USER 185  # Commenté car docker-compose.yml utilise user: root
+# Les dépendances sont téléchargées automatiquement via --packages
+# Plus besoin de RUN curl - Spark les télécharge et les distribue aux executors
 
 ENTRYPOINT ["/bin/bash", "-lc"]
 CMD ["/opt/spark/bin/spark-submit \
       --master spark://spark-master:7077 \
       --deploy-mode client \
+      --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.postgresql:postgresql:42.7.3,com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11 \
       --conf spark.executorEnv.KAFKA_BOOTSTRAP=${KAFKA_BOOTSTRAP} \
       --conf spark.executorEnv.AZURE_SQL_SERVER=${AZURE_SQL_SERVER} \
       --conf spark.executorEnv.AZURE_SQL_DB=${AZURE_SQL_DB} \
